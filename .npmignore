@@ -1,0 +1,52 @@
+# Source files
+src/
+__tests__/
+*.test.ts
+*.spec.ts
+
+# Build configuration
+rollup.config.js
+tsconfig.json
+jest.config.js
+.eslintrc.js
+.prettierrc.js
+
+# Development files
+IMPLEMENTATION_SUMMARY.md
+MIGRATION_GUIDE.md
+SUMMARY.md
+examples/
+
+# Development dependencies
+node_modules/
+package-lock.json
+yarn.lock
+
+# CI/CD and development tools
+.github/
+.git/
+.gitignore
+.prettierrc.js
+.eslintrc.js
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Coverage reports
+coverage/
+*.lcov
+
+# Build artifacts (keep only dist/)
+build/
+out/
