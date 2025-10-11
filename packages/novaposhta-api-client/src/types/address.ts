@@ -3,15 +3,12 @@
  * Handles all address-related operations
  */
 
-import type { NovaPoshtaResponse, ObjectRef, BrandedString } from './base';
+import type { NovaPoshtaResponse, ObjectRef, SettlementRef, CityRef, StreetRef } from './base';
 
-// Branded types for address data
-export type SettlementRef = BrandedString<'SettlementRef'>;
-export type SettlementAreaRef = BrandedString<'SettlementAreaRef'>;
-export type SettlementRegionRef = BrandedString<'SettlementRegionRef'>;
-export type CityRef = BrandedString<'CityRef'>;
-export type StreetRef = BrandedString<'StreetRef'>;
-export type StreetTypeRef = BrandedString<'StreetTypeRef'>;
+// Address-specific types
+export type SettlementAreaRef = string;
+export type SettlementRegionRef = string;
+export type StreetTypeRef = string;
 
 // =============================================================================
 // SETTLEMENTS (AREAS)

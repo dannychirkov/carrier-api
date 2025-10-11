@@ -1,26 +1,11 @@
-import { spec } from 'pactum';
+import { client } from '../../../setup/client.setup';
 
 describe('ReferenceService - getServiceTypes', () => {
   it('should get list of delivery service types', async () => {
-    await spec()
-      .post('/')
-      .withJson({
-        modelName: 'Common',
-        calledMethod: 'getServiceTypes',
-        methodProperties: {},
-      })
-      .expectStatus(200)
-      .expectJsonMatch({
-        success: true,
-      })
-      .expectJsonSchema({
-        type: 'object',
-        properties: {
-          success: { type: 'boolean' },
-          data: { type: 'array' },
-        },
-      })
-      .inspect()
-      .toss();
+    const response = await client.reference.getServiceTypes();
+
+    expect(response.success).toBe(true);
+    expect(response.data).toBeDefined();
+    expect(Array.isArray(response.data)).toBe(true);
   });
 });

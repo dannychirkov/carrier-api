@@ -1,44 +1,22 @@
-import { spec } from 'pactum';
+import { client } from '../../../setup/client.setup';
 
 describe('ReferenceService - getCargoTypes', () => {
   it('should get list of cargo types', async () => {
-    await spec()
-      .post('/')
-      .withJson({
-        modelName: 'Common',
-        calledMethod: 'getCargoTypes',
-        methodProperties: {},
-      })
-      .expectStatus(200)
-      .expectJsonMatch({
-        success: true,
-      })
-      .expectJsonSchema({
-        type: 'object',
-        properties: {
-          success: { type: 'boolean' },
-          data: { type: 'array' },
-        },
-      })
-      .inspect()
-      .toss();
+    const response = await client.reference.getCargoTypes();
+
+    expect(response.success).toBe(true);
+    expect(response.data).toBeDefined();
+    expect(Array.isArray(response.data)).toBe(true);
   });
 
   it('should return cargo types with descriptions', async () => {
-    const response = await spec()
-      .post('/')
-      .withJson({
-        modelName: 'Common',
-        calledMethod: 'getCargoTypes',
-        methodProperties: {},
-      })
-      .expectStatus(200)
-      .expectJsonMatch({
-        success: true,
-      })
-      .inspect()
-      .toss();
+    const response = await client.reference.getCargoTypes();
 
+    expect(response.success).toBe(true);
     expect(response.data).toBeDefined();
+    if (response.data.length > 0) {
+      expect(response.data[0]).toHaveProperty('Ref');
+      expect(response.data[0]).toHaveProperty('Description');
+    }
   });
 });

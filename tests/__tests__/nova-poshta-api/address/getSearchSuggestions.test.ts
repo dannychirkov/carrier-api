@@ -1,56 +1,30 @@
-import { spec } from 'pactum';
+import { client } from '../../../setup/client.setup';
 
 describe('AddressService - getSearchSuggestions', () => {
   it('should get search suggestions for cities', async () => {
     // Perform some searches to build history
-    await spec()
-      .post('/')
-      .withJson({
-        modelName: 'Address',
-        calledMethod: 'getCities',
-        methodProperties: {
-          FindByString: 'Київ',
-        },
-      })
-      .expectStatus(200)
-      .expectJsonMatch({
-        success: true,
-      })
-      .toss();
+    const response1 = await client.address.getCities({
+      FindByString: 'Київ',
+    });
 
-    await spec()
-      .post('/')
-      .withJson({
-        modelName: 'Address',
-        calledMethod: 'getCities',
-        methodProperties: {
-          FindByString: 'Дніпро',
-        },
-      })
-      .expectStatus(200)
-      .expectJsonMatch({
-        success: true,
-      })
-      .toss();
+    expect(response1.success).toBe(true);
+
+    const response2 = await client.address.getCities({
+      FindByString: 'Дніпро',
+    });
+
+    expect(response2.success).toBe(true);
 
     // Search suggestions are managed on client side based on search history
   });
 
   it('should get suggestions for partial query', async () => {
-    await spec()
-      .post('/')
-      .withJson({
-        modelName: 'Address',
-        calledMethod: 'getCities',
-        methodProperties: {
-          FindByString: 'Хар',
-        },
-      })
-      .expectStatus(200)
-      .expectJsonMatch({
-        success: true,
-      })
-      .inspect()
-      .toss();
+    const response = await client.address.getCities({
+      FindByString: 'Хар',
+    });
+
+    expect(response.success).toBe(true);
+    expect(response.data).toBeDefined();
+    expect(Array.isArray(response.data)).toBe(true);
   });
 });

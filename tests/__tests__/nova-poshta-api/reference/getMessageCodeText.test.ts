@@ -1,19 +1,11 @@
-import { spec } from 'pactum';
+import { client } from '../../../setup/client.setup';
 
 describe('ReferenceService - getMessageCodeText', () => {
   it('should get list of error codes and descriptions', async () => {
-    await spec()
-      .post('/')
-      .withJson({
-        modelName: 'Common',
-        calledMethod: 'getMessageCodeText',
-        methodProperties: {},
-      })
-      .expectStatus(200)
-      .expectJsonMatch({
-        success: true,
-      })
-      .inspect()
-      .toss();
+    const response = await client.reference.getMessageCodeText();
+
+    expect(response.success).toBe(true);
+    expect(response.data).toBeDefined();
+    expect(Array.isArray(response.data)).toBe(true);
   });
 });

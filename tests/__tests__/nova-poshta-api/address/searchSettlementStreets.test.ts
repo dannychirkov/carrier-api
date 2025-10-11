@@ -1,63 +1,42 @@
-import { spec } from 'pactum';
+import { client } from '../../../setup/client.setup';
 
 describe('AddressService - searchSettlementStreets', () => {
   it('should search streets in a settlement', async () => {
-    await spec()
-      .post('/')
-      .withJson({
-        modelName: 'Address',
-        calledMethod: 'searchSettlementStreets',
-        methodProperties: {
-          StreetName: 'Хрещатик',
-          SettlementRef: '8d5a980d-391c-11dd-90d9-001a92567626', // Kyiv
-          Limit: '10',
-        },
-      })
-      .expectStatus(200)
-      .expectJsonMatch({
-        success: true,
-      })
-      .inspect()
-      .toss();
+    const response = await client.address.searchSettlementStreets({
+      streetName: 'Хрещатик',
+      settlementRef: '8d5a980d-391c-11dd-90d9-001a92567626', // Kyiv
+      limit: 10,
+    });
+
+    expect(response.success).toBe(true);
+    expect(response.data).toBeDefined();
+    expect(Array.isArray(response.data)).toBe(true);
   });
 
   it('should search streets by partial name', async () => {
-    await spec()
-      .post('/')
-      .withJson({
-        modelName: 'Address',
-        calledMethod: 'searchSettlementStreets',
-        methodProperties: {
-          StreetName: 'вул',
-          SettlementRef: '8d5a980d-391c-11dd-90d9-001a92567626',
-          Limit: '20',
-        },
-      })
-      .expectStatus(200)
-      .expectJsonMatch({
-        success: true,
-      })
-      .inspect()
-      .toss();
+    const response = await client.address.searchSettlementStreets({
+      streetName: 'вул',
+      settlementRef: '8d5a980d-391c-11dd-90d9-001a92567626',
+      limit: 20,
+    });
+
+    expect(response.success).toBe(true);
+    expect(response.data).toBeDefined();
+    expect(Array.isArray(response.data)).toBe(true);
+    if (response.data.length > 0) {
+      expect(response.data.length).toBeLessThanOrEqual(20);
+    }
   });
 
   it('should search streets in different city', async () => {
-    await spec()
-      .post('/')
-      .withJson({
-        modelName: 'Address',
-        calledMethod: 'searchSettlementStreets',
-        methodProperties: {
-          StreetName: 'Гоголя',
-          SettlementRef: 'db5c88e0-391c-11dd-90d9-001a92567626', // Dnipro
-          Limit: '10',
-        },
-      })
-      .expectStatus(200)
-      .expectJsonMatch({
-        success: true,
-      })
-      .inspect()
-      .toss();
+    const response = await client.address.searchSettlementStreets({
+      streetName: 'Гоголя',
+      settlementRef: 'db5c88e0-391c-11dd-90d9-001a92567626', // Dnipro
+      limit: 10,
+    });
+
+    expect(response.success).toBe(true);
+    expect(response.data).toBeDefined();
+    expect(Array.isArray(response.data)).toBe(true);
   });
 });

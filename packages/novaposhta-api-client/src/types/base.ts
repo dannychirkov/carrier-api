@@ -3,44 +3,41 @@
  * These are fundamental types used throughout the library
  */
 
-// Branded types for better type safety
-export type NovaPoshtaRef = string & { readonly __brand: 'NovaPoshtaRef' };
-export type CityRef = string & { readonly __brand: 'CityRef' };
-export type WarehouseRef = string & { readonly __brand: 'WarehouseRef' };
-export type CounterpartyRef = string & { readonly __brand: 'CounterpartyRef' };
-export type ContactRef = string & { readonly __brand: 'ContactRef' };
-export type AddressRef = string & { readonly __brand: 'AddressRef' };
-export type DocumentRef = string & { readonly __brand: 'DocumentRef' };
-export type SettlementRef = string & { readonly __brand: 'SettlementRef' };
-export type AreaRef = string & { readonly __brand: 'AreaRef' };
-export type StreetRef = string & { readonly __brand: 'StreetRef' };
-export type ObjectRef = string & { readonly __brand: 'ObjectRef' };
+// Reference types
+export type NovaPoshtaRef = string;
+export type CityRef = string;
+export type WarehouseRef = string;
+export type CounterpartyRef = string;
+export type ContactRef = string;
+export type AddressRef = string;
+export type DocumentRef = string;
+export type SettlementRef = string;
+export type AreaRef = string;
+export type StreetRef = string;
+export type ObjectRef = string;
 
-// Generic branded string type
-export type BrandedString<T extends string> = string & { readonly __brand: T };
+// String types
+export type String36 = string;
+export type String50 = string;
+export type String100 = string;
 
-// String length constraints
-export type String36 = string & { readonly __length: 36 };
-export type String50 = string & { readonly __length: 50 };
-export type String100 = string & { readonly __length: 100 };
-
-// Utility type for creating branded strings
+// Utility type for creating refs
 export function createRef<T extends string>(value: string): T {
   return value as T;
 }
 
-// Phone number type with validation
-export type PhoneNumber = string & { readonly __format: 'phone' };
+// Phone number type
+export type PhoneNumber = string;
 
 // Date types
-export type NovaPoshtaDate = string & { readonly __format: 'dd.mm.yyyy' };
-export type NovaPoshtaDateTime = string & { readonly __format: 'dd.mm.yyyy hh:mm:ss' };
+export type NovaPoshtaDate = string;
+export type NovaPoshtaDateTime = string;
 
-// Numeric types with constraints
-export type Weight = number & { readonly __unit: 'kg', readonly __min: 0.1 };
-export type Volume = number & { readonly __unit: 'm3', readonly __min: 0.0004 };
-export type Dimensions = number & { readonly __unit: 'cm', readonly __min: 1 };
-export type Cost = number & { readonly __unit: 'uah', readonly __min: 0 };
+// Numeric types
+export type Weight = number;
+export type Volume = number;
+export type Dimensions = number;
+export type Cost = number;
 
 // Generic response wrapper
 export interface NovaPoshtaResponse<T = unknown> {
@@ -137,9 +134,7 @@ export type Result<T, E = Error> =
 export type Optional<T, R extends string = 'optional'> = T | undefined;
 
 // Conditional types for service-specific parameters
-export type ConditionalProps<T, K extends keyof T> = T[K] extends true
-  ? Required<T>
-  : Partial<T>;
+export type ConditionalProps<T, K extends keyof T> = T[K] extends true ? Required<T> : Partial<T>;
 
 // Utility types for API responses
 export type ApiData<T extends NovaPoshtaResponse<unknown>> = T extends NovaPoshtaResponse<infer U> ? U : never;

@@ -1,19 +1,11 @@
-import { spec } from 'pactum';
+import { client } from '../../../setup/client.setup';
 
 describe('ReferenceService - getTypesOfPayersForRedelivery', () => {
   it('should get list of payer types for redelivery', async () => {
-    await spec()
-      .post('/')
-      .withJson({
-        modelName: 'Common',
-        calledMethod: 'getTypesOfPayersForRedelivery',
-        methodProperties: {},
-      })
-      .expectStatus(200)
-      .expectJsonMatch({
-        success: true,
-      })
-      .inspect()
-      .toss();
+    const response = await client.reference.getTypesOfPayersForRedelivery();
+
+    expect(response.success).toBe(true);
+    expect(response.data).toBeDefined();
+    expect(Array.isArray(response.data)).toBe(true);
   });
 });

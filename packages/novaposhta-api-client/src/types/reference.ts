@@ -3,21 +3,21 @@
  * Handles all reference data operations
  */
 
-import type { NovaPoshtaResponse, ObjectRef, BrandedString } from './base';
+import type { NovaPoshtaResponse, ObjectRef } from './base';
 
-// Branded types for reference data
-export type CargoTypeRef = BrandedString<'CargoTypeRef'>;
-export type PalletRef = BrandedString<'PalletRef'>;
-export type PackRef = BrandedString<'PackRef'>;
-export type TireWheelRef = BrandedString<'TireWheelRef'>;
-export type CargoDescriptionRef = BrandedString<'CargoDescriptionRef'>;
-export type MessageCodeRef = BrandedString<'MessageCodeRef'>;
-export type ServiceTypeRef = BrandedString<'ServiceTypeRef'>;
-export type OwnershipFormRef = BrandedString<'OwnershipFormRef'>;
-export type TimeIntervalRef = BrandedString<'TimeIntervalRef'>;
-export type PickupTimeIntervalRef = BrandedString<'PickupTimeIntervalRef'>;
-export type BackwardDeliveryCargoTypeRef = BrandedString<'BackwardDeliveryCargoTypeRef'>;
-export type PayerTypeRef = BrandedString<'PayerTypeRef'>;
+// Reference data types
+export type CargoTypeRef = string;
+export type PalletRef = string;
+export type PackRef = string;
+export type TireWheelRef = string;
+export type CargoDescriptionRef = string;
+export type MessageCodeRef = string;
+export type ServiceTypeRef = string;
+export type OwnershipFormRef = string;
+export type TimeIntervalRef = string;
+export type PickupTimeIntervalRef = string;
+export type BackwardDeliveryCargoTypeRef = string;
+export type PayerTypeRef = string;
 
 // =============================================================================
 // CARGO TYPES

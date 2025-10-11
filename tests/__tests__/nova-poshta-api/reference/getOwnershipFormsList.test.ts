@@ -1,19 +1,11 @@
-import { spec } from 'pactum';
+import { client } from '../../../setup/client.setup';
 
 describe('ReferenceService - getOwnershipFormsList', () => {
   it('should get list of ownership forms', async () => {
-    await spec()
-      .post('/')
-      .withJson({
-        modelName: 'Common',
-        calledMethod: 'getOwnershipFormsList',
-        methodProperties: {},
-      })
-      .expectStatus(200)
-      .expectJsonMatch({
-        success: true,
-      })
-      .inspect()
-      .toss();
+    const response = await client.reference.getOwnershipFormsList();
+
+    expect(response.success).toBe(true);
+    expect(response.data).toBeDefined();
+    expect(Array.isArray(response.data)).toBe(true);
   });
 });

@@ -1,45 +1,22 @@
-import { spec } from 'pactum';
+import { client } from '../../../setup/client.setup';
 
 describe('AddressService - getSettlements', () => {
   it('should get list of settlement areas', async () => {
-    await spec()
-      .post('/')
-      .withJson({
-        modelName: 'Address',
-        calledMethod: 'getSettlementAreas',
-        methodProperties: {},
-      })
-      .expectStatus(200)
-      .expectJsonMatch({
-        success: true,
-      })
-      .expectJsonSchema({
-        type: 'object',
-        properties: {
-          success: { type: 'boolean' },
-          data: { type: 'array' },
-        },
-      })
-      .inspect()
-      .toss();
+    const response = await client.address.getSettlements();
+
+    expect(response.success).toBe(true);
+    expect(response.data).toBeDefined();
+    expect(Array.isArray(response.data)).toBe(true);
   });
 
   it('should return settlements with references', async () => {
-    const response = await spec()
-      .post('/')
-      .withJson({
-        modelName: 'Address',
-        calledMethod: 'getSettlementAreas',
-        methodProperties: {},
-      })
-      .expectStatus(200)
-      .expectJsonMatch({
-        success: true,
-      })
-      .inspect()
-      .toss();
+    const response = await client.address.getSettlements();
 
+    expect(response.success).toBe(true);
     expect(response.data).toBeDefined();
     expect(Array.isArray(response.data)).toBe(true);
+    if (response.data.length > 0) {
+      expect(response.data[0]).toHaveProperty('Ref');
+    }
   });
 });
