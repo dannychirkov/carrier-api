@@ -10,7 +10,6 @@
  *
  * // Create configuration
  * const config = createConfig(process.env.NOVA_POSHTA_API_KEY!)
- *   .environment('production')
  *   .language(Language.Ukrainian)
  *   .validation(true)
  *   .caching(true)
@@ -69,8 +68,6 @@ export type { ClientState, ClientMetrics, HealthCheckResult } from './core/novaP
 // Configuration
 export {
   createConfig,
-  createProductionConfig,
-  createDevelopmentConfig,
   createTestConfig,
   validateConfig,
   loadConfigFromEnv,
@@ -384,8 +381,7 @@ export const SUPPORTED_API_VERSION = '2.0';
 
 // Default exports for convenience
 import { NovaPoshtaClient } from './core/novaPoshtaClient';
-import { createConfig, createProductionConfig, createDevelopmentConfig } from './config';
-import { Language } from './types/enums';
+import { createConfig } from './config';
 
 export default NovaPoshtaClient;
 
@@ -402,58 +398,5 @@ export default NovaPoshtaClient;
  */
 export function quickStart(apiKey: string): NovaPoshtaClient {
   const config = createConfig(apiKey).build();
-  return new NovaPoshtaClient(config);
-}
-
-/**
- * Create a production-ready client with optimal settings
- *
- * @example
- * ```typescript
- * import { createProductionClient } from '@novaposhta/client';
- *
- * const client = createProductionClient('your-api-key', {
- *   language: Language.English,
- *   enableMetrics: true,
- * });
- * ```
- */
-export function createProductionClient(
-  apiKey: string,
-  options?: {
-    language?: Language;
-    enableMetrics?: boolean;
-    userAgent?: string;
-  }
-): NovaPoshtaClient {
-  let config = createProductionConfig(apiKey);
-
-  if (options?.language) {
-    config = { ...config, language: options.language };
-  }
-
-  if (options?.enableMetrics) {
-    config = { ...config, enableMetrics: options.enableMetrics };
-  }
-
-  if (options?.userAgent) {
-    config = { ...config, userAgent: options.userAgent };
-  }
-
-  return new NovaPoshtaClient(config);
-}
-
-/**
- * Create a development client with debugging features enabled
- *
- * @example
- * ```typescript
- * import { createDevelopmentClient } from '@novaposhta/client';
- *
- * const client = createDevelopmentClient('your-api-key');
- * ```
- */
-export function createDevelopmentClient(apiKey: string): NovaPoshtaClient {
-  const config = createDevelopmentConfig(apiKey);
   return new NovaPoshtaClient(config);
 }

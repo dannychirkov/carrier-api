@@ -102,8 +102,8 @@ export const additionalServicesSchema = z.object({
   message: 'Invalid additional services configuration',
 });
 
-// Base waybill properties schema
-export const baseWaybillPropertiesSchema = z.object({
+// Base waybill properties schema (without refinement)
+const baseWaybillPropertiesSchemaObject = z.object({
   payerType: payerTypeSchema,
   paymentMethod: paymentMethodSchema,
   dateTime: novaPoshtaDateSchema,
@@ -123,7 +123,10 @@ export const baseWaybillPropertiesSchema = z.object({
   recipientAddress: novaPoshtaRefSchema,
   contactRecipient: novaPoshtaRefSchema,
   recipientsPhone: phoneNumberSchema,
-}).refine(data => {
+});
+
+// Base waybill properties schema with refinement
+export const baseWaybillPropertiesSchema = baseWaybillPropertiesSchemaObject.refine(data => {
   // For ThirdPerson payer type, paymentMethod must be NonCash
   if (data.payerType === PayerType.ThirdPerson && data.paymentMethod !== PaymentMethod.NonCash) {
     return false;
@@ -138,14 +141,26 @@ export const baseWaybillPropertiesSchema = z.object({
 });
 
 // Create waybill request schema
-export const createWaybillRequestSchema = baseWaybillPropertiesSchema.extend({
+export const createWaybillRequestSchema = baseWaybillPropertiesSchemaObject.extend({
   senderWarehouseIndex: string36Schema.optional(),
   recipientWarehouseIndex: string36Schema.optional(),
   volumeGeneral: volumeSchema.optional(),
+}).refine(data => {
+  // For ThirdPerson payer type, paymentMethod must be NonCash
+  if (data.payerType === PayerType.ThirdPerson && data.paymentMethod !== PaymentMethod.NonCash) {
+    return false;
+  }
+  // For Documents cargo type, weight must be 0.1, 0.5, or 1
+  if (data.cargoType === CargoType.Documents && ![0.1, 0.5, 1].includes(data.weight)) {
+    return false;
+  }
+  return true;
+}, {
+  message: 'Invalid waybill properties configuration',
 });
 
 // Create waybill with options request schema
-export const createWaybillWithOptionsRequestSchema = baseWaybillPropertiesSchema.extend({
+export const createWaybillWithOptionsRequestSchema = baseWaybillPropertiesSchemaObject.extend({
   senderWarehouseIndex: string36Schema.optional(),
   recipientWarehouseIndex: string36Schema.optional(),
   volumeGeneral: volumeSchema.optional(),
@@ -154,7 +169,15 @@ export const createWaybillWithOptionsRequestSchema = baseWaybillPropertiesSchema
   thirdPerson: novaPoshtaRefSchema.optional(),
   backwardDeliveryData: z.array(backwardDeliverySchema).optional(),
   additionalServices: additionalServicesSchema.optional(),
-}).refine(data => {
+}).refine((data: any) => {
+  // For ThirdPerson payer type, paymentMethod must be NonCash
+  if (data.payerType === PayerType.ThirdPerson && data.paymentMethod !== PaymentMethod.NonCash) {
+    return false;
+  }
+  // For Documents cargo type, weight must be 0.1, 0.5, or 1
+  if (data.cargoType === CargoType.Documents && ![0.1, 0.5, 1].includes(data.weight)) {
+    return false;
+  }
   // If payerType is ThirdPerson, thirdPerson ref must be provided
   if (data.payerType === PayerType.ThirdPerson && !data.thirdPerson) {
     return false;
@@ -173,7 +196,7 @@ export const createWaybillWithOptionsRequestSchema = baseWaybillPropertiesSchema
 });
 
 // Create postomat waybill request schema
-export const createPoshtomatWaybillRequestSchema = baseWaybillPropertiesSchema.extend({
+export const createPoshtomatWaybillRequestSchema = baseWaybillPropertiesSchemaObject.extend({
   senderWarehouseIndex: string36Schema.optional(),
   recipientWarehouseIndex: string36Schema.optional(),
   optionsSeat: z.array(poshtomatOptionsSeatSchema).length(1, 'Postomat allows only one seat per shipment'),
@@ -183,9 +206,21 @@ export const createPoshtomatWaybillRequestSchema = baseWaybillPropertiesSchema.e
 });
 
 // Update waybill request schema
-export const updateWaybillRequestSchema = baseWaybillPropertiesSchema.extend({
+export const updateWaybillRequestSchema = baseWaybillPropertiesSchemaObject.extend({
   ref: novaPoshtaRefSchema,
   volumeGeneral: volumeSchema.optional(),
+}).refine(data => {
+  // For ThirdPerson payer type, paymentMethod must be NonCash
+  if (data.payerType === PayerType.ThirdPerson && data.paymentMethod !== PaymentMethod.NonCash) {
+    return false;
+  }
+  // For Documents cargo type, weight must be 0.1, 0.5, or 1
+  if (data.cargoType === CargoType.Documents && ![0.1, 0.5, 1].includes(data.weight)) {
+    return false;
+  }
+  return true;
+}, {
+  message: 'Invalid waybill properties configuration',
 });
 
 // Delete waybill request schema
@@ -352,7 +387,6 @@ export const transportConfigSchema = z.object({
 export const clientConfigSchema = z.object({
   apiKey: z.string().min(32, 'API key must be at least 32 characters'),
   language: languageSchema.optional(),
-  environment: z.enum(['production', 'staging', 'development']).optional(),
   transport: transportConfigSchema.optional(),
   enableValidation: z.boolean().optional(),
   enableCaching: z.boolean().optional(),

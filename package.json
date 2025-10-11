@@ -1,28 +1,23 @@
 {
-  "name": "@shopana/novaposhta-client",
+  "name": "@shopana/carrier-api",
   "version": "1.0.0",
+  "private": true,
   "description": "Fully typed Nova Poshta API client for Node.js and browsers with enterprise-grade features",
-  "main": "dist/index.js",
-  "module": "dist/index.esm.js",
-  "types": "dist/index.d.ts",
-  "files": [
-    "dist/**/*",
-    "README.md",
-    "LICENSE"
+  "workspaces": [
+    "packages/*",
+    "tests"
   ],
   "scripts": {
-    "build": "npm run clean && npm run build:types && rollup -c",
-    "build:types": "tsc --declaration --emitDeclarationOnly --outDir dist/types",
-    "clean": "rm -rf dist",
-    "dev": "rollup -c -w",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage",
-    "lint": "eslint src/**/*.ts",
-    "lint:fix": "eslint src/**/*.ts --fix",
-    "type-check": "tsc --noEmit",
-    "docs": "typedoc src/index.ts",
-    "prepublishOnly": "npm run build"
+    "build": "yarn workspace @shopana/nova-poshta-api build",
+    "dev": "yarn workspace @shopana/nova-poshta-api dev",
+    "test": "yarn workspace @shopana/tests test",
+    "test:watch": "yarn workspace @shopana/tests test:watch",
+    "test:coverage": "yarn workspace @shopana/tests test:coverage",
+    "lint": "eslint packages/nova-poshta-api/src/**/*.ts",
+    "lint:fix": "eslint packages/nova-poshta-api/src/**/*.ts --fix",
+    "format": "prettier --write \"packages/**/*.{ts,tsx,js,jsx,json,md}\" \"tests/**/*.{ts,tsx,js,jsx,json,md}\"",
+    "format:check": "prettier --check \"packages/**/*.{ts,tsx,js,jsx,json,md}\" \"tests/**/*.{ts,tsx,js,jsx,json,md}\"",
+    "type-check": "yarn workspaces foreach run type-check"
   },
   "keywords": [
     "nova-poshta",
@@ -45,13 +40,6 @@
     "url": "https://github.com/phl-portal/novaposhta-client/issues"
   },
   "homepage": "https://github.com/phl-portal/novaposhta-client#readme",
-  "engines": {
-    "node": ">=18.0.0"
-  },
-  "dependencies": {
-    "cross-fetch": "^4.0.0",
-    "zod": "^3.22.4"
-  },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-node-resolve": "^15.2.3",
@@ -64,24 +52,12 @@
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.1",
     "jest": "^29.7.0",
-    "prettier": "^3.1.0",
+    "prettier": "^3.6.2",
     "rollup": "^4.5.0",
     "rollup-plugin-dts": "^6.1.0",
     "ts-jest": "^29.1.1",
     "tslib": "^2.6.2",
     "typedoc": "^0.25.4",
     "typescript": "^5.2.2"
-  },
-  "peerDependencies": {
-    "typescript": ">=4.9.0"
-  },
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.esm.js",
-      "require": "./dist/index.js"
-    },
-    "./package.json": "./package.json"
-  },
-  "sideEffects": false
+  }
 }

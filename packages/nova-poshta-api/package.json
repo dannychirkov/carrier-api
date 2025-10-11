@@ -1,0 +1,57 @@
+{
+  "name": "@shopana/nova-poshta-api",
+  "version": "1.0.0",
+  "description": "Fully typed Nova Poshta API client for Node.js and browsers with enterprise-grade features",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/**/*",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "npm run clean && npm run build:types && rollup -c",
+    "build:types": "tsc --declaration --emitDeclarationOnly --outDir dist/types",
+    "clean": "rm -rf dist",
+    "dev": "rollup -c -w",
+    "type-check": "tsc --noEmit"
+  },
+  "keywords": [
+    "nova-poshta",
+    "shipping",
+    "logistics",
+    "api-client",
+    "typescript",
+    "ukraine",
+    "delivery",
+    "tracking",
+    "waybill"
+  ],
+  "author": "Nova Poshta Client Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/phl-portal/novaposhta-client.git"
+  },
+  "bugs": {
+    "url": "https://github.com/phl-portal/novaposhta-client/issues"
+  },
+  "homepage": "https://github.com/phl-portal/novaposhta-client#readme",
+  "dependencies": {
+    "cross-fetch": "^4.0.0",
+    "zod": "^3.22.4"
+  },
+  "peerDependencies": {
+    "typescript": ">=4.9.0"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "sideEffects": false
+}

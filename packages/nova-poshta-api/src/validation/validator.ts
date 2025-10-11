@@ -44,9 +44,13 @@ export class NovaPoshtaValidator {
         errorMap: this.createErrorMap(context),
       };
 
-      const result = this.config.strict
-        ? schema.strict().parse(data, parseOptions)
-        : schema.parse(data, parseOptions);
+      // Apply strict mode only if schema supports it (ZodObject)
+      let schemaToUse = schema;
+      if (this.config.strict && 'strict' in schema && typeof (schema as any).strict === 'function') {
+        schemaToUse = (schema as any).strict();
+      }
+
+      const result = schemaToUse.parse(data, parseOptions);
 
       return { success: true, data: result };
     } catch (error) {
@@ -292,10 +296,14 @@ export class NovaPoshtaValidator {
       case z.ZodIssueCode.too_big:
         return `maximum: ${issue.maximum}`;
       case z.ZodIssueCode.invalid_string:
-        if (issue.validation === 'regex') {
-          return `pattern: ${issue.validation}`;
+        if (typeof issue.validation === 'string') {
+          if (issue.validation === 'regex') {
+            return `pattern: ${issue.validation}`;
+          }
+          return issue.validation;
         }
-        return issue.validation;
+        // For complex validation objects, stringify them
+        return `validation: ${JSON.stringify(issue.validation)}`;
       case z.ZodIssueCode.invalid_enum_value:
         return `allowedValues: ${issue.options.join(', ')}`;
       default:

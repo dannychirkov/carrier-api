@@ -28,7 +28,6 @@ export interface ClientState {
   readonly initialized: boolean;
   readonly apiKey: string;
   readonly language: Language;
-  readonly environment: string;
   readonly version: string;
 }
 
@@ -61,7 +60,6 @@ export interface HealthCheckResult {
  * import { NovaPoshtaClient, createConfig } from '@novaposhta/client';
  *
  * const config = createConfig('your-api-key')
- *   .environment('production')
  *   .language(Language.Ukrainian)
  *   .validation(true)
  *   .caching(true)
@@ -212,7 +210,6 @@ export class NovaPoshtaClient {
       initialized: true,
       apiKey: this.config.apiKey.substring(0, 8) + '...',
       language: this.config.language,
-      environment: this.config.environment,
       version: '1.0.0',
     };
   }

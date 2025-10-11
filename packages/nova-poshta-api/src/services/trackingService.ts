@@ -326,7 +326,7 @@ export class TrackingService {
    * Get human-readable status description
    */
   getStatusDescription(status: DeliveryStatus, language: 'ua' | 'ru' | 'en' = 'ua'): string {
-    const descriptions = {
+    const descriptions: Partial<Record<DeliveryStatus, { ua: string; ru: string; en: string }>> = {
       [DeliveryStatus.CreatedBySender]: {
         ua: 'Створено відправником',
         ru: 'Создано отправителем',

@@ -261,7 +261,6 @@ export enum Currency {
 export enum Language {
   Ukrainian = 'ua',
   Russian = 'ru',
-  English = 'en',
 }
 
 // Days of week for delivery availability
