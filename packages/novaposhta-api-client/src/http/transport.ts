@@ -25,7 +25,7 @@ export const DEFAULT_TRANSPORT_CONFIG: TransportConfig = {
   timeout: 30000, // 30 seconds
   headers: {
     'Content-Type': 'application/json',
-    'Accept': 'application/json',
+    Accept: 'application/json',
   },
 };
 
@@ -40,10 +40,12 @@ export class FetchHttpTransport implements HttpTransport {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), this.config.timeout);
 
+    const apiKey = request.apiKey || this.apiKey;
+
     try {
       const finalRequest: NovaPoshtaRequest = {
         ...request,
-        apiKey: request.apiKey && request.apiKey.length > 0 ? request.apiKey : this.apiKey,
+        ...(apiKey ? { apiKey } : {}),
       };
 
       const response = await fetch(this.config.baseUrl, {
@@ -59,7 +61,7 @@ export class FetchHttpTransport implements HttpTransport {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
       }
 
-      const data = await response.json() as NovaPoshtaResponse<T>;
+      const data = (await response.json()) as NovaPoshtaResponse<T>;
       return data;
     } catch (error) {
       clearTimeout(timeoutId);

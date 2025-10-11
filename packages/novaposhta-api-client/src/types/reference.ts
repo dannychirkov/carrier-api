@@ -4,7 +4,6 @@
  */
 
 import type { NovaPoshtaResponse, ObjectRef, BrandedString } from './base';
-import type { CargoType, ServiceType } from './enums';
 
 // Branded types for reference data
 export type CargoTypeRef = BrandedString<'CargoTypeRef'>;

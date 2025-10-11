@@ -262,19 +262,3 @@ export type AddressData =
 // =============================================================================
 // HELPER TYPES
 // =============================================================================
-
-/** City search result with additional metadata */
-export interface CitySearchResult extends CityData {
-  /** Calculated relevance score */
-  readonly relevanceScore?: number;
-  /** Distance from search location */
-  readonly distance?: number;
-}
-
-/** Street search result with additional metadata */
-export interface StreetSearchResult extends StreetData {
-  /** Parent city information */
-  readonly cityInfo?: Pick<CityData, 'description' | 'ref'>;
-  /** Calculated relevance score */
-  readonly relevanceScore?: number;
-}

@@ -95,7 +95,7 @@ export { ReferenceService, DEFAULT_REFERENCE_CONFIG } from './services/reference
 export type { ReferenceServiceConfig } from './services/referenceService';
 
 export { AddressService, DEFAULT_ADDRESS_CONFIG } from './services/addressService';
-export type { AddressServiceConfig, SearchSuggestions } from './services/addressService';
+export type { AddressServiceConfig } from './services/addressService';
 
 //
 
@@ -340,8 +340,6 @@ export type {
   AddressRequest,
   AddressResponse,
   AddressData,
-  CitySearchResult,
-  StreetSearchResult,
 } from './types/address';
 
 // Version information
