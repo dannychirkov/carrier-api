@@ -1,75 +1,34 @@
-import { spec } from 'pactum';
-import { getApiKey } from '../../../setup/pactum.setup';
+import { client } from '../../../setup/client.setup';
 
 describe('TrackingService - monitorDocuments', () => {
   it('should track documents for monitoring', async () => {
-    // First check
-    const response1 = await spec()
-      .post('/')
-      .withJson({
-        apiKey: getApiKey(),
-        modelName: 'TrackingDocument',
-        calledMethod: 'getStatusDocuments',
-        methodProperties: {
-          Documents: [
-            { DocumentNumber: '20450123456789', Phone: '' },
-            { DocumentNumber: '20450987654321', Phone: '' },
-          ],
-        },
-      })
-      .expectStatus(200)
-      .expectJsonMatch({
-        success: true,
-      })
-      .inspect()
-      .toss();
+    const documentNumbers = ['20450123456789', '20450987654321'];
+    let callbackExecuted = false;
+    let resultsReceived: any[] = [];
 
-    expect(response1).toBeDefined();
+    // Start monitoring
+    const stopMonitoring = await client.tracking.monitorDocuments(
+      documentNumbers,
+      results => {
+        callbackExecuted = true;
+        resultsReceived = results;
+      },
+      1000, // 1 second for testing
+    );
 
-    // Simulate periodic monitoring - second check
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    // Wait for initial check
+    await new Promise(resolve => setTimeout(resolve, 100));
 
-    const response2 = await spec()
-      .post('/')
-      .withJson({
-        apiKey: getApiKey(),
-        modelName: 'TrackingDocument',
-        calledMethod: 'getStatusDocuments',
-        methodProperties: {
-          Documents: [
-            { DocumentNumber: '20450123456789', Phone: '' },
-            { DocumentNumber: '20450987654321', Phone: '' },
-          ],
-        },
-      })
-      .expectStatus(200)
-      .expectJsonMatch({
-        success: true,
-      })
-      .inspect()
-      .toss();
+    expect(callbackExecuted).toBe(true);
+    expect(Array.isArray(resultsReceived)).toBe(true);
 
-    expect(response2).toBeDefined();
+    // Cleanup
+    stopMonitoring();
   });
 
   it('should monitor single document with periodic updates', async () => {
-    await spec()
-      .post('/')
-      .withJson({
-        apiKey: getApiKey(),
-        modelName: 'TrackingDocument',
-        calledMethod: 'getStatusDocuments',
-        methodProperties: {
-          Documents: [
-            { DocumentNumber: '20450123456789', Phone: '' },
-          ],
-        },
-      })
-      .expectStatus(200)
-      .expectJsonMatch({
-        success: true,
-      })
-      .inspect()
-      .toss();
+    const response = await client.tracking.trackDocument('20450123456789');
+
+    expect(response).toBeDefined();
   });
 });

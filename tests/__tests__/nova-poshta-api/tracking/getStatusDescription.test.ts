@@ -1,55 +1,24 @@
-import { spec } from 'pactum';
-import { getApiKey } from '../../../setup/pactum.setup';
+import { client } from '../../../setup/client.setup';
+import { DeliveryStatus } from '@shopana/novaposhta-api-client';
 
 describe('TrackingService - getStatusDescription', () => {
   it('should get status with description', async () => {
-    const response = await spec()
-      .post('/')
-      .withJson({
-        apiKey: getApiKey(),
-        modelName: 'TrackingDocument',
-        calledMethod: 'getStatusDocuments',
-        methodProperties: {
-          Documents: [
-            {
-              DocumentNumber: '20450123456789',
-              Phone: '',
-            },
-          ],
-        },
-      })
-      .expectStatus(200)
-      .expectJsonMatch({
-        success: true,
-      })
-      .inspect()
-      .toss();
+    const response = await client.tracking.trackDocument('20450123456789');
 
-    // response.data[0].Status contains human-readable description
-    // StatusCode contains numeric code
+    // response contains Status with human-readable description
+    // statusCode contains numeric code
     expect(response).toBeDefined();
   });
 
   it('should get localized status descriptions', async () => {
-    // Test with Ukrainian locale (default)
-    await spec()
-      .post('/')
-      .withJson({
-        apiKey: getApiKey(),
-        modelName: 'TrackingDocument',
-        calledMethod: 'getStatusDocuments',
-        methodProperties: {
-          Documents: [
-            { DocumentNumber: '20450123456789', Phone: '' },
-            { DocumentNumber: '20450987654321', Phone: '' },
-          ],
-        },
-      })
-      .expectStatus(200)
-      .expectJsonMatch({
-        success: true,
-      })
-      .inspect()
-      .toss();
+    // Test with different locales
+    const uaDescription = client.tracking.getStatusDescription(DeliveryStatus.Received, 'ua');
+    const ruDescription = client.tracking.getStatusDescription(DeliveryStatus.Received, 'ru');
+    const enDescription = client.tracking.getStatusDescription(DeliveryStatus.Received, 'en');
+
+    expect(uaDescription).toBeDefined();
+    expect(ruDescription).toBeDefined();
+    expect(enDescription).toBeDefined();
+    expect(uaDescription).not.toBe(ruDescription);
   });
 });

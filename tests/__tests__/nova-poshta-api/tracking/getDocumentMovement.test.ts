@@ -1,54 +1,23 @@
-import { spec } from 'pactum';
-import { getApiKey } from '../../../setup/pactum.setup';
+import { client } from '../../../setup/client.setup';
 
 describe('TrackingService - getDocumentMovement', () => {
   it('should get document movement history', async () => {
-    await spec()
-      .post('/')
-      .withJson({
-        apiKey: getApiKey(),
-        modelName: 'TrackingDocument',
-        calledMethod: 'getDocumentsEWMovement',
-        methodProperties: {
-          Documents: [
-            {
-              DocumentNumber: '20450123456789',
-              Phone: '',
-            },
-          ],
-          ShowDeliveryDetails: '1',
-        },
-      })
-      .expectStatus(200)
-      .expectJsonMatch({
-        success: true,
-      })
-      .inspect()
-      .toss();
+    const response = await client.tracking.getDocumentMovement({
+      documents: [{ documentNumber: '20450123456789', phone: '' }],
+      showDeliveryDetails: true,
+    });
+
+    expect(response.success).toBe(true);
+    expect(response.data).toBeDefined();
   });
 
   it('should get movement without delivery details', async () => {
-    await spec()
-      .post('/')
-      .withJson({
-        apiKey: getApiKey(),
-        modelName: 'TrackingDocument',
-        calledMethod: 'getDocumentsEWMovement',
-        methodProperties: {
-          Documents: [
-            {
-              DocumentNumber: '20450123456789',
-              Phone: '',
-            },
-          ],
-          ShowDeliveryDetails: '0',
-        },
-      })
-      .expectStatus(200)
-      .expectJsonMatch({
-        success: true,
-      })
-      .inspect()
-      .toss();
+    const response = await client.tracking.getDocumentMovement({
+      documents: [{ documentNumber: '20450123456789', phone: '' }],
+      showDeliveryDetails: false,
+    });
+
+    expect(response.success).toBe(true);
+    expect(response.data).toBeDefined();
   });
 });

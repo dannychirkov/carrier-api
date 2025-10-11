@@ -1,54 +1,37 @@
-import { spec } from 'pactum';
-import { getApiKey } from '../../../setup/pactum.setup';
+import { client } from '../../../setup/client.setup';
 
 describe('TrackingService - isInTransit', () => {
   it('should check if document is in transit', async () => {
-    const response = await spec()
-      .post('/')
-      .withJson({
-        apiKey: getApiKey(),
-        modelName: 'TrackingDocument',
-        calledMethod: 'getStatusDocuments',
-        methodProperties: {
-          Documents: [
-            {
-              DocumentNumber: '20450123456789',
-              Phone: '',
-            },
-          ],
-        },
-      })
-      .expectStatus(200)
-      .expectJsonMatch({
-        success: true,
-      })
-      .inspect()
-      .toss();
+    const response = await client.tracking.trackDocument('20450123456789');
 
-    // Check response.data[0].StatusCode to determine if in transit
+    // Check response.statusCode to determine if in transit
     // In transit statuses: 3 (InTransitToRecipientCity), 6 (OnTheWayToRecipient), 107 (BeingPacked)
     expect(response).toBeDefined();
+
+    if (response) {
+      const isInTransit = client.tracking.isInTransit(response);
+      expect(typeof isInTransit).toBe('boolean');
+    }
   });
 
   it('should track multiple documents and check transit status', async () => {
-    await spec()
-      .post('/')
-      .withJson({
-        apiKey: getApiKey(),
-        modelName: 'TrackingDocument',
-        calledMethod: 'getStatusDocuments',
-        methodProperties: {
-          Documents: [
-            { DocumentNumber: '20450123456789', Phone: '' },
-            { DocumentNumber: '20450987654321', Phone: '' },
-          ],
-        },
-      })
-      .expectStatus(200)
-      .expectJsonMatch({
-        success: true,
-      })
-      .inspect()
-      .toss();
+    const response = await client.tracking.trackDocuments({
+      documents: [
+        { documentNumber: '20450123456789', phone: '' },
+        { documentNumber: '20450987654321', phone: '' },
+      ],
+    });
+
+    expect(response.success).toBe(true);
+    expect(response.data).toBeDefined();
+
+    if (response.data.length > 0) {
+      response.data.forEach(status => {
+        if (status) {
+          const isInTransit = client.tracking.isInTransit(status);
+          expect(typeof isInTransit).toBe('boolean');
+        }
+      });
+    }
   });
 });
