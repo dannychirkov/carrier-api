@@ -61,9 +61,6 @@
 export { createClient } from './core/client';
 export type { ClientContext, Client, ServiceAPI } from './core/client';
 
-// Configuration
-export type { NovaPoshtaClientConfig } from './config';
-
 export type { HttpTransport } from './http/transport';
 
 export { WaybillService } from './services/waybillService';

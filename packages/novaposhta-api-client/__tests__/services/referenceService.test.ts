@@ -1,0 +1,321 @@
+import { createClient } from '../../src/core/client';
+import { ReferenceService } from '../../src/services/referenceService';
+import { createMockTransport } from '../mocks/transport';
+
+describe('ReferenceService', () => {
+  const baseUrl = 'https://api.novaposhta.ua/v2.0/json/';
+  const apiKey = 'test-api-key';
+
+  describe('getCargoTypes', () => {
+    it('should call transport with correct parameters and return expected response', async () => {
+      const mockData = [
+        {
+          Ref: 'cargo-type-ref-1',
+          Description: 'Parcel',
+        },
+      ];
+      const { transport, calls, setResponse } = createMockTransport();
+      setResponse({ success: true, data: mockData });
+
+      const client = createClient({ transport, baseUrl, apiKey }).use(new ReferenceService());
+
+      const result = await client.reference.getCargoTypes();
+
+      expect(calls).toHaveLength(1);
+      expect(calls[0].url).toBe(baseUrl);
+      expect(calls[0].body).toMatchObject({
+        modelName: 'CommonGeneral',
+        calledMethod: 'getCargoTypes',
+      });
+      expect(result.success).toBe(true);
+      expect(result.data).toEqual(mockData);
+    });
+  });
+
+  describe('getBackwardDeliveryCargoTypes', () => {
+    it('should call transport with correct parameters and return expected response', async () => {
+      const mockData = [
+        {
+          Ref: 'backward-cargo-ref-1',
+          Description: 'Money',
+        },
+      ];
+      const { transport, calls, setResponse } = createMockTransport();
+      setResponse({ success: true, data: mockData });
+
+      const client = createClient({ transport, baseUrl, apiKey }).use(new ReferenceService());
+
+      const result = await client.reference.getBackwardDeliveryCargoTypes();
+
+      expect(calls).toHaveLength(1);
+      expect(calls[0].body).toMatchObject({
+        modelName: 'CommonGeneral',
+        calledMethod: 'getBackwardDeliveryCargoTypes',
+      });
+      expect(result.success).toBe(true);
+      expect(result.data).toEqual(mockData);
+    });
+  });
+
+  describe('getPalletsList', () => {
+    it('should call transport with correct parameters and return expected response', async () => {
+      const mockData = [
+        {
+          Ref: 'pallet-ref-1',
+          Description: 'Euro Pallet',
+        },
+      ];
+      const { transport, calls, setResponse } = createMockTransport();
+      setResponse({ success: true, data: mockData });
+
+      const client = createClient({ transport, baseUrl, apiKey }).use(new ReferenceService());
+
+      const result = await client.reference.getPalletsList();
+
+      expect(calls).toHaveLength(1);
+      expect(calls[0].body).toMatchObject({
+        modelName: 'CommonGeneral',
+        calledMethod: 'getPalletsList',
+      });
+      expect(result.success).toBe(true);
+      expect(result.data).toEqual(mockData);
+    });
+  });
+
+  describe('getPackList', () => {
+    it('should call transport with correct parameters and return expected response', async () => {
+      const mockData = [
+        {
+          Ref: 'pack-ref-1',
+          Description: 'Box',
+        },
+      ];
+      const { transport, calls, setResponse } = createMockTransport();
+      setResponse({ success: true, data: mockData });
+
+      const client = createClient({ transport, baseUrl, apiKey }).use(new ReferenceService());
+
+      const result = await client.reference.getPackList({ length: 10, width: 10, height: 10 });
+
+      expect(calls).toHaveLength(1);
+      expect(calls[0].body).toMatchObject({
+        modelName: 'CommonGeneral',
+        calledMethod: 'getPackList',
+        methodProperties: { length: 10, width: 10, height: 10 },
+      });
+      expect(result.success).toBe(true);
+      expect(result.data).toEqual(mockData);
+    });
+  });
+
+  describe('getTiresWheelsList', () => {
+    it('should call transport with correct parameters and return expected response', async () => {
+      const mockData = [
+        {
+          Ref: 'tire-ref-1',
+          Description: 'Tire 205/55 R16',
+        },
+      ];
+      const { transport, calls, setResponse } = createMockTransport();
+      setResponse({ success: true, data: mockData });
+
+      const client = createClient({ transport, baseUrl, apiKey }).use(new ReferenceService());
+
+      const result = await client.reference.getTiresWheelsList();
+
+      expect(calls).toHaveLength(1);
+      expect(calls[0].body).toMatchObject({
+        modelName: 'CommonGeneral',
+        calledMethod: 'getTiresWheelsList',
+      });
+      expect(result.success).toBe(true);
+      expect(result.data).toEqual(mockData);
+    });
+  });
+
+  describe('getCargoDescriptionList', () => {
+    it('should call transport with correct parameters and return expected response', async () => {
+      const mockData = [
+        {
+          Ref: 'cargo-desc-ref-1',
+          Description: 'Electronics',
+        },
+      ];
+      const { transport, calls, setResponse } = createMockTransport();
+      setResponse({ success: true, data: mockData });
+
+      const client = createClient({ transport, baseUrl, apiKey }).use(new ReferenceService());
+
+      const result = await client.reference.getCargoDescriptionList({ findByString: 'Electronics' });
+
+      expect(calls).toHaveLength(1);
+      expect(calls[0].body).toMatchObject({
+        modelName: 'CommonGeneral',
+        calledMethod: 'getCargoDescriptionList',
+        methodProperties: { findByString: 'Electronics' },
+      });
+      expect(result.success).toBe(true);
+      expect(result.data).toEqual(mockData);
+    });
+  });
+
+  describe('getMessageCodeText', () => {
+    it('should call transport with correct parameters and return expected response', async () => {
+      const mockData = [
+        {
+          MessageCode: '20000100140101',
+          MessageText: 'Success',
+        },
+      ];
+      const { transport, calls, setResponse } = createMockTransport();
+      setResponse({ success: true, data: mockData });
+
+      const client = createClient({ transport, baseUrl, apiKey }).use(new ReferenceService());
+
+      const result = await client.reference.getMessageCodeText();
+
+      expect(calls).toHaveLength(1);
+      expect(calls[0].body).toMatchObject({
+        modelName: 'CommonGeneral',
+        calledMethod: 'getMessageCodeText',
+      });
+      expect(result.success).toBe(true);
+      expect(result.data).toEqual(mockData);
+    });
+  });
+
+  describe('getServiceTypes', () => {
+    it('should call transport with correct parameters and return expected response', async () => {
+      const mockData = [
+        {
+          Ref: 'service-type-ref-1',
+          Description: 'Warehouse-Warehouse',
+        },
+      ];
+      const { transport, calls, setResponse } = createMockTransport();
+      setResponse({ success: true, data: mockData });
+
+      const client = createClient({ transport, baseUrl, apiKey }).use(new ReferenceService());
+
+      const result = await client.reference.getServiceTypes();
+
+      expect(calls).toHaveLength(1);
+      expect(calls[0].body).toMatchObject({
+        modelName: 'CommonGeneral',
+        calledMethod: 'getServiceTypes',
+      });
+      expect(result.success).toBe(true);
+      expect(result.data).toEqual(mockData);
+    });
+  });
+
+  describe('getOwnershipFormsList', () => {
+    it('should call transport with correct parameters and return expected response', async () => {
+      const mockData = [
+        {
+          Ref: 'ownership-ref-1',
+          Description: 'Private Person',
+        },
+      ];
+      const { transport, calls, setResponse } = createMockTransport();
+      setResponse({ success: true, data: mockData });
+
+      const client = createClient({ transport, baseUrl, apiKey }).use(new ReferenceService());
+
+      const result = await client.reference.getOwnershipFormsList();
+
+      expect(calls).toHaveLength(1);
+      expect(calls[0].body).toMatchObject({
+        modelName: 'CommonGeneral',
+        calledMethod: 'getOwnershipFormsList',
+      });
+      expect(result.success).toBe(true);
+      expect(result.data).toEqual(mockData);
+    });
+  });
+
+  describe('getTimeIntervals', () => {
+    it('should call transport with correct parameters and return expected response', async () => {
+      const mockData = [
+        {
+          Number: '1',
+          Start: '09:00',
+          End: '12:00',
+        },
+      ];
+      const { transport, calls, setResponse } = createMockTransport();
+      setResponse({ success: true, data: mockData });
+
+      const client = createClient({ transport, baseUrl, apiKey }).use(new ReferenceService());
+
+      const result = await client.reference.getTimeIntervals({ recipientCityRef: 'city-ref-1', dateTime: '01.01.2024' });
+
+      expect(calls).toHaveLength(1);
+      expect(calls[0].body).toMatchObject({
+        modelName: 'CommonGeneral',
+        calledMethod: 'getTimeIntervals',
+        methodProperties: {
+          recipientCityRef: 'city-ref-1',
+          dateTime: '01.01.2024',
+        },
+      });
+      expect(result.success).toBe(true);
+      expect(result.data).toEqual(mockData);
+    });
+  });
+
+  describe('getTypesOfPayersForRedelivery', () => {
+    it('should call transport with correct parameters and return expected response', async () => {
+      const mockData = [
+        {
+          Ref: 'payer-ref-1',
+          Description: 'Sender',
+        },
+      ];
+      const { transport, calls, setResponse } = createMockTransport();
+      setResponse({ success: true, data: mockData });
+
+      const client = createClient({ transport, baseUrl, apiKey }).use(new ReferenceService());
+
+      const result = await client.reference.getTypesOfPayersForRedelivery();
+
+      expect(calls).toHaveLength(1);
+      expect(calls[0].body).toMatchObject({
+        modelName: 'CommonGeneral',
+        calledMethod: 'getTypesOfPayersForRedelivery',
+      });
+      expect(result.success).toBe(true);
+      expect(result.data).toEqual(mockData);
+    });
+  });
+
+  describe('getPickupTimeIntervals', () => {
+    it('should call transport with correct parameters and return expected response', async () => {
+      const mockData = [
+        {
+          Number: '1',
+          Start: '09:00',
+          End: '12:00',
+        },
+      ];
+      const { transport, calls, setResponse } = createMockTransport();
+      setResponse({ success: true, data: mockData });
+
+      const client = createClient({ transport, baseUrl, apiKey }).use(new ReferenceService());
+
+      const result = await client.reference.getPickupTimeIntervals({ cityRef: 'city-ref-1', dateTime: '01.01.2024' });
+
+      expect(calls).toHaveLength(1);
+      expect(calls[0].body).toMatchObject({
+        modelName: 'CommonGeneral',
+        calledMethod: 'getPickupTimeIntervals',
+        methodProperties: {
+          cityRef: 'city-ref-1',
+          dateTime: '01.01.2024',
+        },
+      });
+      expect(result.success).toBe(true);
+      expect(result.data).toEqual(mockData);
+    });
+  });
+});
