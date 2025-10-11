@@ -127,6 +127,8 @@ export interface GetCargoDescriptionListRequest {
   readonly findByString?: string;
   /** Page number (optional, up to 500 records per page) */
   readonly page?: number;
+  /** Limit number (optional, up to 500 records per page) */
+
 }
 
 export interface CargoDescriptionData {

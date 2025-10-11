@@ -3,7 +3,7 @@ import { client } from '../../../setup/client.setup';
 describe('AddressService - getStreet', () => {
   it('should get streets in a city', async () => {
     const response = await client.address.getStreet({
-      CityRef: '8d5a980d-391c-11dd-90d9-001a92567626', // Kyiv
+      cityRef: '8d5a980d-391c-11dd-90d9-001a92567626', // Kyiv
     });
 
     expect(response.success).toBe(true);
@@ -13,8 +13,8 @@ describe('AddressService - getStreet', () => {
 
   it('should search streets by name', async () => {
     const response = await client.address.getStreet({
-      CityRef: '8d5a980d-391c-11dd-90d9-001a92567626',
-      FindByString: 'Хрещатик',
+      cityRef: '8d5a980d-391c-11dd-90d9-001a92567626',
+      findByString: 'Хрещатик',
     });
 
     expect(response.success).toBe(true);
@@ -24,10 +24,10 @@ describe('AddressService - getStreet', () => {
 
   it('should search streets with pagination', async () => {
     const response = await client.address.getStreet({
-      CityRef: '8d5a980d-391c-11dd-90d9-001a92567626',
-      FindByString: 'вул',
-      Page: '1',
-      Limit: '20',
+      cityRef: '8d5a980d-391c-11dd-90d9-001a92567626',
+      findByString: 'вул',
+      page: 1,
+      limit: 20,
     });
 
     expect(response.success).toBe(true);

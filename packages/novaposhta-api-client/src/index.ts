@@ -124,17 +124,6 @@ export type {
   Result,
 } from './types/base';
 
-// Base utility functions
-export {
-  createRef,
-  isSuccessResponse,
-  isErrorResponse,
-  isValidRef,
-  isValidPhoneNumber as isValidPhoneBase,
-  isValidDate,
-  isValidDateTime,
-} from './types/base';
-
 // Enums
 export {
   NovaPoshtaModel,

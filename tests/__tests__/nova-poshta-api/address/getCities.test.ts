@@ -11,7 +11,7 @@ describe('AddressService - getCities', () => {
 
   it('should search cities by string', async () => {
     const response = await client.address.getCities({
-      FindByString: 'Київ',
+      findByString: 'Київ',
     });
 
     expect(response.success).toBe(true);
@@ -21,9 +21,9 @@ describe('AddressService - getCities', () => {
 
   it('should search cities with pagination', async () => {
     const response = await client.address.getCities({
-      FindByString: 'Дніпр',
-      Page: '1',
-      Limit: '10',
+      findByString: 'Дніпр',
+      page: 1,
+      limit: 10,
     });
 
     expect(response.success).toBe(true);
@@ -36,7 +36,7 @@ describe('AddressService - getCities', () => {
 
   it('should get city by ref', async () => {
     const response = await client.address.getCities({
-      Ref: '8d5a980d-391c-11dd-90d9-001a92567626', // Kyiv
+      ref: '8d5a980d-391c-11dd-90d9-001a92567626', // Kyiv
     });
 
     expect(response.success).toBe(true);

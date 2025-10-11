@@ -4,13 +4,13 @@ describe('AddressService - getSearchSuggestions', () => {
   it('should get search suggestions for cities', async () => {
     // Perform some searches to build history
     const response1 = await client.address.getCities({
-      FindByString: 'Київ',
+      findByString: 'Київ',
     });
 
     expect(response1.success).toBe(true);
 
     const response2 = await client.address.getCities({
-      FindByString: 'Дніпро',
+      findByString: 'Дніпро',
     });
 
     expect(response2.success).toBe(true);
@@ -20,7 +20,7 @@ describe('AddressService - getSearchSuggestions', () => {
 
   it('should get suggestions for partial query', async () => {
     const response = await client.address.getCities({
-      FindByString: 'Хар',
+      findByString: 'Хар',
     });
 
     expect(response.success).toBe(true);

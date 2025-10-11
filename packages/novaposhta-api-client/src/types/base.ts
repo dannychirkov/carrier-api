@@ -21,11 +21,6 @@ export type String36 = string;
 export type String50 = string;
 export type String100 = string;
 
-// Utility type for creating refs
-export function createRef<T extends string>(value: string): T {
-  return value as T;
-}
-
 // Phone number type
 export type PhoneNumber = string;
 
@@ -138,31 +133,3 @@ export type ConditionalProps<T, K extends keyof T> = T[K] extends true ? Require
 
 // Utility types for API responses
 export type ApiData<T extends NovaPoshtaResponse<unknown>> = T extends NovaPoshtaResponse<infer U> ? U : never;
-export type ApiSuccess<T extends NovaPoshtaResponse<unknown>> = T & { success: true };
-export type ApiError<T extends NovaPoshtaResponse<unknown>> = T & { success: false };
-
-// Type guards
-export function isSuccessResponse<T>(response: NovaPoshtaResponse<T>): response is ApiSuccess<NovaPoshtaResponse<T>> {
-  return response.success === true && response.errors.length === 0;
-}
-
-export function isErrorResponse<T>(response: NovaPoshtaResponse<T>): response is ApiError<NovaPoshtaResponse<T>> {
-  return response.success === false || response.errors.length > 0;
-}
-
-// Validation helpers
-export function isValidRef(ref: string): ref is NovaPoshtaRef {
-  return typeof ref === 'string' && ref.length > 0 && /^[a-f0-9-]+$/i.test(ref);
-}
-
-export function isValidPhoneNumber(phone: string): phone is PhoneNumber {
-  return /^(\+?380|380|0)[0-9]{9}$/.test(phone);
-}
-
-export function isValidDate(date: string): date is NovaPoshtaDate {
-  return /^\d{2}\.\d{2}\.\d{4}$/.test(date);
-}
-
-export function isValidDateTime(dateTime: string): dateTime is NovaPoshtaDateTime {
-  return /^\d{2}\.\d{2}\.\d{4} \d{2}:\d{2}:\d{2}$/.test(dateTime);
-}
