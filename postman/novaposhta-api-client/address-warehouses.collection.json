@@ -1,0 +1,281 @@
+{
+  "info": {
+    "name": "Nova Poshta - Warehouses",
+    "description": "Search and retrieve Nova Poshta warehouses (branches, postomats, pickup points)",
+    "version": "1.0.0",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Get All Warehouses in City",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getWarehouses\",\n  \"methodProperties\": {\n    \"CityRef\": \"8d5a980d-391c-11dd-90d9-001a92567626\"\n  }\n}"
+        },
+        "url": {
+          "raw": "{{BASE_URL}}",
+          "host": ["{{BASE_URL}}"]
+        },
+        "description": "Get all warehouses in Kyiv. Returns all types (branches, postomats, pickup points)."
+      },
+      "response": []
+    },
+    {
+      "name": "Search Warehouses by Number",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getWarehouses\",\n  \"methodProperties\": {\n    \"CityRef\": \"8d5a980d-391c-11dd-90d9-001a92567626\",\n    \"Number\": \"1\"\n  }\n}"
+        },
+        "url": {
+          "raw": "{{BASE_URL}}",
+          "host": ["{{BASE_URL}}"]
+        },
+        "description": "Search for warehouse by number. Example: Branch #1 in Kyiv."
+      },
+      "response": []
+    },
+    {
+      "name": "Search Warehouses by Street Name",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getWarehouses\",\n  \"methodProperties\": {\n    \"CityRef\": \"8d5a980d-391c-11dd-90d9-001a92567626\",\n    \"FindByString\": \"Хрещатик\"\n  }\n}"
+        },
+        "url": {
+          "raw": "{{BASE_URL}}",
+          "host": ["{{BASE_URL}}"]
+        },
+        "description": "Search warehouses by street name. Useful for finding nearest warehouse on specific street."
+      },
+      "response": []
+    },
+    {
+      "name": "Get Warehouses with Limit",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getWarehouses\",\n  \"methodProperties\": {\n    \"CityRef\": \"8d5a980d-391c-11dd-90d9-001a92567626\",\n    \"Limit\": \"10\"\n  }\n}"
+        },
+        "url": {
+          "raw": "{{BASE_URL}}",
+          "host": ["{{BASE_URL}}"]
+        },
+        "description": "Limit number of returned warehouses. Useful for pagination."
+      },
+      "response": []
+    },
+    {
+      "name": "Get Warehouses with Pagination",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getWarehouses\",\n  \"methodProperties\": {\n    \"CityRef\": \"8d5a980d-391c-11dd-90d9-001a92567626\",\n    \"Page\": \"2\",\n    \"Limit\": \"50\"\n  }\n}"
+        },
+        "url": {
+          "raw": "{{BASE_URL}}",
+          "host": ["{{BASE_URL}}"]
+        },
+        "description": "Get second page of results. Use Page and Limit for pagination."
+      },
+      "response": []
+    },
+    {
+      "name": "Get Warehouse by Ref",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getWarehouses\",\n  \"methodProperties\": {\n    \"Ref\": \"1ec09d88-e1c2-11ec-8ced-005056b2dbe1\"\n  }\n}"
+        },
+        "url": {
+          "raw": "{{BASE_URL}}",
+          "host": ["{{BASE_URL}}"]
+        },
+        "description": "Get specific warehouse by reference. Returns detailed warehouse information."
+      },
+      "response": []
+    },
+    {
+      "name": "Get Only Branches",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getWarehouses\",\n  \"methodProperties\": {\n    \"CityRef\": \"8d5a980d-391c-11dd-90d9-001a92567626\",\n    \"TypeOfWarehouseRef\": \"9a68df70-0267-42a8-bb5c-37f427e36ee4\"\n  }\n}"
+        },
+        "url": {
+          "raw": "{{BASE_URL}}",
+          "host": ["{{BASE_URL}}"]
+        },
+        "description": "Filter warehouses by type. This example gets only branches (відділення). Use getWarehouseTypes to get type references."
+      },
+      "response": []
+    },
+    {
+      "name": "Get Only Postomats",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getWarehouses\",\n  \"methodProperties\": {\n    \"CityRef\": \"8d5a980d-391c-11dd-90d9-001a92567626\",\n    \"TypeOfWarehouseRef\": \"95dc212d-479c-4ffb-a8ab-8c1b9073d0bc\"\n  }\n}"
+        },
+        "url": {
+          "raw": "{{BASE_URL}}",
+          "host": ["{{BASE_URL}}"]
+        },
+        "description": "Get only postomats (поштомати) in the city. Postomats are automated parcel terminals."
+      },
+      "response": []
+    },
+    {
+      "name": "Get Only Pickup Points",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getWarehouses\",\n  \"methodProperties\": {\n    \"CityRef\": \"8d5a980d-391c-11dd-90d9-001a92567626\",\n    \"TypeOfWarehouseRef\": \"6f8c7162-4b72-4b0a-88e5-906948c6a92f\"\n  }\n}"
+        },
+        "url": {
+          "raw": "{{BASE_URL}}",
+          "host": ["{{BASE_URL}}"]
+        },
+        "description": "Get only pickup points (пункти приймання-видачі) in the city."
+      },
+      "response": []
+    },
+    {
+      "name": "Search by Language (Ukrainian)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getWarehouses\",\n  \"methodProperties\": {\n    \"CityRef\": \"8d5a980d-391c-11dd-90d9-001a92567626\",\n    \"Language\": \"UA\",\n    \"Limit\": \"20\"\n  }\n}"
+        },
+        "url": {
+          "raw": "{{BASE_URL}}",
+          "host": ["{{BASE_URL}}"]
+        },
+        "description": "Get warehouses with Ukrainian language response. Language can be UA or RU."
+      },
+      "response": []
+    },
+    {
+      "name": "Get Warehouses in Lviv",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getWarehouses\",\n  \"methodProperties\": {\n    \"CityRef\": \"db5c88e0-391c-11dd-90d9-001a92567626\",\n    \"Limit\": \"50\"\n  }\n}"
+        },
+        "url": {
+          "raw": "{{BASE_URL}}",
+          "host": ["{{BASE_URL}}"]
+        },
+        "description": "Get warehouses in Lviv. Example of using different city reference."
+      },
+      "response": []
+    },
+    {
+      "name": "Get Warehouse Types",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getWarehouseTypes\",\n  \"methodProperties\": {}\n}"
+        },
+        "url": {
+          "raw": "{{BASE_URL}}",
+          "host": ["{{BASE_URL}}"]
+        },
+        "description": "Get all available warehouse types (Branch, Postomat, Pickup Point). Use the returned references to filter warehouses."
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "BASE_URL",
+      "value": "https://api.novaposhta.ua/v2.0/json/",
+      "type": "string"
+    }
+  ]
+}
