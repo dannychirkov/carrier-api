@@ -18,7 +18,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"apiKey\": \"{{API_KEY}}\",\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getSettlementAreas\",\n  \"methodProperties\": {}\n}"
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getSettlementAreas\",\n  \"methodProperties\": {}\n}"
         },
         "url": {
           "raw": "{{BASE_URL}}",
@@ -40,7 +40,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"apiKey\": \"{{API_KEY}}\",\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getSettlementAreas\",\n  \"methodProperties\": {\n    \"Ref\": \"71508128-9b87-11de-822f-000c2965ae0e\"\n  }\n}"
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getSettlementAreas\",\n  \"methodProperties\": {\n    \"Ref\": \"71508128-9b87-11de-822f-000c2965ae0e\"\n  }\n}"
         },
         "url": {
           "raw": "{{BASE_URL}}",
@@ -62,7 +62,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"apiKey\": \"{{API_KEY}}\",\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getSettlementAreas\",\n  \"methodProperties\": {\n    \"Ref\": \"e4ade6ea-9b87-11de-822f-000c2965ae0e\"\n  }\n}"
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getSettlementAreas\",\n  \"methodProperties\": {\n    \"Ref\": \"e4ade6ea-9b87-11de-822f-000c2965ae0e\"\n  }\n}"
         },
         "url": {
           "raw": "{{BASE_URL}}",
@@ -84,7 +84,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"apiKey\": \"{{API_KEY}}\",\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getSettlementAreas\",\n  \"methodProperties\": {\n    \"Ref\": \"e4b6a00b-9b87-11de-822f-000c2965ae0e\"\n  }\n}"
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getSettlementAreas\",\n  \"methodProperties\": {\n    \"Ref\": \"e4b6a00b-9b87-11de-822f-000c2965ae0e\"\n  }\n}"
         },
         "url": {
           "raw": "{{BASE_URL}}",

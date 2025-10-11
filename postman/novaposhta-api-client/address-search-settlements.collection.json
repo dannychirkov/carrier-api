@@ -18,7 +18,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"apiKey\": \"{{API_KEY}}\",\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"searchSettlements\",\n  \"methodProperties\": {\n    \"CityName\": \"Київ\",\n    \"Limit\": \"50\",\n    \"Page\": \"1\"\n  }\n}"
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"searchSettlements\",\n  \"methodProperties\": {\n    \"CityName\": \"Київ\",\n    \"Limit\": \"50\",\n    \"Page\": \"1\"\n  }\n}"
         },
         "url": {
           "raw": "{{BASE_URL}}",
@@ -40,7 +40,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"apiKey\": \"{{API_KEY}}\",\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"searchSettlements\",\n  \"methodProperties\": {\n    \"CityName\": \"Львів\",\n    \"Limit\": \"50\",\n    \"Page\": \"1\"\n  }\n}"
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"searchSettlements\",\n  \"methodProperties\": {\n    \"CityName\": \"Львів\",\n    \"Limit\": \"50\",\n    \"Page\": \"1\"\n  }\n}"
         },
         "url": {
           "raw": "{{BASE_URL}}",
@@ -62,7 +62,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"apiKey\": \"{{API_KEY}}\",\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"searchSettlements\",\n  \"methodProperties\": {\n    \"CityName\": \"Оде\",\n    \"Limit\": \"30\",\n    \"Page\": \"1\"\n  }\n}"
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"searchSettlements\",\n  \"methodProperties\": {\n    \"CityName\": \"Оде\",\n    \"Limit\": \"30\",\n    \"Page\": \"1\"\n  }\n}"
         },
         "url": {
           "raw": "{{BASE_URL}}",
@@ -84,7 +84,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"apiKey\": \"{{API_KEY}}\",\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"searchSettlements\",\n  \"methodProperties\": {\n    \"CityName\": \"Бориспіль\",\n    \"Limit\": \"50\",\n    \"Page\": \"1\"\n  }\n}"
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"searchSettlements\",\n  \"methodProperties\": {\n    \"CityName\": \"Бориспіль\",\n    \"Limit\": \"50\",\n    \"Page\": \"1\"\n  }\n}"
         },
         "url": {
           "raw": "{{BASE_URL}}",
@@ -106,7 +106,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"apiKey\": \"{{API_KEY}}\",\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"searchSettlements\",\n  \"methodProperties\": {\n    \"CityName\": \"01001\",\n    \"Limit\": \"50\",\n    \"Page\": \"1\"\n  }\n}"
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"searchSettlements\",\n  \"methodProperties\": {\n    \"CityName\": \"01001\",\n    \"Limit\": \"50\",\n    \"Page\": \"1\"\n  }\n}"
         },
         "url": {
           "raw": "{{BASE_URL}}",
@@ -128,7 +128,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"apiKey\": \"{{API_KEY}}\",\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"searchSettlements\",\n  \"methodProperties\": {\n    \"CityName\": \"Нов\",\n    \"Limit\": \"100\",\n    \"Page\": \"1\"\n  }\n}"
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"searchSettlements\",\n  \"methodProperties\": {\n    \"CityName\": \"Нов\",\n    \"Limit\": \"100\",\n    \"Page\": \"1\"\n  }\n}"
         },
         "url": {
           "raw": "{{BASE_URL}}",
@@ -150,7 +150,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"apiKey\": \"{{API_KEY}}\",\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"searchSettlements\",\n  \"methodProperties\": {\n    \"CityName\": \"Нов\",\n    \"Limit\": \"50\",\n    \"Page\": \"2\"\n  }\n}"
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"searchSettlements\",\n  \"methodProperties\": {\n    \"CityName\": \"Нов\",\n    \"Limit\": \"50\",\n    \"Page\": \"2\"\n  }\n}"
         },
         "url": {
           "raw": "{{BASE_URL}}",
@@ -172,7 +172,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"apiKey\": \"{{API_KEY}}\",\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"searchSettlements\",\n  \"methodProperties\": {\n    \"CityName\": \"а\",\n    \"Limit\": \"500\",\n    \"Page\": \"1\"\n  }\n}"
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"searchSettlements\",\n  \"methodProperties\": {\n    \"CityName\": \"а\",\n    \"Limit\": \"500\",\n    \"Page\": \"1\"\n  }\n}"
         },
         "url": {
           "raw": "{{BASE_URL}}",
@@ -194,7 +194,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"apiKey\": \"{{API_KEY}}\",\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"searchSettlements\",\n  \"methodProperties\": {\n    \"CityName\": \"Івано-Франківськ\",\n    \"Limit\": \"50\",\n    \"Page\": \"1\"\n  }\n}"
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"searchSettlements\",\n  \"methodProperties\": {\n    \"CityName\": \"Івано-Франківськ\",\n    \"Limit\": \"50\",\n    \"Page\": \"1\"\n  }\n}"
         },
         "url": {
           "raw": "{{BASE_URL}}",
@@ -216,7 +216,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"apiKey\": \"{{API_KEY}}\",\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"searchSettlements\",\n  \"methodProperties\": {\n    \"CityName\": \"Запоріж\",\n    \"Limit\": \"50\",\n    \"Page\": \"1\"\n  }\n}"
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"searchSettlements\",\n  \"methodProperties\": {\n    \"CityName\": \"Запоріж\",\n    \"Limit\": \"50\",\n    \"Page\": \"1\"\n  }\n}"
         },
         "url": {
           "raw": "{{BASE_URL}}",
@@ -238,7 +238,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"apiKey\": \"{{API_KEY}}\",\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"searchSettlements\",\n  \"methodProperties\": {\n    \"CityName\": \"К\",\n    \"Limit\": \"100\",\n    \"Page\": \"1\"\n  }\n}"
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"searchSettlements\",\n  \"methodProperties\": {\n    \"CityName\": \"К\",\n    \"Limit\": \"100\",\n    \"Page\": \"1\"\n  }\n}"
         },
         "url": {
           "raw": "{{BASE_URL}}",
@@ -260,7 +260,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"apiKey\": \"{{API_KEY}}\",\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"searchSettlements\",\n  \"methodProperties\": {\n    \"CityName\": \"Харків\",\n    \"Limit\": \"50\",\n    \"Page\": \"1\"\n  }\n}"
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"searchSettlements\",\n  \"methodProperties\": {\n    \"CityName\": \"Харків\",\n    \"Limit\": \"50\",\n    \"Page\": \"1\"\n  }\n}"
         },
         "url": {
           "raw": "{{BASE_URL}}",

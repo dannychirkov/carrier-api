@@ -18,7 +18,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"apiKey\": \"{{API_KEY}}\",\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"searchSettlementStreets\",\n  \"methodProperties\": {\n    \"StreetName\": \"Хрещатик\",\n    \"SettlementRef\": \"e718a680-4b33-11e4-ab6d-005056801329\",\n    \"Limit\": \"50\"\n  }\n}"
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"searchSettlementStreets\",\n  \"methodProperties\": {\n    \"StreetName\": \"Хрещатик\",\n    \"SettlementRef\": \"e718a680-4b33-11e4-ab6d-005056801329\",\n    \"Limit\": \"50\"\n  }\n}"
         },
         "url": {
           "raw": "{{BASE_URL}}",
@@ -40,7 +40,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"apiKey\": \"{{API_KEY}}\",\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"searchSettlementStreets\",\n  \"methodProperties\": {\n    \"StreetName\": \"Шевченка\",\n    \"SettlementRef\": \"e718a680-4b33-11e4-ab6d-005056801329\",\n    \"Limit\": \"50\"\n  }\n}"
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"searchSettlementStreets\",\n  \"methodProperties\": {\n    \"StreetName\": \"Шевченка\",\n    \"SettlementRef\": \"e718a680-4b33-11e4-ab6d-005056801329\",\n    \"Limit\": \"50\"\n  }\n}"
         },
         "url": {
           "raw": "{{BASE_URL}}",
@@ -62,7 +62,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"apiKey\": \"{{API_KEY}}\",\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"searchSettlementStreets\",\n  \"methodProperties\": {\n    \"StreetName\": \"Банк\",\n    \"SettlementRef\": \"e718a680-4b33-11e4-ab6d-005056801329\",\n    \"Limit\": \"20\"\n  }\n}"
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"searchSettlementStreets\",\n  \"methodProperties\": {\n    \"StreetName\": \"Банк\",\n    \"SettlementRef\": \"e718a680-4b33-11e4-ab6d-005056801329\",\n    \"Limit\": \"20\"\n  }\n}"
         },
         "url": {
           "raw": "{{BASE_URL}}",
@@ -84,7 +84,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"apiKey\": \"{{API_KEY}}\",\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"searchSettlementStreets\",\n  \"methodProperties\": {\n    \"StreetName\": \"Київська\",\n    \"SettlementRef\": \"e718a680-4b33-11e4-ab6d-005056801329\",\n    \"Limit\": \"10\"\n  }\n}"
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"searchSettlementStreets\",\n  \"methodProperties\": {\n    \"StreetName\": \"Київська\",\n    \"SettlementRef\": \"e718a680-4b33-11e4-ab6d-005056801329\",\n    \"Limit\": \"10\"\n  }\n}"
         },
         "url": {
           "raw": "{{BASE_URL}}",
@@ -106,7 +106,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"apiKey\": \"{{API_KEY}}\",\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"searchSettlementStreets\",\n  \"methodProperties\": {\n    \"StreetName\": \"Грушевського\",\n    \"SettlementRef\": \"e718a680-4b33-11e4-ab6d-005056801329\"\n  }\n}"
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"searchSettlementStreets\",\n  \"methodProperties\": {\n    \"StreetName\": \"Грушевського\",\n    \"SettlementRef\": \"e718a680-4b33-11e4-ab6d-005056801329\"\n  }\n}"
         },
         "url": {
           "raw": "{{BASE_URL}}",
@@ -128,7 +128,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"apiKey\": \"{{API_KEY}}\",\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"searchSettlementStreets\",\n  \"methodProperties\": {\n    \"StreetName\": \"Свободи\",\n    \"SettlementRef\": \"0c41f7f9-4b33-11e4-ab6d-005056801329\",\n    \"Limit\": \"50\"\n  }\n}"
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"searchSettlementStreets\",\n  \"methodProperties\": {\n    \"StreetName\": \"Свободи\",\n    \"SettlementRef\": \"0c41f7f9-4b33-11e4-ab6d-005056801329\",\n    \"Limit\": \"50\"\n  }\n}"
         },
         "url": {
           "raw": "{{BASE_URL}}",
@@ -150,7 +150,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"apiKey\": \"{{API_KEY}}\",\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"searchSettlementStreets\",\n  \"methodProperties\": {\n    \"StreetName\": \"Коперника\",\n    \"SettlementRef\": \"0c41f7f9-4b33-11e4-ab6d-005056801329\",\n    \"Limit\": \"50\"\n  }\n}"
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"searchSettlementStreets\",\n  \"methodProperties\": {\n    \"StreetName\": \"Коперника\",\n    \"SettlementRef\": \"0c41f7f9-4b33-11e4-ab6d-005056801329\",\n    \"Limit\": \"50\"\n  }\n}"
         },
         "url": {
           "raw": "{{BASE_URL}}",
@@ -172,7 +172,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"apiKey\": \"{{API_KEY}}\",\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"searchSettlementStreets\",\n  \"methodProperties\": {\n    \"StreetName\": \"Дерибасівська\",\n    \"SettlementRef\": \"a2d82b4e-4b33-11e4-ab6d-005056801329\",\n    \"Limit\": \"50\"\n  }\n}"
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"searchSettlementStreets\",\n  \"methodProperties\": {\n    \"StreetName\": \"Дерибасівська\",\n    \"SettlementRef\": \"a2d82b4e-4b33-11e4-ab6d-005056801329\",\n    \"Limit\": \"50\"\n  }\n}"
         },
         "url": {
           "raw": "{{BASE_URL}}",
@@ -194,7 +194,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"apiKey\": \"{{API_KEY}}\",\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"searchSettlementStreets\",\n  \"methodProperties\": {\n    \"StreetName\": \"Сумська\",\n    \"SettlementRef\": \"a9e6b4e3-4b33-11e4-ab6d-005056801329\",\n    \"Limit\": \"50\"\n  }\n}"
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"searchSettlementStreets\",\n  \"methodProperties\": {\n    \"StreetName\": \"Сумська\",\n    \"SettlementRef\": \"a9e6b4e3-4b33-11e4-ab6d-005056801329\",\n    \"Limit\": \"50\"\n  }\n}"
         },
         "url": {
           "raw": "{{BASE_URL}}",
@@ -216,7 +216,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"apiKey\": \"{{API_KEY}}\",\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"searchSettlementStreets\",\n  \"methodProperties\": {\n    \"StreetName\": \"Набережна\",\n    \"SettlementRef\": \"f3f4b936-4b33-11e4-ab6d-005056801329\",\n    \"Limit\": \"50\"\n  }\n}"
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"searchSettlementStreets\",\n  \"methodProperties\": {\n    \"StreetName\": \"Набережна\",\n    \"SettlementRef\": \"f3f4b936-4b33-11e4-ab6d-005056801329\",\n    \"Limit\": \"50\"\n  }\n}"
         },
         "url": {
           "raw": "{{BASE_URL}}",
@@ -238,7 +238,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"apiKey\": \"{{API_KEY}}\",\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"searchSettlementStreets\",\n  \"methodProperties\": {\n    \"StreetName\": \"вул\",\n    \"SettlementRef\": \"e718a680-4b33-11e4-ab6d-005056801329\",\n    \"Limit\": \"100\"\n  }\n}"
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"searchSettlementStreets\",\n  \"methodProperties\": {\n    \"StreetName\": \"вул\",\n    \"SettlementRef\": \"e718a680-4b33-11e4-ab6d-005056801329\",\n    \"Limit\": \"100\"\n  }\n}"
         },
         "url": {
           "raw": "{{BASE_URL}}",
@@ -260,7 +260,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"apiKey\": \"{{API_KEY}}\",\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"searchSettlementStreets\",\n  \"methodProperties\": {\n    \"StreetName\": \"Б\",\n    \"SettlementRef\": \"e718a680-4b33-11e4-ab6d-005056801329\",\n    \"Limit\": \"50\"\n  }\n}"
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"searchSettlementStreets\",\n  \"methodProperties\": {\n    \"StreetName\": \"Б\",\n    \"SettlementRef\": \"e718a680-4b33-11e4-ab6d-005056801329\",\n    \"Limit\": \"50\"\n  }\n}"
         },
         "url": {
           "raw": "{{BASE_URL}}",
@@ -282,7 +282,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"apiKey\": \"{{API_KEY}}\",\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"searchSettlementStreets\",\n  \"methodProperties\": {\n    \"StreetName\": \"а\",\n    \"SettlementRef\": \"e718a680-4b33-11e4-ab6d-005056801329\",\n    \"Limit\": \"500\"\n  }\n}"
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"searchSettlementStreets\",\n  \"methodProperties\": {\n    \"StreetName\": \"а\",\n    \"SettlementRef\": \"e718a680-4b33-11e4-ab6d-005056801329\",\n    \"Limit\": \"500\"\n  }\n}"
         },
         "url": {
           "raw": "{{BASE_URL}}",
@@ -304,7 +304,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"apiKey\": \"{{API_KEY}}\",\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"searchSettlementStreets\",\n  \"methodProperties\": {\n    \"StreetName\": \"Соборний\",\n    \"SettlementRef\": \"aa8e1a36-4b33-11e4-ab6d-005056801329\",\n    \"Limit\": \"50\"\n  }\n}"
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"searchSettlementStreets\",\n  \"methodProperties\": {\n    \"StreetName\": \"Соборний\",\n    \"SettlementRef\": \"aa8e1a36-4b33-11e4-ab6d-005056801329\",\n    \"Limit\": \"50\"\n  }\n}"
         },
         "url": {
           "raw": "{{BASE_URL}}",

@@ -36,8 +36,11 @@ postman/novaposhta-api-client/
 
 **Note:** Address collections don't require API key, reference data does
 
-### 2. Setup API Key
+### 2. Setup API Key (Optional for Address Collections)
 
+**Note:** Address collections work without API key. API key is only required for Reference Service.
+
+If you want to use Reference Service:
 1. Go to **Environments**
 2. Select **Nova Poshta API - Production**
 3. Fill in the `API_KEY` variable with your API key
@@ -182,7 +185,6 @@ Reference data for deliveries
 
 ```json
 {
-  "apiKey": "{{API_KEY}}",
   "modelName": "Address",
   "calledMethod": "getSettlementAreas",
   "methodProperties": {}
@@ -195,7 +197,6 @@ Reference data for deliveries
 
 ```json
 {
-  "apiKey": "{{API_KEY}}",
   "modelName": "Address",
   "calledMethod": "getSettlementCountryRegion",
   "methodProperties": {
@@ -210,7 +211,6 @@ Reference data for deliveries
 
 ```json
 {
-  "apiKey": "{{API_KEY}}",
   "modelName": "Address",
   "calledMethod": "getCities",
   "methodProperties": {
@@ -226,7 +226,6 @@ Reference data for deliveries
 
 ```json
 {
-  "apiKey": "{{API_KEY}}",
   "modelName": "Address",
   "calledMethod": "getStreet",
   "methodProperties": {
@@ -243,7 +242,6 @@ Reference data for deliveries
 
 ```json
 {
-  "apiKey": "{{API_KEY}}",
   "modelName": "Address",
   "calledMethod": "searchSettlements",
   "methodProperties": {
@@ -260,7 +258,6 @@ Reference data for deliveries
 
 ```json
 {
-  "apiKey": "{{API_KEY}}",
   "modelName": "Address",
   "calledMethod": "searchSettlementStreets",
   "methodProperties": {

@@ -18,7 +18,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"apiKey\": \"{{API_KEY}}\",\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getCities\",\n  \"methodProperties\": {}\n}"
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getCities\",\n  \"methodProperties\": {}\n}"
         },
         "url": {
           "raw": "{{BASE_URL}}",
@@ -40,7 +40,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"apiKey\": \"{{API_KEY}}\",\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getCities\",\n  \"methodProperties\": {\n    \"FindByString\": \"Київ\"\n  }\n}"
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getCities\",\n  \"methodProperties\": {\n    \"FindByString\": \"Київ\"\n  }\n}"
         },
         "url": {
           "raw": "{{BASE_URL}}",
@@ -62,7 +62,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"apiKey\": \"{{API_KEY}}\",\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getCities\",\n  \"methodProperties\": {\n    \"FindByString\": \"Львів\"\n  }\n}"
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getCities\",\n  \"methodProperties\": {\n    \"FindByString\": \"Львів\"\n  }\n}"
         },
         "url": {
           "raw": "{{BASE_URL}}",
@@ -84,7 +84,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"apiKey\": \"{{API_KEY}}\",\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getCities\",\n  \"methodProperties\": {\n    \"FindByString\": \"Одес\",\n    \"Limit\": \"10\"\n  }\n}"
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getCities\",\n  \"methodProperties\": {\n    \"FindByString\": \"Одес\",\n    \"Limit\": \"10\"\n  }\n}"
         },
         "url": {
           "raw": "{{BASE_URL}}",
@@ -106,7 +106,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"apiKey\": \"{{API_KEY}}\",\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getCities\",\n  \"methodProperties\": {\n    \"FindByString\": \"Дніпр\",\n    \"Page\": \"1\",\n    \"Limit\": \"20\"\n  }\n}"
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getCities\",\n  \"methodProperties\": {\n    \"FindByString\": \"Дніпр\",\n    \"Page\": \"1\",\n    \"Limit\": \"20\"\n  }\n}"
         },
         "url": {
           "raw": "{{BASE_URL}}",
@@ -128,7 +128,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"apiKey\": \"{{API_KEY}}\",\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getCities\",\n  \"methodProperties\": {\n    \"FindByString\": \"Вин\",\n    \"Limit\": \"15\"\n  }\n}"
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getCities\",\n  \"methodProperties\": {\n    \"FindByString\": \"Вин\",\n    \"Limit\": \"15\"\n  }\n}"
         },
         "url": {
           "raw": "{{BASE_URL}}",
@@ -150,7 +150,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"apiKey\": \"{{API_KEY}}\",\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getCities\",\n  \"methodProperties\": {\n    \"Ref\": \"8d5a980d-391c-11dd-90d9-001a92567626\"\n  }\n}"
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getCities\",\n  \"methodProperties\": {\n    \"Ref\": \"8d5a980d-391c-11dd-90d9-001a92567626\"\n  }\n}"
         },
         "url": {
           "raw": "{{BASE_URL}}",
@@ -172,7 +172,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"apiKey\": \"{{API_KEY}}\",\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getCities\",\n  \"methodProperties\": {\n    \"Ref\": \"db5c88e0-391c-11dd-90d9-001a92567626\"\n  }\n}"
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getCities\",\n  \"methodProperties\": {\n    \"Ref\": \"db5c88e0-391c-11dd-90d9-001a92567626\"\n  }\n}"
         },
         "url": {
           "raw": "{{BASE_URL}}",
@@ -194,7 +194,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"apiKey\": \"{{API_KEY}}\",\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getCities\",\n  \"methodProperties\": {\n    \"FindByString\": \"а\",\n    \"Limit\": \"100\"\n  }\n}"
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getCities\",\n  \"methodProperties\": {\n    \"FindByString\": \"а\",\n    \"Limit\": \"100\"\n  }\n}"
         },
         "url": {
           "raw": "{{BASE_URL}}",
@@ -216,7 +216,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"apiKey\": \"{{API_KEY}}\",\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getCities\",\n  \"methodProperties\": {\n    \"FindByString\": \"а\",\n    \"Page\": \"2\",\n    \"Limit\": \"50\"\n  }\n}"
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getCities\",\n  \"methodProperties\": {\n    \"FindByString\": \"а\",\n    \"Page\": \"2\",\n    \"Limit\": \"50\"\n  }\n}"
         },
         "url": {
           "raw": "{{BASE_URL}}",

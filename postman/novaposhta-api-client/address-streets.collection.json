@@ -18,7 +18,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"apiKey\": \"{{API_KEY}}\",\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getStreet\",\n  \"methodProperties\": {\n    \"CityRef\": \"8d5a980d-391c-11dd-90d9-001a92567626\"\n  }\n}"
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getStreet\",\n  \"methodProperties\": {\n    \"CityRef\": \"8d5a980d-391c-11dd-90d9-001a92567626\"\n  }\n}"
         },
         "url": {
           "raw": "{{BASE_URL}}",
@@ -40,7 +40,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"apiKey\": \"{{API_KEY}}\",\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getStreet\",\n  \"methodProperties\": {\n    \"CityRef\": \"8d5a980d-391c-11dd-90d9-001a92567626\",\n    \"FindByString\": \"Хрещатик\"\n  }\n}"
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getStreet\",\n  \"methodProperties\": {\n    \"CityRef\": \"8d5a980d-391c-11dd-90d9-001a92567626\",\n    \"FindByString\": \"Хрещатик\"\n  }\n}"
         },
         "url": {
           "raw": "{{BASE_URL}}",
@@ -62,7 +62,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"apiKey\": \"{{API_KEY}}\",\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getStreet\",\n  \"methodProperties\": {\n    \"CityRef\": \"8d5a980d-391c-11dd-90d9-001a92567626\",\n    \"FindByString\": \"Шевченка\"\n  }\n}"
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getStreet\",\n  \"methodProperties\": {\n    \"CityRef\": \"8d5a980d-391c-11dd-90d9-001a92567626\",\n    \"FindByString\": \"Шевченка\"\n  }\n}"
         },
         "url": {
           "raw": "{{BASE_URL}}",
@@ -84,7 +84,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"apiKey\": \"{{API_KEY}}\",\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getStreet\",\n  \"methodProperties\": {\n    \"CityRef\": \"8d5a980d-391c-11dd-90d9-001a92567626\",\n    \"FindByString\": \"Київська\",\n    \"Limit\": \"10\"\n  }\n}"
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getStreet\",\n  \"methodProperties\": {\n    \"CityRef\": \"8d5a980d-391c-11dd-90d9-001a92567626\",\n    \"FindByString\": \"Київська\",\n    \"Limit\": \"10\"\n  }\n}"
         },
         "url": {
           "raw": "{{BASE_URL}}",
@@ -106,7 +106,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"apiKey\": \"{{API_KEY}}\",\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getStreet\",\n  \"methodProperties\": {\n    \"CityRef\": \"8d5a980d-391c-11dd-90d9-001a92567626\",\n    \"FindByString\": \"а\",\n    \"Page\": \"1\",\n    \"Limit\": \"50\"\n  }\n}"
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getStreet\",\n  \"methodProperties\": {\n    \"CityRef\": \"8d5a980d-391c-11dd-90d9-001a92567626\",\n    \"FindByString\": \"а\",\n    \"Page\": \"1\",\n    \"Limit\": \"50\"\n  }\n}"
         },
         "url": {
           "raw": "{{BASE_URL}}",
@@ -128,7 +128,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"apiKey\": \"{{API_KEY}}\",\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getStreet\",\n  \"methodProperties\": {\n    \"CityRef\": \"db5c88e0-391c-11dd-90d9-001a92567626\"\n  }\n}"
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getStreet\",\n  \"methodProperties\": {\n    \"CityRef\": \"db5c88e0-391c-11dd-90d9-001a92567626\"\n  }\n}"
         },
         "url": {
           "raw": "{{BASE_URL}}",
@@ -150,7 +150,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"apiKey\": \"{{API_KEY}}\",\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getStreet\",\n  \"methodProperties\": {\n    \"CityRef\": \"db5c88e0-391c-11dd-90d9-001a92567626\",\n    \"FindByString\": \"Свободи\"\n  }\n}"
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getStreet\",\n  \"methodProperties\": {\n    \"CityRef\": \"db5c88e0-391c-11dd-90d9-001a92567626\",\n    \"FindByString\": \"Свободи\"\n  }\n}"
         },
         "url": {
           "raw": "{{BASE_URL}}",
@@ -172,7 +172,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"apiKey\": \"{{API_KEY}}\",\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getStreet\",\n  \"methodProperties\": {\n    \"CityRef\": \"db5c88d0-391c-11dd-90d9-001a92567626\",\n    \"FindByString\": \"Дерибасівська\"\n  }\n}"
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getStreet\",\n  \"methodProperties\": {\n    \"CityRef\": \"db5c88d0-391c-11dd-90d9-001a92567626\",\n    \"FindByString\": \"Дерибасівська\"\n  }\n}"
         },
         "url": {
           "raw": "{{BASE_URL}}",
@@ -194,7 +194,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"apiKey\": \"{{API_KEY}}\",\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getStreet\",\n  \"methodProperties\": {\n    \"CityRef\": \"db5c88de-391c-11dd-90d9-001a92567626\",\n    \"FindByString\": \"Сумська\"\n  }\n}"
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getStreet\",\n  \"methodProperties\": {\n    \"CityRef\": \"db5c88de-391c-11dd-90d9-001a92567626\",\n    \"FindByString\": \"Сумська\"\n  }\n}"
         },
         "url": {
           "raw": "{{BASE_URL}}",
@@ -216,7 +216,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"apiKey\": \"{{API_KEY}}\",\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getStreet\",\n  \"methodProperties\": {\n    \"CityRef\": \"8d5a980d-391c-11dd-90d9-001a92567626\",\n    \"FindByString\": \"Бан\",\n    \"Limit\": \"20\"\n  }\n}"
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getStreet\",\n  \"methodProperties\": {\n    \"CityRef\": \"8d5a980d-391c-11dd-90d9-001a92567626\",\n    \"FindByString\": \"Бан\",\n    \"Limit\": \"20\"\n  }\n}"
         },
         "url": {
           "raw": "{{BASE_URL}}",
@@ -238,7 +238,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"apiKey\": \"{{API_KEY}}\",\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getStreet\",\n  \"methodProperties\": {\n    \"CityRef\": \"db5c88f5-391c-11dd-90d9-001a92567626\",\n    \"FindByString\": \"Набережна\"\n  }\n}"
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getStreet\",\n  \"methodProperties\": {\n    \"CityRef\": \"db5c88f5-391c-11dd-90d9-001a92567626\",\n    \"FindByString\": \"Набережна\"\n  }\n}"
         },
         "url": {
           "raw": "{{BASE_URL}}",
@@ -260,7 +260,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"apiKey\": \"{{API_KEY}}\",\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getStreet\",\n  \"methodProperties\": {\n    \"CityRef\": \"8d5a980d-391c-11dd-90d9-001a92567626\",\n    \"Limit\": \"500\"\n  }\n}"
+          "raw": "{\n  \"modelName\": \"Address\",\n  \"calledMethod\": \"getStreet\",\n  \"methodProperties\": {\n    \"CityRef\": \"8d5a980d-391c-11dd-90d9-001a92567626\",\n    \"Limit\": \"500\"\n  }\n}"
         },
         "url": {
           "raw": "{{BASE_URL}}",
