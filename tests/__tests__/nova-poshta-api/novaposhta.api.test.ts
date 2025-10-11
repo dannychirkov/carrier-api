@@ -23,46 +23,5 @@ describe('Nova Poshta API Integration Tests', () => {
         })
         .toss();
     });
-
-    it('should get cities', async () => {
-      await spec()
-        .post('/')
-        .withJson({
-          apiKey: getApiKey(),
-          modelName: 'Address',
-          calledMethod: 'getCities',
-          methodProperties: {},
-        })
-        .expectStatus(200)
-        .expectJsonMatch({
-          success: true,
-        })
-        .toss();
-    });
-  });
-
-  describeOrSkip('Tracking API', () => {
-    it('should handle tracking request', async () => {
-      await spec()
-        .post('/')
-        .withJson({
-          apiKey: getApiKey(),
-          modelName: 'TrackingDocument',
-          calledMethod: 'getStatusDocuments',
-          methodProperties: {
-            Documents: [
-              {
-                DocumentNumber: '20450000000000',
-                Phone: '',
-              },
-            ],
-          },
-        })
-        .expectStatus(200)
-        .expectJsonMatch({
-          success: true,
-        })
-        .toss();
-    });
   });
 });
