@@ -1113,10 +1113,10 @@
   resolved "https://registry.yarnpkg.com/@rollup/rollup-win32-x64-msvc/-/rollup-win32-x64-msvc-4.53.3.tgz#38ae84f4c04226c1d56a3b17296ef1e0460ecdfe"
   integrity sha512-UhTd8u31dXadv0MopwGgNOBpUVROFKWVQgAg5N1ESyCz8AuBcMqm4AuTjrwgQKGDfoFuz02EuMRHQIw/frmYKQ==
 
-"@shopana/novaposhta-api-client@npm:@shopana/novaposhta-api-client@^0.0.1-alpha.1":
-  version "0.0.1-alpha.1"
-  resolved "https://registry.yarnpkg.com/@shopana/novaposhta-api-client/-/novaposhta-api-client-0.0.1-alpha.1.tgz#9f84990238d1de16957087437192bf7c336a9daa"
-  integrity sha512-nGE3w3x99mpjGvxcj8aqjiJ4al+9TsbVSKhtwt1wU56UQo/2A3KaNK075XaIuvP/Qh/8x5XhIkxcYVA/pht8Qg==
+"@shopana/novaposhta-api-client@npm:@shopana/novaposhta-api-client@^0.0.1-alpha.2":
+  version "0.0.1-alpha.2"
+  resolved "https://registry.yarnpkg.com/@shopana/novaposhta-api-client/-/novaposhta-api-client-0.0.1-alpha.2.tgz#4001b909341deb66fd03a8f7fe62b80661c41e5e"
+  integrity sha512-mWM0nxtgz5wna4EBdTRWA7JX3ZVRu9dJ8vp2XQ5XEzhyRBVu5T8hJG9Mk3IiuyMIyxV/73mDHQZu4LIxfYDIFQ==
 
 "@shopana/novaposhta-transport-fetch@npm:@shopana/novaposhta-transport-fetch@^0.0.1-alpha.0":
   version "0.0.1-alpha.0"
