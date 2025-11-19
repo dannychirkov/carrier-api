@@ -148,9 +148,9 @@ describe('TrackingService', () => {
       const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(new TrackingService());
 
       const mockTrackingData = [
-        { statusCode: 9, dateCreated: '01.01.2024', citySender: 'Kyiv', cityRecipient: 'Lviv' } as any,
-        { statusCode: 5, dateCreated: '02.01.2024', citySender: 'Kyiv', cityRecipient: 'Odesa' } as any,
-        { statusCode: 7, dateCreated: '03.01.2024', citySender: 'Kharkiv', cityRecipient: 'Dnipro' } as any,
+        { StatusCode: 9, DateCreated: '01.01.2024', CitySender: 'Kyiv', CityRecipient: 'Lviv' } as any,
+        { StatusCode: 5, DateCreated: '02.01.2024', CitySender: 'Kyiv', CityRecipient: 'Odesa' } as any,
+        { StatusCode: 7, DateCreated: '03.01.2024', CitySender: 'Kharkiv', CityRecipient: 'Dnipro' } as any,
       ];
 
       const result = client.tracking.calculateStatistics(mockTrackingData);
@@ -165,8 +165,8 @@ describe('TrackingService', () => {
       const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(new TrackingService());
 
       const mockTrackingData = [
-        { statusCode: 102, dateCreated: '01.01.2024', citySender: 'Kyiv', cityRecipient: 'Lviv' } as any,
-        { statusCode: 103, dateCreated: '02.01.2024', citySender: 'Kyiv', cityRecipient: 'Odesa' } as any,
+        { StatusCode: 102, DateCreated: '01.01.2024', CitySender: 'Kyiv', CityRecipient: 'Lviv' } as any,
+        { StatusCode: 103, DateCreated: '02.01.2024', CitySender: 'Kyiv', CityRecipient: 'Odesa' } as any,
       ];
 
       const result = client.tracking.calculateStatistics(mockTrackingData);
@@ -179,8 +179,8 @@ describe('TrackingService', () => {
       const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(new TrackingService());
 
       const mockTrackingData = [
-        { statusCode: 999, dateCreated: '01.01.2024', citySender: 'Kyiv', cityRecipient: 'Lviv' } as any,
-        { statusCode: 1000, dateCreated: '02.01.2024', citySender: 'Kyiv', cityRecipient: 'Odesa' } as any,
+        { StatusCode: 999, DateCreated: '01.01.2024', CitySender: 'Kyiv', CityRecipient: 'Lviv' } as any,
+        { StatusCode: 1000, DateCreated: '02.01.2024', CitySender: 'Kyiv', CityRecipient: 'Odesa' } as any,
       ];
 
       const result = client.tracking.calculateStatistics(mockTrackingData);
@@ -230,17 +230,17 @@ describe('TrackingService', () => {
           Number: '20400048799000',
           Status: 'Delivered',
           StatusCode: '9',
-          dateCreated: '01.01.2024',
-          citySender: 'Kyiv',
-          cityRecipient: 'Lviv',
+          DateCreated: '01.01.2024',
+          CitySender: 'Kyiv',
+          CityRecipient: 'Lviv',
         },
         {
           Number: '20400048799001',
           Status: 'In Transit',
           StatusCode: '5',
-          dateCreated: '02.01.2024',
-          citySender: 'Kyiv',
-          cityRecipient: 'Odesa',
+          DateCreated: '02.01.2024',
+          CitySender: 'Kyiv',
+          CityRecipient: 'Odesa',
         },
       ];
       const { transport, calls, setResponse } = createMockTransport();
@@ -274,10 +274,10 @@ describe('TrackingService', () => {
         {
           Number: '20400048799000',
           Status: 'Delivered',
-          statusCode: 9,
-          dateCreated: '01.01.2024',
-          citySender: 'Kyiv',
-          cityRecipient: 'Lviv',
+          StatusCode: 9,
+          DateCreated: '01.01.2024',
+          CitySender: 'Kyiv',
+          CityRecipient: 'Lviv',
         },
         null,
       ];
@@ -299,36 +299,36 @@ describe('TrackingService', () => {
       const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(new TrackingService());
 
       const mockResults = [
-        { statusCode: 9, dateCreated: '01.01.2024', citySender: 'Kyiv', cityRecipient: 'Lviv' } as any,
-        { statusCode: 5, dateCreated: '02.01.2024', citySender: 'Kyiv', cityRecipient: 'Odesa' } as any,
+        { StatusCode: 9, DateCreated: '01.01.2024', CitySender: 'Kyiv', CityRecipient: 'Lviv' } as any,
+        { StatusCode: 5, DateCreated: '02.01.2024', CitySender: 'Kyiv', CityRecipient: 'Odesa' } as any,
       ];
 
       const filtered = client.tracking.filterTrackingResults(mockResults, { status: [9] });
 
       expect(filtered).toHaveLength(1);
-      expect(filtered[0].statusCode).toBe(9);
+      expect(filtered[0].StatusCode).toBe(9);
     });
 
     it('should filter results by city', () => {
       const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(new TrackingService());
 
       const mockResults = [
-        { statusCode: 9, dateCreated: '01.01.2024', citySender: 'Kyiv', cityRecipient: 'Lviv' } as any,
-        { statusCode: 5, dateCreated: '02.01.2024', citySender: 'Kharkiv', cityRecipient: 'Odesa' } as any,
+        { StatusCode: 9, DateCreated: '01.01.2024', CitySender: 'Kyiv', CityRecipient: 'Lviv' } as any,
+        { StatusCode: 5, DateCreated: '02.01.2024', CitySender: 'Kharkiv', CityRecipient: 'Odesa' } as any,
       ];
 
       const filtered = client.tracking.filterTrackingResults(mockResults, { citySender: 'Kyiv' });
 
       expect(filtered).toHaveLength(1);
-      expect(filtered[0].citySender).toBe('Kyiv');
+      expect(filtered[0].CitySender).toBe('Kyiv');
     });
 
     it('should filter results by date range', () => {
       const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(new TrackingService());
 
       const mockResults = [
-        { statusCode: 9, dateCreated: '2024-01-01', citySender: 'Kyiv', cityRecipient: 'Lviv' } as any,
-        { statusCode: 5, dateCreated: '2024-01-10', citySender: 'Kharkiv', cityRecipient: 'Odesa' } as any,
+        { StatusCode: 9, DateCreated: '2024-01-01', CitySender: 'Kyiv', CityRecipient: 'Lviv' } as any,
+        { StatusCode: 5, DateCreated: '2024-01-10', CitySender: 'Kharkiv', CityRecipient: 'Odesa' } as any,
       ];
 
       const filtered = client.tracking.filterTrackingResults(mockResults, {
@@ -336,28 +336,28 @@ describe('TrackingService', () => {
       });
 
       expect(filtered).toHaveLength(1);
-      expect(filtered[0].statusCode).toBe(5);
+      expect(filtered[0].StatusCode).toBe(5);
     });
 
     it('should filter results by recipient city', () => {
       const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(new TrackingService());
 
       const mockResults = [
-        { statusCode: 9, dateCreated: '01.01.2024', citySender: 'Kyiv', cityRecipient: 'Lviv' } as any,
-        { statusCode: 5, dateCreated: '02.01.2024', citySender: 'Kharkiv', cityRecipient: 'Odesa' } as any,
+        { StatusCode: 9, DateCreated: '01.01.2024', CitySender: 'Kyiv', CityRecipient: 'Lviv' } as any,
+        { StatusCode: 5, DateCreated: '02.01.2024', CitySender: 'Kharkiv', CityRecipient: 'Odesa' } as any,
       ];
 
       const filtered = client.tracking.filterTrackingResults(mockResults, { cityRecipient: 'Lviv' });
 
       expect(filtered).toHaveLength(1);
-      expect(filtered[0].cityRecipient).toBe('Lviv');
+      expect(filtered[0].CityRecipient).toBe('Lviv');
     });
 
     it('should return empty array when no results match filter', () => {
       const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(new TrackingService());
 
       const mockResults = [
-        { statusCode: 9, dateCreated: '01.01.2024', citySender: 'Kyiv', cityRecipient: 'Lviv' } as any,
+        { StatusCode: 9, DateCreated: '01.01.2024', CitySender: 'Kyiv', CityRecipient: 'Lviv' } as any,
       ];
 
       const filtered = client.tracking.filterTrackingResults(mockResults, { status: [5] });
@@ -370,14 +370,14 @@ describe('TrackingService', () => {
     it('should return true for delivered status', () => {
       const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(new TrackingService());
 
-      const status = { statusCode: 9 } as any;
+      const status = { StatusCode: 9 } as any;
       expect(client.tracking.isDelivered(status)).toBe(true);
     });
 
     it('should return false for non-delivered status', () => {
       const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(new TrackingService());
 
-      const status = { statusCode: 5 } as any;
+      const status = { StatusCode: 5 } as any;
       expect(client.tracking.isDelivered(status)).toBe(false);
     });
   });
@@ -386,14 +386,14 @@ describe('TrackingService', () => {
     it('should return true for in-transit status', () => {
       const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(new TrackingService());
 
-      const status = { statusCode: 5 } as any;
+      const status = { StatusCode: 5 } as any;
       expect(client.tracking.isInTransit(status)).toBe(true);
     });
 
     it('should return false for non-transit status', () => {
       const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(new TrackingService());
 
-      const status = { statusCode: 9 } as any;
+      const status = { StatusCode: 9 } as any;
       expect(client.tracking.isInTransit(status)).toBe(false);
     });
   });
@@ -402,14 +402,14 @@ describe('TrackingService', () => {
     it('should return true for warehouse status', () => {
       const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(new TrackingService());
 
-      const status = { statusCode: 7 } as any;
+      const status = { StatusCode: 7 } as any;
       expect(client.tracking.isAtWarehouse(status)).toBe(true);
     });
 
     it('should return false for non-warehouse status', () => {
       const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(new TrackingService());
 
-      const status = { statusCode: 9 } as any;
+      const status = { StatusCode: 9 } as any;
       expect(client.tracking.isAtWarehouse(status)).toBe(false);
     });
   });
@@ -444,9 +444,9 @@ describe('TrackingService', () => {
           Number: '20400048799000',
           Status: 'Delivered',
           StatusCode: '9',
-          dateCreated: '01.01.2024',
-          citySender: 'Kyiv',
-          cityRecipient: 'Lviv',
+          DateCreated: '01.01.2024',
+          CitySender: 'Kyiv',
+          CityRecipient: 'Lviv',
         },
       ];
       const { transport, setResponse } = createMockTransport();
