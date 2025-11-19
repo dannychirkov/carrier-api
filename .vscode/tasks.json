@@ -1,0 +1,98 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Nova Poshta MCP Server: Build",
+      "type": "shell",
+      "command": "yarn workspace @shopana/novaposhta-mcp-server build",
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Nova Poshta MCP Server: Run",
+      "type": "shell",
+      "command": "node",
+      "args": [
+        "${workspaceFolder}/packages/novaposhta-mcp-server/dist/index.js"
+      ],
+      "group": "none",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "showReuseMessage": false,
+        "clear": true
+      },
+      "isBackground": true,
+      "problemMatcher": {
+        "pattern": {
+          "regexp": "^$",
+          "file": 1,
+          "location": 2,
+          "message": 3
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": ".*",
+          "endsPattern": "Nova Poshta MCP server is listening on stdio"
+        }
+      }
+    },
+    {
+      "label": "Nova Poshta MCP Server: Build and Run",
+      "dependsOn": [
+        "Nova Poshta MCP Server: Build",
+        "Nova Poshta MCP Server: Run"
+      ],
+      "dependsOrder": "sequence",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Nova Poshta MCP Server: Test",
+      "type": "shell",
+      "command": "yarn workspace @shopana/novaposhta-mcp-server test",
+      "group": "test",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Nova Poshta MCP Server: Dev (Watch)",
+      "type": "shell",
+      "command": "yarn workspace @shopana/novaposhta-mcp-server dev",
+      "group": "none",
+      "isBackground": true,
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "showReuseMessage": false
+      },
+      "problemMatcher": {
+        "pattern": {
+          "regexp": ".",
+          "file": 1,
+          "location": 2,
+          "message": 3
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": ".*",
+          "endsPattern": "(Watching for file changes|Found \\d+ error)"
+        }
+      }
+    }
+  ]
+}
