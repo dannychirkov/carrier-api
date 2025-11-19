@@ -19,6 +19,8 @@ import type {
   SearchSettlementsResponse,
   SearchSettlementStreetsRequest,
   SearchSettlementStreetsResponse,
+  GetWarehousesRequest,
+  GetWarehousesResponse,
 } from '../types/address';
 import type { NovaPoshtaRequest } from '../types/base';
 import { NovaPoshtaModel, NovaPoshtaMethod } from '../types/enums';
@@ -158,5 +160,43 @@ export class AddressService {
     };
 
     return await this.transport.request<SearchSettlementStreetsResponse['data']>(apiRequest);
+  }
+
+  /**
+   * Get warehouses (branches and postomats)
+   * @description Retrieves list of Nova Poshta warehouses filtered by city, settlement, or other criteria
+   * @cacheable 1 hour
+   * @note API returns HTTP 303 Redirect with link to cached file for some cities
+   */
+  async getWarehouses(request: GetWarehousesRequest = {}): Promise<GetWarehousesResponse> {
+    const methodProperties: Record<string, string | undefined> = {
+      Ref: request.ref,
+      CityName: request.cityName,
+      CityRef: request.cityRef,
+      SettlementRef: request.settlementRef,
+      WarehouseId: request.warehouseId,
+      FindByString: request.findByString,
+      TypeOfWarehouseRef: request.typeOfWarehouseRef,
+      BicycleParking: request.bicycleParking,
+      PostFinance: request.postFinance,
+      POSTerminal: request.posTerminal,
+      Page: request.page?.toString(),
+      Limit: request.limit?.toString(),
+      Language: request.language,
+    };
+
+    // Remove undefined values
+    const cleanProperties = Object.fromEntries(
+      Object.entries(methodProperties).filter(([, value]) => value !== undefined && value !== ''),
+    );
+
+    const apiRequest: NovaPoshtaRequest = {
+      ...(this.apiKey ? { apiKey: this.apiKey } : {}),
+      modelName: NovaPoshtaModel.Address,
+      calledMethod: NovaPoshtaMethod.GetWarehouses,
+      methodProperties: cleanProperties,
+    };
+
+    return await this.transport.request<GetWarehousesResponse['data']>(apiRequest);
   }
 }

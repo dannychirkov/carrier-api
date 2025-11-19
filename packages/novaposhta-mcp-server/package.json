@@ -1,0 +1,38 @@
+{
+  "name": "@shopana/novaposhta-mcp-server",
+  "version": "0.0.1-alpha.0",
+  "description": "MCP Server for Nova Poshta API integration with AI assistants",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "novaposhta-mcp": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsx src/index.ts",
+    "lint": "eslint 'src/**/*.{ts,tsx}'",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "keywords": [
+    "mcp",
+    "nova-poshta",
+    "ai",
+    "assistant",
+    "cli"
+  ],
+  "author": "Shopana IO",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.22.0",
+    "@shopana/novaposhta-api-client": "^0.0.1-alpha.1",
+    "@shopana/novaposhta-transport-fetch": "^0.0.1-alpha.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "tsx": "^4.1.0",
+    "typescript": "^5.3.3",
+    "vitest": "^1.0.0"
+  }
+}

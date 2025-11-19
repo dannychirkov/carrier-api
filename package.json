@@ -10,6 +10,9 @@
   "scripts": {
     "build": "yarn workspace @shopana/novaposhta-api-client build",
     "dev": "yarn workspace @shopana/novaposhta-api-client dev",
+    "build:mcp": "yarn workspace @shopana/novaposhta-mcp-server build",
+    "dev:mcp": "yarn workspace @shopana/novaposhta-mcp-server dev",
+    "test:mcp": "yarn workspace @shopana/novaposhta-mcp-server test",
     "test": "yarn workspace @shopana/tests test",
     "test:watch": "yarn workspace @shopana/tests test:watch",
     "test:coverage": "yarn workspace @shopana/tests test:coverage",

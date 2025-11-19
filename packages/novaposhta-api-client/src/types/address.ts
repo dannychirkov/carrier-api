@@ -226,6 +226,143 @@ export interface SearchSettlementStreetsData {
 export type SearchSettlementStreetsResponse = NovaPoshtaResponse<SearchSettlementStreetsData[]>;
 
 // =============================================================================
+// WAREHOUSES
+// =============================================================================
+
+export interface GetWarehousesRequest {
+  /** Specific warehouse reference (returns single warehouse) */
+  readonly ref?: string;
+  /** City name filter */
+  readonly cityName?: string;
+  /** City identifier */
+  readonly cityRef?: CityRef;
+  /** Settlement identifier from getSettlements */
+  readonly settlementRef?: SettlementRef;
+  /** Search by warehouse number (e.g., "1" for Branch #1) */
+  readonly warehouseId?: string;
+  /** Search string for warehouse name or address */
+  readonly findByString?: string;
+  /** Warehouse type reference filter */
+  readonly typeOfWarehouseRef?: string;
+  /** Filter by bicycle parking availability (1/0) */
+  readonly bicycleParking?: string;
+  /** Filter by NovaPay cash desk availability (1/0) */
+  readonly postFinance?: string;
+  /** Filter by POS terminal availability (1/0) */
+  readonly posTerminal?: string;
+  /** Page number (max 500 records per page) */
+  readonly page?: number;
+  /** Records per page (works with Page parameter) */
+  readonly limit?: number;
+  /** Language code (UA or RU, default UA) */
+  readonly language?: string;
+}
+
+export interface DimensionsLimitation {
+  /** Width in cm */
+  readonly Width: number;
+  /** Height in cm */
+  readonly Height: number;
+  /** Length in cm */
+  readonly Length: number;
+}
+
+export interface WarehouseData {
+  /** Warehouse code */
+  readonly SiteKey: string;
+  /** Warehouse name in Ukrainian */
+  readonly Description: string;
+  /** Warehouse name in Russian */
+  readonly DescriptionRu: string;
+  /** Short address in Ukrainian */
+  readonly ShortAddress: string;
+  /** Short address in Russian */
+  readonly ShortAddressRu: string;
+  /** Phone number */
+  readonly Phone: string;
+  /** Type of warehouse */
+  readonly TypeOfWarehouse: string;
+  /** Warehouse identifier */
+  readonly Ref: string;
+  /** Warehouse number */
+  readonly Number: string;
+  /** City identifier */
+  readonly CityRef: CityRef;
+  /** City name in Ukrainian */
+  readonly CityDescription: string;
+  /** City name in Russian */
+  readonly CityDescriptionRu: string;
+  /** Settlement identifier */
+  readonly SettlementRef: SettlementRef;
+  /** Settlement description */
+  readonly SettlementDescription: string;
+  /** Settlement area description */
+  readonly SettlementAreaDescription: string;
+  /** Settlement region description */
+  readonly SettlementRegionsDescription: string;
+  /** Settlement type in Ukrainian */
+  readonly SettlementTypeDescription: string;
+  /** Settlement type in Russian */
+  readonly SettlementTypeDescriptionRu: string;
+  /** Longitude coordinate */
+  readonly Longitude: string;
+  /** Latitude coordinate */
+  readonly Latitude: string;
+  /** NovaPay cash desk availability (1/0) */
+  readonly PostFinance: string;
+  /** Bicycle parking availability (1/0) */
+  readonly BicycleParking: string;
+  /** Payment access availability (1/0) */
+  readonly PaymentAccess: string;
+  /** POS terminal availability (1/0) */
+  readonly POSTerminal: string;
+  /** International shipping availability (1/0) */
+  readonly InternationalShipping: string;
+  /** Self-service workplaces count (1/0) */
+  readonly SelfServiceWorkplacesCount: string;
+  /** Total maximum weight allowed */
+  readonly TotalMaxWeightAllowed: string;
+  /** Maximum weight per one place */
+  readonly PlaceMaxWeightAllowed: string;
+  /** Sending limitations on dimensions */
+  readonly SendingLimitationsOnDimensions: DimensionsLimitation;
+  /** Receiving limitations on dimensions */
+  readonly ReceivingLimitationsOnDimensions: DimensionsLimitation;
+  /** Reception schedule */
+  readonly Reception: Record<string, string>;
+  /** Delivery schedule (same day) */
+  readonly Delivery: Record<string, string>;
+  /** Working schedule */
+  readonly Schedule: Record<string, string>;
+  /** District code */
+  readonly DistrictCode: string;
+  /** Warehouse status */
+  readonly WarehouseStatus: string;
+  /** Warehouse status date */
+  readonly WarehouseStatusDate: string;
+  /** Category of warehouse */
+  readonly CategoryOfWarehouse: string;
+  /** Region/City */
+  readonly RegionCity: string;
+  /** Warehouse belongs to franchise network (1/0) */
+  readonly WarehouseForAgent: string;
+  /** Maximum declared cost */
+  readonly MaxDeclaredCost: string;
+  /** Deny to select warehouse in Internet Document (0/1) */
+  readonly DenyToSelect: string;
+  /** Postomat type (None/FullDayService/PartTime/ForResidentOfEntrance/Private/LimitedAccess) */
+  readonly PostMachineType: string;
+  /** Postal code of warehouse address */
+  readonly PostalCodeUA: string;
+  /** Only receiving parcel flag (1/0) */
+  readonly OnlyReceivingParcel: string;
+  /** Digital warehouse address (settlement index/warehouse number) */
+  readonly WarehouseIndex: string;
+}
+
+export type GetWarehousesResponse = NovaPoshtaResponse<WarehouseData[]>;
+
+// =============================================================================
 // AGGREGATE TYPES
 // =============================================================================
 
@@ -236,7 +373,8 @@ export type AddressRequest =
   | GetCitiesRequest
   | GetStreetRequest
   | SearchSettlementsRequest
-  | SearchSettlementStreetsRequest;
+  | SearchSettlementStreetsRequest
+  | GetWarehousesRequest;
 
 /** All address response types */
 export type AddressResponse =
@@ -245,7 +383,8 @@ export type AddressResponse =
   | GetCitiesResponse
   | GetStreetResponse
   | SearchSettlementsResponse
-  | SearchSettlementStreetsResponse;
+  | SearchSettlementStreetsResponse
+  | GetWarehousesResponse;
 
 /** All address data types */
 export type AddressData =
@@ -254,4 +393,5 @@ export type AddressData =
   | CityData
   | StreetData
   | SearchSettlementsData
-  | SearchSettlementStreetsData;
+  | SearchSettlementStreetsData
+  | WarehouseData;
