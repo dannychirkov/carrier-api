@@ -138,7 +138,7 @@ export class TrackingService {
 
     if (response.success && response.data) {
       response.data.forEach((item, index) => {
-        if (item && item.statusCode !== DeliveryStatus.NotFound) {
+        if (item && item.StatusCode !== DeliveryStatus.NotFound) {
           successful.push(item);
         } else {
           failed.push(documentNumbers[index] || 'unknown');
@@ -164,14 +164,14 @@ export class TrackingService {
     return results.filter(result => {
       // Filter by status
       if (filter.status && filter.status.length > 0) {
-        if (!filter.status.includes(result.statusCode)) {
+        if (!filter.status.includes(result.StatusCode)) {
           return false;
         }
       }
 
       // Filter by date range
       if (filter.dateFrom || filter.dateTo) {
-        const resultDate = new Date(result.dateCreated);
+        const resultDate = new Date(result.DateCreated);
 
         if (filter.dateFrom && resultDate < new Date(filter.dateFrom)) {
           return false;
@@ -183,12 +183,12 @@ export class TrackingService {
       }
 
       // Filter by sender city
-      if (filter.citySender && !result.citySender.includes(filter.citySender)) {
+      if (filter.citySender && !result.CitySender.includes(filter.citySender)) {
         return false;
       }
 
       // Filter by recipient city
-      if (filter.cityRecipient && !result.cityRecipient.includes(filter.cityRecipient)) {
+      if (filter.cityRecipient && !result.CityRecipient.includes(filter.cityRecipient)) {
         return false;
       }
 
@@ -210,7 +210,7 @@ export class TrackingService {
     };
 
     results.forEach(result => {
-      switch (result.statusCode) {
+      switch (result.StatusCode) {
         case DeliveryStatus.Received:
         case DeliveryStatus.ReceivedAwaitingMoneyTransfer:
         case DeliveryStatus.ReceivedAndMoneyTransferred:
@@ -252,7 +252,7 @@ export class TrackingService {
       DeliveryStatus.Received,
       DeliveryStatus.ReceivedAwaitingMoneyTransfer,
       DeliveryStatus.ReceivedAndMoneyTransferred,
-    ].includes(status.statusCode);
+    ].includes(status.StatusCode);
   }
 
   /**
@@ -263,7 +263,7 @@ export class TrackingService {
       DeliveryStatus.InTransitToRecipientCity,
       DeliveryStatus.OnTheWayToRecipient,
       DeliveryStatus.BeingPacked,
-    ].includes(status.statusCode);
+    ].includes(status.StatusCode);
   }
 
   /**
@@ -274,7 +274,7 @@ export class TrackingService {
       DeliveryStatus.ArrivedAtWarehouse,
       DeliveryStatus.ArrivedAtPostomat,
       DeliveryStatus.InRecipientCityAwaitingDelivery,
-    ].includes(status.statusCode);
+    ].includes(status.StatusCode);
   }
 
   /**
