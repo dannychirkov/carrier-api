@@ -92,11 +92,11 @@ describe('reference tools', () => {
         infoCodes: [],
       });
 
-      await handleReferenceTool('reference_get_pack_list', { length: 100, width: 50, height: 30 }, context);
+      await handleReferenceTool('reference_get_pack_list', { Length: 100, Width: 50, Height: 30 }, context);
       expect(context.client.reference.getPackList).toHaveBeenCalledWith({
-        length: 100,
-        width: 50,
-        height: 30,
+        Length: 100,
+        Width: 50,
+        Height: 30,
       });
     });
   });
@@ -163,10 +163,10 @@ describe('reference tools', () => {
         infoCodes: [],
       });
 
-      await handleReferenceTool('reference_get_cargo_description_list', { findByString: 'Одяг', page: 2 }, context);
+      await handleReferenceTool('reference_get_cargo_description_list', { FindByString: 'Одяг', Page: 2 }, context);
       expect(context.client.reference.getCargoDescriptionList).toHaveBeenCalledWith({
-        findByString: 'Одяг',
-        page: 2,
+        FindByString: 'Одяг',
+        Page: 2,
       });
     });
   });
@@ -191,11 +191,11 @@ describe('reference tools', () => {
         infoCodes: [],
       });
 
-      const result = await handleReferenceTool('reference_get_pickup_time_intervals', { cityRef: 'city-ref', dateTime: '01.01.2024' }, context);
+      const result = await handleReferenceTool('reference_get_pickup_time_intervals', { SenderCityRef: 'city-ref', DateTime: '01.01.2024' }, context);
       expect(result.isError).toBeFalsy();
       expect(context.client.reference.getPickupTimeIntervals).toHaveBeenCalledWith({
-        senderCityRef: 'city-ref',
-        dateTime: '01.01.2024',
+        SenderCityRef: 'city-ref',
+        DateTime: '01.01.2024',
       });
     });
 

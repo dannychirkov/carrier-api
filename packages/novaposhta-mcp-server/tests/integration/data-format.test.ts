@@ -108,7 +108,7 @@ describe('Data Format Integration Tests', () => {
 
       const result = await handleTrackingTool(
         'track_document',
-        { documentNumber: '20450123456789' },
+        { DocumentNumber: '20450123456789' },
         context,
       );
 
@@ -164,7 +164,7 @@ describe('Data Format Integration Tests', () => {
 
       const result = await handleAddressTool(
         'address_search_settlements',
-        { cityName: 'Київ', limit: 10 },
+        { CityName: 'Київ', Limit: 10 },
         context,
       );
 
@@ -248,7 +248,7 @@ describe('Data Format Integration Tests', () => {
 
       const result = await handleCounterpartyTool(
         'counterparty_get_counterparties',
-        { counterpartyProperty: 'Sender' },
+        { CounterpartyProperty: 'Sender' },
         context,
       );
 
@@ -298,13 +298,13 @@ describe('Data Format Integration Tests', () => {
       const result = await handleWaybillTool(
         'waybill_calculate_cost',
         {
-          citySender: 'city-ref-1',
-          cityRecipient: 'city-ref-2',
-          weight: 5,
-          serviceType: 'WarehouseWarehouse',
-          cost: 1000,
-          cargoType: 'Parcel',
-          seatsAmount: 1,
+          CitySender: 'city-ref-1',
+          CityRecipient: 'city-ref-2',
+          Weight: 5,
+          ServiceType: 'WarehouseWarehouse',
+          Cost: 1000,
+          CargoType: 'Parcel',
+          SeatsAmount: 1,
         },
         context,
       );
@@ -323,7 +323,7 @@ describe('Data Format Integration Tests', () => {
 
       const result = await handleTrackingTool(
         'track_document',
-        { documentNumber: '20450123456789' },
+        { DocumentNumber: '20450123456789' },
         context,
       );
 
@@ -335,7 +335,7 @@ describe('Data Format Integration Tests', () => {
     it('returns validation error with clear message', async () => {
       const result = await handleTrackingTool(
         'track_document',
-        { documentNumber: '123' }, // Invalid tracking number
+        { DocumentNumber: '123' }, // Invalid tracking number
         context,
       );
 
@@ -359,7 +359,7 @@ describe('Data Format Integration Tests', () => {
 
       const result = await handleCounterpartyTool(
         'counterparty_get_counterparties',
-        { counterpartyProperty: 'Sender' },
+        { CounterpartyProperty: 'Sender' },
         context,
       );
 
@@ -414,7 +414,7 @@ describe('Data Format Integration Tests', () => {
 
       const result = await handleAddressTool(
         'address_get_warehouses',
-        { cityRef: 'city-ref', limit: 10 },
+        { CityRef: 'city-ref', Limit: 10 },
         context,
       );
 
@@ -461,12 +461,12 @@ describe('Data Format Integration Tests', () => {
       const result = await handleContactPersonTool(
         'contact_person_save',
         {
-          counterpartyRef: 'counterparty-ref',
-          firstName: 'Контакт',
-          middleName: 'Особистий',
-          lastName: 'Новий',
-          phone: '380501234567',
-          email: 'new@example.com',
+          CounterpartyRef: 'counterparty-ref',
+          FirstName: 'Контакт',
+          MiddleName: 'Особистий',
+          LastName: 'Новий',
+          Phone: '380501234567',
+          Email: 'new@example.com',
         },
         context,
       );
@@ -475,7 +475,7 @@ describe('Data Format Integration Tests', () => {
       const text = (result.content[0] as any).text;
 
       // Verify contact person ref and description are returned
-      // Note: API only returns ref and description, not phone/email
+      // Note: API only returns ref and description, not Phone/Email
       expect(text).toContain('contact-ref-new');
       expect(text).toContain('Новий Контакт Особистий');
     });
@@ -494,7 +494,7 @@ describe('Data Format Integration Tests', () => {
 
       const result = await handleTrackingTool(
         'track_document',
-        { documentNumber: '20450123456789' },
+        { DocumentNumber: '20450123456789' },
         context,
       );
 
@@ -533,7 +533,7 @@ describe('Data Format Integration Tests', () => {
 
       const result = await handleAddressTool(
         'address_search_streets',
-        { settlementRef: 'settlement-ref', streetName: 'Шевченка', limit: 10 },
+        { SettlementRef: 'settlement-ref', StreetName: 'Шевченка', Limit: 10 },
         context,
       );
 

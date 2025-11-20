@@ -12,7 +12,7 @@ const addressTools: Tool[] = [
     inputSchema: {
       type: 'object',
       properties: {
-        ref: { type: 'string', description: 'Optional area reference to get specific area.' },
+        Ref: { type: 'string', description: 'Optional area reference to get specific area.' },
       },
       required: [],
     },
@@ -24,10 +24,10 @@ const addressTools: Tool[] = [
     inputSchema: {
       type: 'object',
       properties: {
-        areaRef: { type: 'string', description: 'Area reference from address_get_settlements.' },
-        ref: { type: 'string', description: 'Optional region reference to get specific region.' },
+        AreaRef: { type: 'string', description: 'Area reference from address_get_settlements.' },
+        Ref: { type: 'string', description: 'Optional region reference to get specific region.' },
       },
-      required: ['areaRef'],
+      required: ['AreaRef'],
     },
   },
   {
@@ -37,11 +37,11 @@ const addressTools: Tool[] = [
     inputSchema: {
       type: 'object',
       properties: {
-        query: { type: 'string', description: 'Partial city name or postal code.' },
-        page: { type: 'number', description: 'Page number (default 1).' },
-        limit: { type: 'number', description: 'Items per page (max 50). Recommended: 10 to avoid large responses.' },
+        FindByString: { type: 'string', description: 'Partial city name or postal code.' },
+        Page: { type: 'number', description: 'Page number (default 1).' },
+        Limit: { type: 'number', description: 'Items per page (max 50). Recommended: 10 to avoid large responses.' },
       },
-      required: ['query'],
+      required: ['FindByString'],
     },
   },
   {
@@ -51,11 +51,11 @@ const addressTools: Tool[] = [
     inputSchema: {
       type: 'object',
       properties: {
-        cityName: { type: 'string', description: 'Settlement name or postal code.' },
-        page: { type: 'number', description: 'Page number (default 1).' },
-        limit: { type: 'number', description: 'Items per page (1-500). Recommended: 10 to avoid large responses.' },
+        CityName: { type: 'string', description: 'Settlement name or postal code.' },
+        Page: { type: 'number', description: 'Page number (default 1).' },
+        Limit: { type: 'number', description: 'Items per page (1-500). Recommended: 10 to avoid large responses.' },
       },
-      required: ['cityName'],
+      required: ['CityName'],
     },
   },
   {
@@ -65,11 +65,11 @@ const addressTools: Tool[] = [
     inputSchema: {
       type: 'object',
       properties: {
-        settlementRef: { type: 'string', description: 'Settlement reference ID.' },
-        streetName: { type: 'string', description: 'Street name or fragment.' },
-        limit: { type: 'number', description: 'Max items to return. Recommended: 10 to avoid large responses.' },
+        SettlementRef: { type: 'string', description: 'Settlement reference ID.' },
+        StreetName: { type: 'string', description: 'Street name or fragment.' },
+        Limit: { type: 'number', description: 'Max items to return. Recommended: 10 to avoid large responses.' },
       },
-      required: ['settlementRef', 'streetName'],
+      required: ['SettlementRef', 'StreetName'],
     },
   },
   {
@@ -79,25 +79,25 @@ const addressTools: Tool[] = [
     inputSchema: {
       type: 'object',
       properties: {
-        ref: { type: 'string', description: 'Specific warehouse reference (returns single warehouse).' },
-        cityName: { type: 'string', description: 'City name filter.' },
-        cityRef: { type: 'string', description: 'City reference from getCities.' },
-        settlementRef: { type: 'string', description: 'Settlement reference from searchSettlements.' },
-        warehouseId: { type: 'string', description: 'Warehouse number (e.g., "1" for Branch #1).' },
-        findByString: { type: 'string', description: 'Search string for warehouse name, address, or street.' },
-        typeOfWarehouseRef: {
+        Ref: { type: 'string', description: 'Specific warehouse reference (returns single warehouse).' },
+        CityName: { type: 'string', description: 'City name filter.' },
+        CityRef: { type: 'string', description: 'City reference from getCities.' },
+        SettlementRef: { type: 'string', description: 'Settlement reference from searchSettlements.' },
+        WarehouseId: { type: 'string', description: 'Warehouse number (e.g., "1" for Branch #1).' },
+        FindByString: { type: 'string', description: 'Search string for warehouse name, address, or street.' },
+        TypeOfWarehouseRef: {
           type: 'string',
           description: 'Filter by warehouse type (Branch, Postomat, Pickup Point).',
         },
-        bicycleParking: { type: 'string', description: 'Filter by bicycle parking availability (1/0).' },
-        postFinance: { type: 'string', description: 'Filter by NovaPay cash desk availability (1/0).' },
-        posTerminal: { type: 'string', description: 'Filter by POS terminal availability (1/0).' },
-        page: { type: 'number', description: 'Page number (default 1).' },
-        limit: {
+        BicycleParking: { type: 'string', description: 'Filter by bicycle parking availability (1/0).' },
+        PostFinance: { type: 'string', description: 'Filter by NovaPay cash desk availability (1/0).' },
+        POSTerminal: { type: 'string', description: 'Filter by POS terminal availability (1/0).' },
+        Page: { type: 'number', description: 'Page number (default 1).' },
+        Limit: {
           type: 'number',
           description: 'Items per page (default 50). Recommended: 10-20 to avoid large responses.',
         },
-        language: { type: 'string', description: 'Language code (UA, RU, EN).' },
+        Language: { type: 'string', description: 'Language code (UA, RU, EN).' },
       },
       required: [],
     },
@@ -109,13 +109,13 @@ const addressTools: Tool[] = [
     inputSchema: {
       type: 'object',
       properties: {
-        counterpartyRef: { type: 'string', description: 'Counterparty reference.' },
-        streetRef: { type: 'string', description: 'Street reference from address_search_streets.' },
-        buildingNumber: { type: 'string', description: 'Building number (required).' },
-        flat: { type: 'string', description: 'Apartment number (optional).' },
-        note: { type: 'string', description: 'Additional note (optional).' },
+        CounterpartyRef: { type: 'string', description: 'Counterparty reference.' },
+        StreetRef: { type: 'string', description: 'Street reference from address_search_streets.' },
+        BuildingNumber: { type: 'string', description: 'Building number (required).' },
+        Flat: { type: 'string', description: 'Apartment number (optional).' },
+        Note: { type: 'string', description: 'Additional note (optional).' },
       },
-      required: ['counterpartyRef', 'streetRef', 'buildingNumber'],
+      required: ['CounterpartyRef', 'StreetRef', 'BuildingNumber'],
     },
   },
   {
@@ -125,14 +125,14 @@ const addressTools: Tool[] = [
     inputSchema: {
       type: 'object',
       properties: {
-        ref: { type: 'string', description: 'Address reference to update.' },
-        counterpartyRef: { type: 'string', description: 'Counterparty reference.' },
-        streetRef: { type: 'string', description: 'Updated street reference.' },
-        buildingNumber: { type: 'string', description: 'Updated building number.' },
-        flat: { type: 'string', description: 'Updated apartment number.' },
-        note: { type: 'string', description: 'Updated note.' },
+        Ref: { type: 'string', description: 'Address reference to update.' },
+        CounterpartyRef: { type: 'string', description: 'Counterparty reference.' },
+        StreetRef: { type: 'string', description: 'Updated street reference.' },
+        BuildingNumber: { type: 'string', description: 'Updated building number.' },
+        Flat: { type: 'string', description: 'Updated apartment number.' },
+        Note: { type: 'string', description: 'Updated note.' },
       },
-      required: ['ref', 'counterpartyRef'],
+      required: ['Ref', 'CounterpartyRef'],
     },
   },
   {
@@ -142,9 +142,9 @@ const addressTools: Tool[] = [
     inputSchema: {
       type: 'object',
       properties: {
-        ref: { type: 'string', description: 'Address reference to delete.' },
+        Ref: { type: 'string', description: 'Address reference to delete.' },
       },
-      required: ['ref'],
+      required: ['Ref'],
     },
   },
 ];
@@ -187,10 +187,10 @@ export async function handleAddressTool(
 }
 
 async function handleGetSettlements(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
-  const ref = assertOptionalString(args?.ref, 'ref');
+  const ref = assertOptionalString(args?.Ref, 'Ref');
 
   const response = await context.client.address.getSettlements({
-    ...(ref ? { ref } : {}),
+    ...(ref ? { Ref: ref } : {}),
   });
 
   if (!response.success) {
@@ -207,12 +207,12 @@ async function handleGetSettlements(args: ToolArguments, context: ToolContext): 
 }
 
 async function handleGetSettlementCountryRegion(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
-  const areaRef = assertString(args?.areaRef, 'areaRef');
-  const ref = assertOptionalString(args?.ref, 'ref');
+  const areaRef = assertString(args?.AreaRef, 'AreaRef');
+  const ref = assertOptionalString(args?.Ref, 'Ref');
 
   const response = await context.client.address.getSettlementCountryRegion({
-    areaRef,
-    ...(ref ? { ref } : {}),
+    AreaRef: areaRef,
+    ...(ref ? { Ref: ref } : {}),
   });
 
   if (!response.success) {
@@ -230,14 +230,14 @@ async function handleGetSettlementCountryRegion(args: ToolArguments, context: To
 }
 
 async function handleSearchCities(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
-  const query = assertString(args?.query, 'query');
-  const page = assertOptionalNumber(args?.page, 'page') ?? 1;
-  const limit = assertOptionalNumber(args?.limit, 'limit') ?? 10;
+  const query = assertString(args?.FindByString, 'FindByString');
+  const page = assertOptionalNumber(args?.Page, 'Page') ?? 1;
+  const limit = assertOptionalNumber(args?.Limit, 'Limit') ?? 10;
 
   const response = await context.client.address.getCities({
-    findByString: query,
-    page,
-    limit,
+    FindByString: query,
+    Page: page,
+    Limit: limit,
   });
 
   const cities =
@@ -255,14 +255,14 @@ async function handleSearchCities(args: ToolArguments, context: ToolContext): Pr
 }
 
 async function handleSearchSettlements(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
-  const cityName = assertString(args?.cityName, 'cityName');
-  const page = assertOptionalNumber(args?.page, 'page') ?? 1;
-  const limit = assertOptionalNumber(args?.limit, 'limit') ?? 10;
+  const cityName = assertString(args?.CityName, 'CityName');
+  const page = assertOptionalNumber(args?.Page, 'Page') ?? 1;
+  const limit = assertOptionalNumber(args?.Limit, 'Limit') ?? 10;
 
   const response = await context.client.address.searchSettlements({
-    cityName,
-    page,
-    limit,
+    CityName: cityName,
+    Page: page,
+    Limit: limit,
   });
 
   const addresses = response.data?.[0]?.Addresses ?? [];
@@ -279,14 +279,14 @@ async function handleSearchSettlements(args: ToolArguments, context: ToolContext
 }
 
 async function handleSearchStreets(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
-  const settlementRef = assertString(args?.settlementRef, 'settlementRef');
-  const streetName = assertString(args?.streetName, 'streetName');
-  const limit = assertOptionalNumber(args?.limit, 'limit') ?? 10;
+  const settlementRef = assertString(args?.SettlementRef, 'SettlementRef');
+  const streetName = assertString(args?.StreetName, 'StreetName');
+  const limit = assertOptionalNumber(args?.Limit, 'Limit') ?? 10;
 
   const response = await context.client.address.searchSettlementStreets({
-    settlementRef,
-    streetName,
-    limit,
+    SettlementRef: settlementRef,
+    StreetName: streetName,
+    Limit: limit,
   });
 
   const addresses = response.data?.[0]?.Addresses ?? [];
@@ -303,39 +303,39 @@ async function handleSearchStreets(args: ToolArguments, context: ToolContext): P
 }
 
 async function handleGetWarehouses(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
-  const ref = assertOptionalString(args?.ref, 'ref');
-  const cityName = assertOptionalString(args?.cityName, 'cityName');
-  const cityRef = assertOptionalString(args?.cityRef, 'cityRef');
-  const settlementRef = assertOptionalString(args?.settlementRef, 'settlementRef');
-  const warehouseId = assertOptionalString(args?.warehouseId, 'warehouseId');
-  const findByString = assertOptionalString(args?.findByString, 'findByString');
-  const typeOfWarehouseRef = assertOptionalString(args?.typeOfWarehouseRef, 'typeOfWarehouseRef');
-  const bicycleParking = assertOptionalString(args?.bicycleParking, 'bicycleParking');
-  const postFinance = assertOptionalString(args?.postFinance, 'postFinance');
-  const posTerminal = assertOptionalString(args?.posTerminal, 'posTerminal');
-  const language = assertOptionalString(args?.language, 'language');
-  const page = assertOptionalNumber(args?.page, 'page') ?? 1;
-  const limit = assertOptionalNumber(args?.limit, 'limit') ?? 10;
+  const ref = assertOptionalString(args?.Ref, 'Ref');
+  const cityName = assertOptionalString(args?.CityName, 'CityName');
+  const cityRef = assertOptionalString(args?.CityRef, 'CityRef');
+  const settlementRef = assertOptionalString(args?.SettlementRef, 'SettlementRef');
+  const warehouseId = assertOptionalString(args?.WarehouseId, 'WarehouseId');
+  const findByString = assertOptionalString(args?.FindByString, 'FindByString');
+  const typeOfWarehouseRef = assertOptionalString(args?.TypeOfWarehouseRef, 'TypeOfWarehouseRef');
+  const bicycleParking = assertOptionalString(args?.BicycleParking, 'BicycleParking');
+  const postFinance = assertOptionalString(args?.PostFinance, 'PostFinance');
+  const posTerminal = assertOptionalString(args?.POSTerminal, 'POSTerminal');
+  const language = assertOptionalString(args?.Language, 'Language');
+  const page = assertOptionalNumber(args?.Page, 'Page') ?? 1;
+  const limit = assertOptionalNumber(args?.Limit, 'Limit') ?? 10;
 
-  // Allow search by ref without cityRef/settlementRef
+  // Allow search by Ref without CityRef/SettlementRef
   if (!ref && !cityRef && !settlementRef) {
-    throw new Error('ref, cityRef, or settlementRef is required to list warehouses');
+    throw new Error('Ref, CityRef, or SettlementRef is required to list warehouses');
   }
 
   const response = await context.client.address.getWarehouses({
-    ref,
-    cityName,
-    cityRef,
-    settlementRef,
-    warehouseId,
-    findByString,
-    typeOfWarehouseRef,
-    bicycleParking,
-    postFinance,
-    posTerminal,
-    language,
-    page,
-    limit,
+    ...(ref ? { Ref: ref } : {}),
+    ...(cityName ? { CityName: cityName } : {}),
+    ...(cityRef ? { CityRef: cityRef } : {}),
+    ...(settlementRef ? { SettlementRef: settlementRef } : {}),
+    ...(warehouseId ? { WarehouseId: warehouseId } : {}),
+    ...(findByString ? { FindByString: findByString } : {}),
+    ...(typeOfWarehouseRef ? { TypeOfWarehouseRef: typeOfWarehouseRef } : {}),
+    ...(bicycleParking ? { BicycleParking: bicycleParking } : {}),
+    ...(postFinance ? { PostFinance: postFinance } : {}),
+    ...(posTerminal ? { POSTerminal: posTerminal } : {}),
+    ...(language ? { Language: language } : {}),
+    Page: page,
+    Limit: limit,
   });
 
   if (!response.success) {
@@ -348,18 +348,18 @@ async function handleGetWarehouses(args: ToolArguments, context: ToolContext): P
 }
 
 async function handleSaveAddress(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
-  const counterpartyRef = assertString(args?.counterpartyRef, 'counterpartyRef');
-  const streetRef = assertString(args?.streetRef, 'streetRef');
-  const buildingNumber = assertString(args?.buildingNumber, 'buildingNumber');
-  const flat = assertOptionalString(args?.flat, 'flat');
-  const note = assertOptionalString(args?.note, 'note');
+  const counterpartyRef = assertString(args?.CounterpartyRef, 'CounterpartyRef');
+  const streetRef = assertString(args?.StreetRef, 'StreetRef');
+  const buildingNumber = assertString(args?.BuildingNumber, 'BuildingNumber');
+  const flat = assertOptionalString(args?.Flat, 'Flat');
+  const note = assertOptionalString(args?.Note, 'Note');
 
   const response = await context.client.address.save({
-    counterpartyRef,
-    streetRef,
-    buildingNumber,
-    flat,
-    note,
+    CounterpartyRef: counterpartyRef,
+    StreetRef: streetRef,
+    BuildingNumber: buildingNumber,
+    ...(flat !== undefined ? { Flat: flat } : {}),
+    ...(note !== undefined ? { Note: note } : {}),
   });
 
   if (!response.success) {
@@ -376,21 +376,21 @@ async function handleSaveAddress(args: ToolArguments, context: ToolContext): Pro
 }
 
 async function handleUpdateAddress(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
-  const ref = assertString(args?.ref, 'ref');
-  const counterpartyRef = assertString(args?.counterpartyRef, 'counterpartyRef');
+  const ref = assertString(args?.Ref, 'Ref');
+  const counterpartyRef = assertString(args?.CounterpartyRef, 'CounterpartyRef');
 
-  const streetRef = assertString(args?.streetRef, 'streetRef');
-  const buildingNumber = assertString(args?.buildingNumber, 'buildingNumber');
-  const flat = assertOptionalString(args?.flat, 'flat');
-  const note = assertOptionalString(args?.note, 'note');
+  const streetRef = assertString(args?.StreetRef, 'StreetRef');
+  const buildingNumber = assertString(args?.BuildingNumber, 'BuildingNumber');
+  const flat = assertOptionalString(args?.Flat, 'Flat');
+  const note = assertOptionalString(args?.Note, 'Note');
 
   const response = await context.client.address.update({
-    ref,
-    counterpartyRef,
-    streetRef,
-    buildingNumber,
-    flat,
-    note,
+    Ref: ref,
+    CounterpartyRef: counterpartyRef,
+    StreetRef: streetRef,
+    BuildingNumber: buildingNumber,
+    ...(flat !== undefined ? { Flat: flat } : {}),
+    ...(note !== undefined ? { Note: note } : {}),
   });
 
   if (!response.success) {
@@ -407,10 +407,10 @@ async function handleUpdateAddress(args: ToolArguments, context: ToolContext): P
 }
 
 async function handleDeleteAddress(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
-  const ref = assertString(args?.ref, 'ref');
+  const ref = assertString(args?.Ref, 'Ref');
 
   const response = await context.client.address.delete({
-    ref,
+    Ref: ref,
   });
 
   if (!response.success) {

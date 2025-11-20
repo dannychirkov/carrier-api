@@ -53,7 +53,7 @@ describe('address tools', () => {
         infoCodes: [],
       });
 
-      const result = await handleAddressTool('address_search_cities', { query: 'Київ' }, context);
+      const result = await handleAddressTool('address_search_cities', { FindByString: 'Київ' }, context);
       expect(result.isError).toBeFalsy();
     });
 
@@ -70,12 +70,12 @@ describe('address tools', () => {
         infoCodes: [],
       });
 
-      await handleAddressTool('address_search_cities', { query: 'Київ', page: 2, limit: 20 }, context);
+      await handleAddressTool('address_search_cities', { FindByString: 'Київ', Page: 2, Limit: 20 }, context);
 
       expect(context.client.address.getCities).toHaveBeenCalledWith({
-        findByString: 'Київ',
-        page: 2,
-        limit: 20,
+        FindByString: 'Київ',
+        Page: 2,
+        Limit: 20,
       });
     });
 
@@ -92,12 +92,12 @@ describe('address tools', () => {
         infoCodes: [],
       });
 
-      await handleAddressTool('address_search_cities', { query: 'test' }, context);
+      await handleAddressTool('address_search_cities', { FindByString: 'test' }, context);
 
       expect(context.client.address.getCities).toHaveBeenCalledWith({
-        findByString: 'test',
-        page: 1,
-        limit: 10,
+        FindByString: 'test',
+        Page: 1,
+        Limit: 10,
       });
     });
   });
@@ -107,7 +107,7 @@ describe('address tools', () => {
       const result = await handleAddressTool('address_get_warehouses', {}, context);
       expect(result.isError).toBe(true);
       const text = (result.content[0] as any).text;
-      expect(text).toContain('ref, cityRef, or settlementRef');
+      expect(text).toContain('Ref, CityRef, or SettlementRef');
     });
 
     it('successfully gets warehouses', async () => {
@@ -131,7 +131,7 @@ describe('address tools', () => {
         infoCodes: [],
       });
 
-      const result = await handleAddressTool('address_get_warehouses', { cityRef: 'city-ref' }, context);
+      const result = await handleAddressTool('address_get_warehouses', { CityRef: 'city-ref' }, context);
       expect(result.isError).toBeFalsy();
     });
   });
@@ -174,8 +174,8 @@ describe('address tools', () => {
         infoCodes: [],
       });
 
-      await handleAddressTool('address_get_settlements', { ref: 'area-ref-123' }, context);
-      expect(context.client.address.getSettlements).toHaveBeenCalledWith({ ref: 'area-ref-123' });
+      await handleAddressTool('address_get_settlements', { Ref: 'area-ref-123' }, context);
+      expect(context.client.address.getSettlements).toHaveBeenCalledWith({ Ref: 'area-ref-123' });
     });
   });
 
@@ -200,16 +200,16 @@ describe('address tools', () => {
         infoCodes: [],
       });
 
-      const result = await handleAddressTool('address_get_settlement_country_region', { areaRef: 'area-ref' }, context);
+      const result = await handleAddressTool('address_get_settlement_country_region', { AreaRef: 'area-ref' }, context);
       expect(result.isError).toBeFalsy();
-      expect(context.client.address.getSettlementCountryRegion).toHaveBeenCalledWith({ areaRef: 'area-ref' });
+      expect(context.client.address.getSettlementCountryRegion).toHaveBeenCalledWith({ AreaRef: 'area-ref' });
     });
 
     it('requires areaRef parameter', async () => {
       const result = await handleAddressTool('address_get_settlement_country_region', {}, context);
       expect(result.isError).toBe(true);
       const text = (result.content[0] as any).text;
-      expect(text).toContain('areaRef');
+      expect(text).toContain('AreaRef');
     });
 
     it('passes optional ref parameter', async () => {
@@ -225,10 +225,10 @@ describe('address tools', () => {
         infoCodes: [],
       });
 
-      await handleAddressTool('address_get_settlement_country_region', { areaRef: 'area-ref', ref: 'region-ref' }, context);
+      await handleAddressTool('address_get_settlement_country_region', { AreaRef: 'area-ref', Ref: 'region-ref' }, context);
       expect(context.client.address.getSettlementCountryRegion).toHaveBeenCalledWith({
-        areaRef: 'area-ref',
-        ref: 'region-ref'
+        AreaRef: 'area-ref',
+        Ref: 'region-ref'
       });
     });
   });

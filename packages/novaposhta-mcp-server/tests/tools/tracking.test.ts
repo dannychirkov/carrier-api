@@ -52,7 +52,7 @@ describe('tracking tools', () => {
 
       const result = await handleTrackingTool(
         'track_document',
-        { documentNumber: '20400048799000' },
+        { DocumentNumber: '20400048799000' },
         baseContext,
       );
 
@@ -64,7 +64,7 @@ describe('tracking tools', () => {
     });
 
     it('fails validation for invalid tracking number', async () => {
-      const result = await handleTrackingTool('track_document', { documentNumber: '123' }, baseContext);
+      const result = await handleTrackingTool('track_document', { DocumentNumber: '123' }, baseContext);
 
       expect(result.isError).toBe(true);
       expect(result.content[0]?.type).toBe('text');
@@ -72,7 +72,7 @@ describe('tracking tools', () => {
       expect(text).toContain('14-digit');
     });
 
-    it('sanitizes and validates phone numbers', async () => {
+    it('sanitizes and validates Phone numbers', async () => {
       vi.mocked(baseContext.client.tracking.trackDocument).mockResolvedValue({
         Number: '20400048799000',
         Status: 'In Transit',
@@ -80,7 +80,7 @@ describe('tracking tools', () => {
 
       const result = await handleTrackingTool(
         'track_document',
-        { documentNumber: '20400048799000', phone: '+380501234567' },
+        { DocumentNumber: '20400048799000', Phone: '+380501234567' },
         baseContext,
       );
 
@@ -93,7 +93,7 @@ describe('tracking tools', () => {
 
       const result = await handleTrackingTool(
         'track_document',
-        { documentNumber: '20400048799000' },
+        { DocumentNumber: '20400048799000' },
         baseContext,
       );
 
@@ -122,7 +122,7 @@ describe('tracking tools', () => {
 
       const result = await handleTrackingTool(
         'track_multiple_documents',
-        { documentNumbers: ['20400048799000', '20400048799001'] },
+        { DocumentNumbers: ['20400048799000', '20400048799001'] },
         baseContext,
       );
 
@@ -133,7 +133,7 @@ describe('tracking tools', () => {
     });
 
     it('fails when no tracking numbers provided', async () => {
-      const result = await handleTrackingTool('track_multiple_documents', { documentNumbers: [] }, baseContext);
+      const result = await handleTrackingTool('track_multiple_documents', { DocumentNumbers: [] }, baseContext);
 
       expect(result.isError).toBe(true);
       const text = (result.content[0] as any).text;
@@ -143,7 +143,7 @@ describe('tracking tools', () => {
     it('validates all tracking numbers', async () => {
       const result = await handleTrackingTool(
         'track_multiple_documents',
-        { documentNumbers: ['20400048799000', 'invalid'] },
+        { DocumentNumbers: ['20400048799000', 'invalid'] },
         baseContext,
       );
 
@@ -175,14 +175,14 @@ describe('tracking tools', () => {
 
       const result = await handleTrackingTool(
         'get_document_movement',
-        { documentNumbers: ['20400048799000'], showDeliveryDetails: true },
+        { DocumentNumbers: ['20400048799000'], ShowDeliveryDetails: true },
         baseContext,
       );
 
       expect(result.isError).toBeFalsy();
       expect(baseContext.client.tracking.getDocumentMovement).toHaveBeenCalledWith({
-        documents: [{ documentNumber: '20400048799000' }],
-        showDeliveryDetails: true,
+        Documents: [{ DocumentNumber: '20400048799000' }],
+        ShowDeliveryDetails: true,
       });
     });
   });
@@ -221,7 +221,7 @@ describe('tracking tools', () => {
 
       const result = await handleTrackingTool(
         'track_multiple',
-        { documentNumbers: ['20400048799000', '20400048799001'] },
+        { DocumentNumbers: ['20400048799000', '20400048799001'] },
         baseContext,
       );
 
@@ -249,7 +249,7 @@ describe('tracking tools', () => {
 
       const result = await handleTrackingTool(
         'track_multiple',
-        { documentNumbers: ['20400048799999'] },
+        { DocumentNumbers: ['20400048799999'] },
         baseContext,
       );
 
@@ -262,7 +262,7 @@ describe('tracking tools', () => {
     it('validates all tracking numbers', async () => {
       const result = await handleTrackingTool(
         'track_multiple',
-        { documentNumbers: ['20400048799000', 'invalid'] },
+        { DocumentNumbers: ['20400048799000', 'invalid'] },
         baseContext,
       );
 
@@ -272,7 +272,7 @@ describe('tracking tools', () => {
     });
 
     it('requires at least one tracking number', async () => {
-      const result = await handleTrackingTool('track_multiple', { documentNumbers: [] }, baseContext);
+      const result = await handleTrackingTool('track_multiple', { DocumentNumbers: [] }, baseContext);
 
       expect(result.isError).toBe(true);
       const text = (result.content[0] as any).text;
@@ -297,9 +297,9 @@ describe('tracking tools', () => {
       const result = await handleTrackingTool(
         'get_document_list',
         {
-          dateTimeFrom: '01.11.2024',
-          dateTimeTo: '19.11.2024',
-          page: 1,
+          DateTimeFrom: '01.11.2024',
+          DateTimeTo: '19.11.2024',
+          Page: 1,
         },
         baseContext,
       );
@@ -311,8 +311,8 @@ describe('tracking tools', () => {
       const result = await handleTrackingTool(
         'get_document_list',
         {
-          dateTimeFrom: '2024-11-01',
-          dateTimeTo: '19.11.2024',
+          DateTimeFrom: '2024-11-01',
+          DateTimeTo: '19.11.2024',
         },
         baseContext,
       );
@@ -326,8 +326,8 @@ describe('tracking tools', () => {
       const result = await handleTrackingTool(
         'get_document_list',
         {
-          dateTimeFrom: '32.11.2024',
-          dateTimeTo: '19.11.2024',
+          DateTimeFrom: '32.11.2024',
+          DateTimeTo: '19.11.2024',
         },
         baseContext,
       );

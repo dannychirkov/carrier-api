@@ -11,28 +11,28 @@ import type {
 
 import type { ToolArguments, ToolContext } from '../types/mcp.js';
 import { toErrorResult } from '../utils/error-handler.js';
-import { assertOptionalString, assertString } from '../utils/validation.js';
+import { assertNumber, assertOptionalString, assertString } from '../utils/validation.js';
 import { createTextResult, formatAsJson } from '../utils/tool-response.js';
 
 const waybillTools: Tool[] = [
   {
     name: 'waybill_calculate_cost',
     description:
-      'Calculate delivery cost and optional delivery date estimation for a shipment. Doc 1.2 explains that every Nova Poshta call sends apiKey/modelName/calledMethod/methodProperties, so this helper either forwards your raw InternetDocument payload or builds one from typed fields.',
+      'Calculate delivery cost and optional delivery date estimation for a shipment. Doc 1.2 explains that every Nova Poshta call sends apiKey/modelName/calledMethod/methodProperties, so this helper either forwards your raw InternetDocument payload or builds one from typed fields (CitySender, CityRecipient, ServiceType, CargoType, Cost, Weight, SeatsAmount).',
     inputSchema: {
       type: 'object',
       properties: {
         request: {
           type: 'object',
-          description: 'Raw Nova Poshta price calculation payload (citySender, cityRecipient, serviceType, cost, weight, cargoType, seatsAmount).',
+          description: 'Raw Nova Poshta price calculation payload (CitySender, CityRecipient, ServiceType, CargoType, Cost, Weight, SeatsAmount).',
         },
-        citySender: { type: 'string', description: 'Sender city reference.' },
-        cityRecipient: { type: 'string', description: 'Recipient city reference.' },
-        serviceType: { type: 'string', description: 'Service type (WarehouseWarehouse, WarehouseDoors, etc.).' },
-        cargoType: { type: 'string', description: 'Cargo type (Parcel, Documents, TiresWheels, etc.).' },
-        cost: { type: 'number', description: 'Declared value in UAH.' },
-        weight: { type: 'number', description: 'Weight in kg.' },
-        seatsAmount: { type: 'number', description: 'Number of seats.' },
+        CitySender: { type: 'string', description: 'Sender city reference.' },
+        CityRecipient: { type: 'string', description: 'Recipient city reference.' },
+        ServiceType: { type: 'string', description: 'Service type (WarehouseWarehouse, WarehouseDoors, etc.).' },
+        CargoType: { type: 'string', description: 'Cargo type (Parcel, Documents, TiresWheels, etc.).' },
+        Cost: { type: 'number', description: 'Declared value in UAH.' },
+        Weight: { type: 'number', description: 'Weight in kg.' },
+        SeatsAmount: { type: 'number', description: 'Number of seats.' },
       },
       required: [],
     },
@@ -40,7 +40,7 @@ const waybillTools: Tool[] = [
   {
     name: 'waybill_get_estimate',
     description:
-      'Get complete shipment estimate (price + delivery date) in one call via InternetDocument/getDocumentPrice and getDocumentDeliveryDate (doc 1.2). Combines cost calculation and delivery date estimation for convenience. Requires same parameters as waybill_calculate_cost.',
+      'Get complete shipment estimate (price + delivery date) in one call via InternetDocument/getDocumentPrice and getDocumentDeliveryDate (doc 1.2). Combines cost calculation and delivery date estimation for convenience. Requires the same PascalCase parameters as waybill_calculate_cost.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -48,13 +48,13 @@ const waybillTools: Tool[] = [
           type: 'object',
           description: 'Raw Nova Poshta price calculation payload.',
         },
-        citySender: { type: 'string', description: 'Sender city reference.' },
-        cityRecipient: { type: 'string', description: 'Recipient city reference.' },
-        serviceType: { type: 'string', description: 'Service type (WarehouseWarehouse, WarehouseDoors, etc.).' },
-        cargoType: { type: 'string', description: 'Cargo type (Parcel, Documents, TiresWheels, etc.).' },
-        cost: { type: 'number', description: 'Declared value in UAH.' },
-        weight: { type: 'number', description: 'Weight in kg.' },
-        seatsAmount: { type: 'number', description: 'Number of seats.' },
+        CitySender: { type: 'string', description: 'Sender city reference.' },
+        CityRecipient: { type: 'string', description: 'Recipient city reference.' },
+        ServiceType: { type: 'string', description: 'Service type (WarehouseWarehouse, WarehouseDoors, etc.).' },
+        CargoType: { type: 'string', description: 'Cargo type (Parcel, Documents, TiresWheels, etc.).' },
+        Cost: { type: 'number', description: 'Declared value in UAH.' },
+        Weight: { type: 'number', description: 'Weight in kg.' },
+        SeatsAmount: { type: 'number', description: 'Number of seats.' },
       },
       required: [],
     },
@@ -170,7 +170,7 @@ const waybillTools: Tool[] = [
   {
     name: 'waybill_get_delivery_date',
     description:
-      'Get estimated delivery date for a city pair and service type. Doc 1.2 outlines the generic Nova Poshta envelope, and this helper builds the methodProperties (citySender, cityRecipient, serviceType, optional dateTime) expected by the delivery-date method.',
+      'Get estimated delivery date for a city pair and service type. Doc 1.2 outlines the generic Nova Poshta envelope, and this helper builds the methodProperties (CitySender, CityRecipient, ServiceType, optional DateTime) expected by the delivery-date method.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -178,10 +178,10 @@ const waybillTools: Tool[] = [
           type: 'object',
           description: 'Raw Nova Poshta delivery date payload.',
         },
-        citySender: { type: 'string', description: 'Sender city reference.' },
-        cityRecipient: { type: 'string', description: 'Recipient city reference.' },
-        serviceType: { type: 'string', description: 'Service type.' },
-        dateTime: { type: 'string', description: 'Optional shipment date (dd.mm.yyyy).' },
+        CitySender: { type: 'string', description: 'Sender city reference.' },
+        CityRecipient: { type: 'string', description: 'Recipient city reference.' },
+        ServiceType: { type: 'string', description: 'Service type.' },
+        DateTime: { type: 'string', description: 'Optional shipment date (dd.mm.yyyy).' },
       },
       required: [],
     },
@@ -232,9 +232,9 @@ async function handleCalculateCost(args: ToolArguments, context: ToolContext): P
   const [price, delivery] = await Promise.all([
     context.client.waybill.getPrice(request),
     context.client.waybill.getDeliveryDate({
-      citySender: request.citySender,
-      cityRecipient: request.cityRecipient,
-      serviceType: request.serviceType,
+      CitySender: request.CitySender,
+      CityRecipient: request.CityRecipient,
+      ServiceType: request.ServiceType,
     }),
   ]);
 
@@ -280,7 +280,7 @@ async function handleDeleteWaybill(args: ToolArguments, context: ToolContext): P
     throw new Error('documentRefs must contain at least one DocumentRef');
   }
 
-  const request: DeleteWaybillRequest = { documentRefs };
+  const request: DeleteWaybillRequest = { DocumentRefs: documentRefs };
   const response = await context.client.waybill.delete(request);
 
   return createTextResult(
@@ -308,87 +308,45 @@ async function handleDeliveryDate(args: ToolArguments, context: ToolContext): Pr
 }
 
 function buildPriceRequest(args: ToolArguments): PriceCalculationRequest {
-  if (args?.request && typeof args.request === 'object') {
-    const req = args.request as Record<string, unknown>;
+  const payload = resolvePayload(args);
 
-    // Validate required fields
-    const citySender = assertString(req.citySender, 'request.citySender');
-    const cityRecipient = assertString(req.cityRecipient, 'request.cityRecipient');
-    const serviceType = assertString(req.serviceType, 'request.serviceType');
-    const cargoType = assertString(req.cargoType, 'request.cargoType');
-    const cost = Number(req.cost);
-    const weight = Number(req.weight);
-    const seatsAmount = Number(req.seatsAmount ?? 1);
-
-    if ([cost, weight, seatsAmount].some(value => Number.isNaN(value))) {
-      throw new Error('request.cost, request.weight, and request.seatsAmount must be valid numbers');
-    }
-
-    return {
-      ...req,
-      citySender,
-      cityRecipient,
-      serviceType,
-      cargoType,
-      cost,
-      weight,
-      seatsAmount,
-    } as PriceCalculationRequest;
-  }
-
-  const citySender = assertString(args?.citySender, 'citySender');
-  const cityRecipient = assertString(args?.cityRecipient, 'cityRecipient');
-  const serviceType = assertString(args?.serviceType, 'serviceType');
-  const cargoType = assertString(args?.cargoType, 'cargoType');
-  const cost = Number(args?.cost);
-  const weight = Number(args?.weight);
-  const seatsAmount = Number(args?.seatsAmount ?? 1);
-
-  if ([cost, weight, seatsAmount].some(value => Number.isNaN(value))) {
-    throw new Error('cost, weight, and seatsAmount must be valid numbers');
-  }
+  const CitySender = assertString(payload['CitySender'], 'CitySender');
+  const CityRecipient = assertString(payload['CityRecipient'], 'CityRecipient');
+  const ServiceType = assertString(payload['ServiceType'], 'ServiceType');
+  const CargoType = assertString(payload['CargoType'], 'CargoType');
+  const Cost = assertNumber(payload['Cost'], 'Cost');
+  const Weight = assertNumber(payload['Weight'], 'Weight');
+  const SeatsAmount = assertNumber(payload['SeatsAmount'] ?? 1, 'SeatsAmount');
 
   return {
-    citySender,
-    cityRecipient,
-    serviceType: serviceType as PriceCalculationRequest['serviceType'],
-    cargoType: cargoType as PriceCalculationRequest['cargoType'],
-    cost,
-    weight,
-    seatsAmount,
-  };
+    ...(payload as Record<string, unknown>),
+    CitySender,
+    CityRecipient,
+    ServiceType,
+    CargoType,
+    Cost,
+    Weight,
+    SeatsAmount,
+  } as PriceCalculationRequest;
 }
 
 function buildDeliveryDateRequest(args: ToolArguments): DeliveryDateRequest {
-  if (args?.request && typeof args.request === 'object') {
-    const req = args.request as Record<string, unknown>;
-
-    // Validate required fields
-    const citySender = assertString(req.citySender, 'request.citySender');
-    const cityRecipient = assertString(req.cityRecipient, 'request.cityRecipient');
-    const serviceType = assertString(req.serviceType, 'request.serviceType');
-    const dateTime = assertOptionalString(req.dateTime, 'request.dateTime');
-
-    return {
-      ...req,
-      citySender,
-      cityRecipient,
-      serviceType,
-      ...(dateTime ? { dateTime } : {}),
-    } as DeliveryDateRequest;
-  }
-
-  const citySender = assertString(args?.citySender, 'citySender');
-  const cityRecipient = assertString(args?.cityRecipient, 'cityRecipient');
-  const serviceType = assertString(args?.serviceType, 'serviceType');
-  const dateTime = assertOptionalString(args?.dateTime, 'dateTime');
+  const payload = resolvePayload(args);
+  const CitySender = assertString(payload['CitySender'], 'CitySender');
+  const CityRecipient = assertString(payload['CityRecipient'], 'CityRecipient');
+  const ServiceType = assertString(payload['ServiceType'], 'ServiceType');
+  const DateTime = assertOptionalString(payload['DateTime'], 'DateTime');
 
   const request: DeliveryDateRequest = {
-    citySender,
-    cityRecipient,
-    serviceType: serviceType as DeliveryDateRequest['serviceType'],
-    ...(dateTime ? { dateTime: dateTime as DeliveryDateRequest['dateTime'] } : {}),
+    ...(payload as Record<string, unknown>),
+    CitySender,
+    CityRecipient,
+    ServiceType,
   };
+
+  if (DateTime) {
+    request.DateTime = DateTime;
+  }
 
   return request;
 }
@@ -475,4 +433,15 @@ async function handleDeleteBatch(args: ToolArguments, context: ToolContext): Pro
     }),
     { response },
   );
+}
+
+function resolvePayload(args: ToolArguments): Record<string, unknown> {
+  const requestPayload = (args && typeof args === 'object' ? args : {}) as Record<string, unknown>;
+  const nested = requestPayload['request'];
+
+  if (nested && typeof nested === 'object') {
+    return nested as Record<string, unknown>;
+  }
+
+  return requestPayload;
 }

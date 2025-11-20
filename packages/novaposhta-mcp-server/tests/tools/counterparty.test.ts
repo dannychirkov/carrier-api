@@ -60,27 +60,24 @@ describe('counterparty tools', () => {
 
       const result = await handleCounterpartyTool(
         'counterparty_get_counterparties',
-        { counterpartyProperty: 'Sender' },
+        { CounterpartyProperty: 'Sender' },
         context,
       );
 
       expect(result.isError).toBeFalsy();
       expect(context.client.counterparty.getCounterparties).toHaveBeenCalledWith({
-        counterpartyProperty: 'Sender',
-        page: undefined,
-        findByString: undefined,
-        cityRef: undefined,
+        CounterpartyProperty: 'Sender',
       });
       const text = (result.content[0] as any).text;
       expect(text).toContain('counterparty-ref-123');
     });
 
-    it('requires counterpartyProperty', async () => {
+    it('requires CounterpartyProperty', async () => {
       const result = await handleCounterpartyTool('counterparty_get_counterparties', {}, context);
 
       expect(result.isError).toBe(true);
       const text = (result.content[0] as any).text;
-      expect(text).toContain('counterpartyProperty');
+      expect(text).toContain('CounterpartyProperty');
     });
 
     it('accepts search filters', async () => {
@@ -99,19 +96,19 @@ describe('counterparty tools', () => {
       await handleCounterpartyTool(
         'counterparty_get_counterparties',
         {
-          counterpartyProperty: 'Recipient',
-          findByString: 'John',
-          cityRef: 'city-123',
-          page: 2,
+          CounterpartyProperty: 'Recipient',
+          FindByString: 'John',
+          CityRef: 'city-123',
+          Page: 2,
         },
         context,
       );
 
       expect(context.client.counterparty.getCounterparties).toHaveBeenCalledWith({
-        counterpartyProperty: 'Recipient',
-        page: 2,
-        findByString: 'John',
-        cityRef: 'city-123',
+        CounterpartyProperty: 'Recipient',
+        Page: 2,
+        FindByString: 'John',
+        CityRef: 'city-123',
       });
     });
   });
@@ -139,7 +136,7 @@ describe('counterparty tools', () => {
 
       const result = await handleCounterpartyTool(
         'counterparty_get_addresses',
-        { ref: 'counterparty-ref', counterpartyProperty: 'Sender' },
+        { Ref: 'counterparty-ref', CounterpartyProperty: 'Sender' },
         context,
       );
 
@@ -148,12 +145,12 @@ describe('counterparty tools', () => {
       expect(text).toContain('address-ref-123');
     });
 
-    it('requires ref', async () => {
+    it('requires Ref', async () => {
       const result = await handleCounterpartyTool('counterparty_get_addresses', {}, context);
 
       expect(result.isError).toBe(true);
       const text = (result.content[0] as any).text;
-      expect(text).toContain('ref');
+      expect(text).toContain('Ref');
     });
   });
 
@@ -180,7 +177,7 @@ describe('counterparty tools', () => {
 
       const result = await handleCounterpartyTool(
         'counterparty_get_contact_persons',
-        { ref: 'counterparty-ref' },
+        { Ref: 'counterparty-ref' },
         context,
       );
 
@@ -212,11 +209,11 @@ describe('counterparty tools', () => {
       const result = await handleCounterpartyTool(
         'counterparty_save',
         {
-          counterpartyType: 'PrivatePerson',
-          counterpartyProperty: 'Sender',
-          firstName: 'Іван',
-          lastName: 'Іванов',
-          phone: '380501234567',
+          CounterpartyType: 'PrivatePerson',
+          CounterpartyProperty: 'Sender',
+          FirstName: 'Іван',
+          LastName: 'Іванов',
+          Phone: '380501234567',
         },
         context,
       );
@@ -247,11 +244,11 @@ describe('counterparty tools', () => {
       const result = await handleCounterpartyTool(
         'counterparty_save',
         {
-          counterpartyType: 'Organization',
-          counterpartyProperty: 'Sender',
-          phone: '380501234567',
-          ownershipForm: 'ownership-ref',
-          edrpou: '12345678',
+          CounterpartyType: 'Organization',
+          CounterpartyProperty: 'Sender',
+          Phone: '380501234567',
+          OwnershipForm: 'ownership-ref',
+          EDRPOU: '12345678',
         },
         context,
       );
@@ -261,14 +258,14 @@ describe('counterparty tools', () => {
       expect(text).toContain('org-counterparty-ref');
     });
 
-    it('requires phone number', async () => {
+    it('requires Phone number', async () => {
       const result = await handleCounterpartyTool(
         'counterparty_save',
         {
-          counterpartyType: 'PrivatePerson',
-          counterpartyProperty: 'Sender',
-          firstName: 'Іван',
-          lastName: 'Іванов',
+          CounterpartyType: 'PrivatePerson',
+          CounterpartyProperty: 'Sender',
+          FirstName: 'Іван',
+          LastName: 'Іванов',
         },
         context,
       );
@@ -299,10 +296,10 @@ describe('counterparty tools', () => {
       const result = await handleCounterpartyTool(
         'counterparty_update',
         {
-          ref: 'counterparty-ref',
-          counterpartyProperty: 'Sender',
-          firstName: 'Updated',
-          lastName: 'Name',
+          Ref: 'counterparty-ref',
+          CounterpartyProperty: 'Sender',
+          FirstName: 'Updated',
+          LastName: 'Name',
         },
         context,
       );
@@ -310,7 +307,7 @@ describe('counterparty tools', () => {
       expect(result.isError).toBeFalsy();
     });
 
-    it('requires ref and counterpartyProperty', async () => {
+    it('requires ref and CounterpartyProperty', async () => {
       const result = await handleCounterpartyTool('counterparty_update', {}, context);
 
       expect(result.isError).toBe(true);
@@ -333,7 +330,7 @@ describe('counterparty tools', () => {
 
       const result = await handleCounterpartyTool(
         'counterparty_delete',
-        { ref: 'counterparty-ref' },
+        { Ref: 'counterparty-ref' },
         context,
       );
 
@@ -371,7 +368,7 @@ describe('counterparty tools', () => {
 
       const result = await handleCounterpartyTool(
         'counterparty_get_options',
-        { ref: 'counterparty-ref' },
+        { Ref: 'counterparty-ref' },
         context,
       );
 

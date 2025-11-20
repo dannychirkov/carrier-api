@@ -13,14 +13,14 @@ const contactPersonTools: Tool[] = [
     inputSchema: {
       type: 'object',
       properties: {
-        counterpartyRef: { type: 'string', description: 'Counterparty reference from getCounterparties.' },
-        firstName: { type: 'string', description: 'First name (required).' },
-        middleName: { type: 'string', description: 'Middle name (optional).' },
-        lastName: { type: 'string', description: 'Last name (required).' },
-        phone: { type: 'string', description: 'Phone number 380XXXXXXXXX (required).' },
-        email: { type: 'string', description: 'Email address (optional).' }
+        CounterpartyRef: { type: 'string', description: 'Counterparty reference from getCounterparties.' },
+        FirstName: { type: 'string', description: 'First name (required).' },
+        MiddleName: { type: 'string', description: 'Middle name (optional).' },
+        LastName: { type: 'string', description: 'Last name (required).' },
+        Phone: { type: 'string', description: 'Phone number 380XXXXXXXXX (required).' },
+        Email: { type: 'string', description: 'Email address (optional).' }
       },
-      required: ['counterpartyRef', 'firstName', 'lastName', 'phone']
+      required: ['CounterpartyRef', 'FirstName', 'LastName', 'Phone']
     }
   },
   {
@@ -30,15 +30,15 @@ const contactPersonTools: Tool[] = [
     inputSchema: {
       type: 'object',
       properties: {
-        ref: { type: 'string', description: 'Contact person reference to update.' },
-        counterpartyRef: { type: 'string', description: 'Counterparty reference.' },
-        firstName: { type: 'string', description: 'Updated first name.' },
-        middleName: { type: 'string', description: 'Updated middle name.' },
-        lastName: { type: 'string', description: 'Updated last name.' },
-        phone: { type: 'string', description: 'Updated phone.' },
-        email: { type: 'string', description: 'Updated email.' }
+        Ref: { type: 'string', description: 'Contact person reference to update.' },
+        CounterpartyRef: { type: 'string', description: 'Counterparty reference.' },
+        FirstName: { type: 'string', description: 'Updated first name.' },
+        MiddleName: { type: 'string', description: 'Updated middle name.' },
+        LastName: { type: 'string', description: 'Updated last name.' },
+        Phone: { type: 'string', description: 'Updated phone.' },
+        Email: { type: 'string', description: 'Updated email.' }
       },
-      required: ['ref', 'counterpartyRef']
+      required: ['Ref', 'CounterpartyRef']
     }
   },
   {
@@ -48,10 +48,10 @@ const contactPersonTools: Tool[] = [
     inputSchema: {
       type: 'object',
       properties: {
-        ref: { type: 'string', description: 'Contact person reference to delete.' },
-        counterpartyRef: { type: 'string', description: 'Counterparty reference.' }
+        Ref: { type: 'string', description: 'Contact person reference to delete.' },
+        CounterpartyRef: { type: 'string', description: 'Counterparty reference.' }
       },
-      required: ['ref', 'counterpartyRef']
+      required: ['Ref', 'CounterpartyRef']
     }
   },
 ];
@@ -82,20 +82,20 @@ export async function handleContactPersonTool(
 }
 
 async function handleSaveContactPerson(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
-  const counterpartyRef = assertString(args?.counterpartyRef, 'counterpartyRef');
-  const firstName = assertString(args?.firstName, 'firstName');
-  const lastName = assertString(args?.lastName, 'lastName');
-  const phone = assertString(args?.phone, 'phone');
-  const middleName = assertOptionalString(args?.middleName, 'middleName');
-  const email = assertOptionalString(args?.email, 'email');
+  const counterpartyRef = assertString(args?.CounterpartyRef, 'CounterpartyRef');
+  const firstName = assertString(args?.FirstName, 'FirstName');
+  const lastName = assertString(args?.LastName, 'LastName');
+  const phone = assertString(args?.Phone, 'Phone');
+  const middleName = assertOptionalString(args?.MiddleName, 'MiddleName');
+  const email = assertOptionalString(args?.Email, 'Email');
 
   const response = await context.client.contactPerson.save({
-    counterpartyRef,
-    firstName,
-    lastName,
-    phone,
-    middleName,
-    email,
+    CounterpartyRef: counterpartyRef,
+    FirstName: firstName,
+    LastName: lastName,
+    Phone: phone,
+    ...(middleName ? { MiddleName: middleName } : {}),
+    ...(email ? { Email: email } : {}),
   });
 
   if (!response.success) {
@@ -112,17 +112,22 @@ async function handleSaveContactPerson(args: ToolArguments, context: ToolContext
 }
 
 async function handleUpdateContactPerson(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
-  const ref = assertString(args?.ref, 'ref');
-  const counterpartyRef = assertString(args?.counterpartyRef, 'counterpartyRef');
+  const ref = assertString(args?.Ref, 'Ref');
+  const counterpartyRef = assertString(args?.CounterpartyRef, 'CounterpartyRef');
+  const firstName = assertOptionalString(args?.FirstName, 'FirstName');
+  const middleName = assertOptionalString(args?.MiddleName, 'MiddleName');
+  const lastName = assertOptionalString(args?.LastName, 'LastName');
+  const phone = assertOptionalString(args?.Phone, 'Phone');
+  const email = assertOptionalString(args?.Email, 'Email');
 
   const response = await context.client.contactPerson.update({
-    ref,
-    counterpartyRef,
-    firstName: assertOptionalString(args?.firstName, 'firstName'),
-    middleName: assertOptionalString(args?.middleName, 'middleName'),
-    lastName: assertOptionalString(args?.lastName, 'lastName'),
-    phone: assertOptionalString(args?.phone, 'phone'),
-    email: assertOptionalString(args?.email, 'email'),
+    Ref: ref,
+    CounterpartyRef: counterpartyRef,
+    ...(firstName !== undefined ? { FirstName: firstName } : {}),
+    ...(middleName !== undefined ? { MiddleName: middleName } : {}),
+    ...(lastName !== undefined ? { LastName: lastName } : {}),
+    ...(phone !== undefined ? { Phone: phone } : {}),
+    ...(email !== undefined ? { Email: email } : {}),
   });
 
   if (!response.success) {
@@ -139,12 +144,12 @@ async function handleUpdateContactPerson(args: ToolArguments, context: ToolConte
 }
 
 async function handleDeleteContactPerson(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
-  const ref = assertString(args?.ref, 'ref');
-  const counterpartyRef = assertString(args?.counterpartyRef, 'counterpartyRef');
+  const ref = assertString(args?.Ref, 'Ref');
+  const counterpartyRef = assertString(args?.CounterpartyRef, 'CounterpartyRef');
 
   const response = await context.client.contactPerson.delete({
-    ref,
-    counterpartyRef,
+    Ref: ref,
+    CounterpartyRef: counterpartyRef,
   });
 
   if (!response.success) {

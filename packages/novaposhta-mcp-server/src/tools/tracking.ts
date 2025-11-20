@@ -20,16 +20,16 @@ const trackingTools: Tool[] = [
     inputSchema: {
       type: 'object',
       properties: {
-        documentNumber: {
+        DocumentNumber: {
           type: 'string',
           description: 'Nova Poshta tracking number (14 digits).',
         },
-        phone: {
+        Phone: {
           type: 'string',
           description: 'Optional recipient phone in international format (380XXXXXXXXX).',
         },
       },
-      required: ['documentNumber'],
+      required: ['DocumentNumber'],
     },
   },
   {
@@ -39,7 +39,7 @@ const trackingTools: Tool[] = [
     inputSchema: {
       type: 'object',
       properties: {
-        documentNumbers: {
+        DocumentNumbers: {
           type: 'array',
           description: 'List of tracking numbers to check.',
           items: {
@@ -47,7 +47,7 @@ const trackingTools: Tool[] = [
           },
         },
       },
-      required: ['documentNumbers'],
+      required: ['DocumentNumbers'],
     },
   },
   {
@@ -57,7 +57,7 @@ const trackingTools: Tool[] = [
     inputSchema: {
       type: 'object',
       properties: {
-        documentNumbers: {
+        DocumentNumbers: {
           type: 'array',
           description: 'List of tracking numbers (14 digits each).',
           items: {
@@ -65,7 +65,7 @@ const trackingTools: Tool[] = [
           },
         },
       },
-      required: ['documentNumbers'],
+      required: ['DocumentNumbers'],
     },
   },
   {
@@ -75,18 +75,18 @@ const trackingTools: Tool[] = [
     inputSchema: {
       type: 'object',
       properties: {
-        documentNumbers: {
+        DocumentNumbers: {
           type: 'array',
           items: {
             type: 'string',
           },
         },
-        showDeliveryDetails: {
+        ShowDeliveryDetails: {
           type: 'boolean',
           description: 'Include extended delivery checkpoints.',
         },
       },
-      required: ['documentNumbers'],
+      required: ['DocumentNumbers'],
     },
   },
   {
@@ -96,24 +96,24 @@ const trackingTools: Tool[] = [
     inputSchema: {
       type: 'object',
       properties: {
-        dateTimeFrom: {
+        DateTimeFrom: {
           type: 'string',
           description: 'Start date (format dd.mm.yyyy).',
         },
-        dateTimeTo: {
+        DateTimeTo: {
           type: 'string',
           description: 'End date (format dd.mm.yyyy).',
         },
-        page: {
+        Page: {
           type: 'number',
           description: 'Page number (default 1).',
         },
-        fullList: {
-          type: 'boolean',
-          description: 'Request full list ignoring pagination (may be slow).',
+        GetFullList: {
+          type: 'string',
+          description: 'Use "1" to request full list ignoring pagination (may be slow).',
         },
       },
-      required: ['dateTimeFrom', 'dateTimeTo'],
+      required: ['DateTimeFrom', 'DateTimeTo'],
     },
   },
 ];
@@ -148,16 +148,16 @@ export async function handleTrackingTool(
 }
 
 async function handleTrackDocument(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
-  const documentNumber = assertString(args?.documentNumber, 'documentNumber').trim();
+  const documentNumber = assertString(args?.DocumentNumber, 'DocumentNumber').trim();
   if (!isTrackingNumber(documentNumber)) {
-    throw new Error('documentNumber must be a 14-digit Nova Poshta tracking number');
+    throw new Error('DocumentNumber must be a 14-digit Nova Poshta tracking number');
   }
 
-  let phone = assertOptionalString(args?.phone, 'phone');
+  let phone = assertOptionalString(args?.Phone, 'Phone');
   if (phone) {
     phone = sanitizePhone(phone);
     if (!isPhoneNumber(phone)) {
-      throw new Error('phone must match format 380XXXXXXXXX or +380XXXXXXXXX');
+      throw new Error('Phone must match format 380XXXXXXXXX or +380XXXXXXXXX');
     }
   }
 
@@ -183,10 +183,10 @@ async function handleTrackDocument(args: ToolArguments, context: ToolContext): P
 }
 
 async function handleTrackMultipleDocuments(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
-  const rawNumbers = Array.isArray(args?.documentNumbers) ? (args?.documentNumbers as unknown[]) : [];
-  const numbers = rawNumbers.map(value => assertString(value, 'documentNumbers[]'));
+  const rawNumbers = Array.isArray(args?.DocumentNumbers) ? (args?.DocumentNumbers as unknown[]) : [];
+  const numbers = rawNumbers.map(value => assertString(value, 'DocumentNumbers[]'));
   if (numbers.length === 0) {
-    throw new Error('documentNumbers must contain at least one tracking number');
+    throw new Error('DocumentNumbers must contain at least one tracking number');
   }
 
   numbers.forEach(num => {
@@ -196,7 +196,7 @@ async function handleTrackMultipleDocuments(args: ToolArguments, context: ToolCo
   });
 
   const response = await context.client.tracking.trackDocuments({
-    documents: numbers.map(documentNumber => ({ documentNumber })),
+    Documents: numbers.map(documentNumber => ({ DocumentNumber: documentNumber })),
   });
 
   return createTextResult(
@@ -210,10 +210,10 @@ async function handleTrackMultipleDocuments(args: ToolArguments, context: ToolCo
 }
 
 async function handleTrackMultiple(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
-  const rawNumbers = Array.isArray(args?.documentNumbers) ? (args?.documentNumbers as unknown[]) : [];
-  const numbers = rawNumbers.map(value => assertString(value, 'documentNumbers[]'));
+  const rawNumbers = Array.isArray(args?.DocumentNumbers) ? (args?.DocumentNumbers as unknown[]) : [];
+  const numbers = rawNumbers.map(value => assertString(value, 'DocumentNumbers[]'));
   if (numbers.length === 0) {
-    throw new Error('documentNumbers must contain at least one tracking number');
+    throw new Error('DocumentNumbers must contain at least one tracking number');
   }
 
   numbers.forEach(num => {
@@ -235,16 +235,16 @@ async function handleTrackMultiple(args: ToolArguments, context: ToolContext): P
 }
 
 async function handleDocumentMovement(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
-  const rawNumbers = Array.isArray(args?.documentNumbers) ? (args?.documentNumbers as unknown[]) : [];
-  const numbers = rawNumbers.map(value => assertString(value, 'documentNumbers[]'));
+  const rawNumbers = Array.isArray(args?.DocumentNumbers) ? (args?.DocumentNumbers as unknown[]) : [];
+  const numbers = rawNumbers.map(value => assertString(value, 'DocumentNumbers[]'));
   if (numbers.length === 0) {
-    throw new Error('documentNumbers must contain at least one tracking number');
+    throw new Error('DocumentNumbers must contain at least one tracking number');
   }
 
-  const showDeliveryDetails = Boolean(args?.showDeliveryDetails);
+  const showDeliveryDetails = Boolean(args?.ShowDeliveryDetails);
   const response = await context.client.tracking.getDocumentMovement({
-    documents: numbers.map(documentNumber => ({ documentNumber })),
-    showDeliveryDetails,
+    Documents: numbers.map(documentNumber => ({ DocumentNumber: documentNumber })),
+    ShowDeliveryDetails: showDeliveryDetails,
   });
 
   return createTextResult(
@@ -257,24 +257,26 @@ async function handleDocumentMovement(args: ToolArguments, context: ToolContext)
 }
 
 async function handleDocumentList(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
-  const dateTimeFrom = assertString(args?.dateTimeFrom, 'dateTimeFrom').trim();
-  const dateTimeTo = assertString(args?.dateTimeTo, 'dateTimeTo').trim();
+  const dateTimeFrom = assertString(args?.DateTimeFrom, 'DateTimeFrom').trim();
+  const dateTimeTo = assertString(args?.DateTimeTo, 'DateTimeTo').trim();
 
   if (!isDateFormat(dateTimeFrom)) {
-    throw new Error('dateTimeFrom must be in format dd.mm.yyyy');
+    throw new Error('DateTimeFrom must be in format dd.mm.yyyy');
   }
   if (!isDateFormat(dateTimeTo)) {
-    throw new Error('dateTimeTo must be in format dd.mm.yyyy');
+    throw new Error('DateTimeTo must be in format dd.mm.yyyy');
   }
 
-  const page = args?.page !== undefined ? Number(args.page) : undefined;
-  const getFullList = args?.fullList ? '1' : '0';
+  const page = args?.Page !== undefined ? Number(args.Page) : undefined;
+  const getFullListInput = args?.GetFullList;
+  const getFullList =
+    getFullListInput === '1' || getFullListInput === 1 || getFullListInput === true ? '1' : '0';
 
   const response = await context.client.tracking.getDocumentList({
-    dateTimeFrom,
-    dateTimeTo,
-    page,
-    getFullList,
+    DateTimeFrom: dateTimeFrom,
+    DateTimeTo: dateTimeTo,
+    ...(page !== undefined ? { Page: page } : {}),
+    GetFullList: getFullList,
   });
 
   return createTextResult(

@@ -181,14 +181,15 @@ The HTTP server exposes:
 #### `track_document`
 Track a single shipment with detailed status information.
 
+
 **Parameters:**
-- `documentNumber` (string, required): 14-digit tracking number
+- `DocumentNumber` (string, required): 14-digit tracking number
 - `phone` (string, optional): Recipient phone in format `380XXXXXXXXX`
 
 **Example:**
 ```typescript
 {
-  "documentNumber": "20450123456789",
+  "DocumentNumber": "20450123456789",
   "phone": "380501234567"
 }
 ```
@@ -197,12 +198,12 @@ Track a single shipment with detailed status information.
 Track multiple shipments at once with aggregated statistics.
 
 **Parameters:**
-- `documentNumbers` (array, required): List of tracking numbers
+- `DocumentNumbers` (array, required): List of tracking numbers
 
 **Example:**
 ```typescript
 {
-  "documentNumbers": ["20450123456789", "20450987654321"]
+  "DocumentNumbers": ["20450123456789", "20450987654321"]
 }
 ```
 
@@ -210,14 +211,14 @@ Track multiple shipments at once with aggregated statistics.
 Get complete movement history for shipments.
 
 **Parameters:**
-- `documentNumbers` (array, required): List of tracking numbers (max 10)
-- `showDeliveryDetails` (boolean, optional): Include extended delivery checkpoints
+- `DocumentNumbers` (array, required): List of tracking numbers (max 10)
+- `ShowDeliveryDetails` (boolean, optional): Include extended delivery checkpoints
 
 **Example:**
 ```typescript
 {
-  "documentNumbers": ["20450123456789"],
-  "showDeliveryDetails": true
+  "DocumentNumbers": ["20450123456789"],
+  "ShowDeliveryDetails": true
 }
 ```
 
@@ -225,17 +226,17 @@ Get complete movement history for shipments.
 List documents created within a date range.
 
 **Parameters:**
-- `dateTimeFrom` (string, required): Start date in format `dd.mm.yyyy`
-- `dateTimeTo` (string, required): End date in format `dd.mm.yyyy`
-- `page` (number, optional): Page number (default: 1)
-- `fullList` (boolean, optional): Request all results ignoring pagination
+- `DateTimeFrom` (string, required): Start date in format `dd.mm.yyyy`
+- `DateTimeTo` (string, required): End date in format `dd.mm.yyyy`
+- `Page` (number, optional): Page number (default: 1)
+- `GetFullList` (string, optional): Use `"1"` to request all results ignoring pagination
 
 **Example:**
 ```typescript
 {
-  "dateTimeFrom": "01.01.2025",
-  "dateTimeTo": "31.01.2025",
-  "page": 1
+  "DateTimeFrom": "01.01.2025",
+  "DateTimeTo": "31.01.2025",
+  "Page": 1
 }
 ```
 
@@ -247,86 +248,86 @@ List documents created within a date range.
 Search for cities by name or postal code.
 
 **Parameters:**
-- `query` (string, required): Partial city name or postal code
-- `page` (number, optional): Page number (default: 1)
-- `limit` (number, optional): Items per page (max: 50, **recommended: 10**, default: 10)
+- `FindByString` (string, required): Partial city name or postal code
+- `Page` (number, optional): Page number (default: 1)
+- `Limit` (number, optional): Items per page (max: 50, **recommended: 10**, default: 10)
 
 **Example:**
 ```typescript
 {
-  "query": "Київ",
-  "limit": 10
+  "FindByString": "Київ",
+  "Limit": 10
 }
 ```
 
-**Note:** Always specify `limit` to avoid large responses that may consume excessive tokens.
+**Note:** Always specify `Limit` to avoid large responses that may consume excessive tokens.
 
 #### `address_search_settlements`
 Search for settlements (cities, towns, villages).
 
 **Parameters:**
-- `cityName` (string, required): Settlement name or postal code
-- `page` (number, optional): Page number (default: 1)
-- `limit` (number, optional): Items per page (1-500, **recommended: 10**, default: 10)
+- `CityName` (string, required): Settlement name or postal code
+- `Page` (number, optional): Page number (default: 1)
+- `Limit` (number, optional): Items per page (1-500, **recommended: 10**, default: 10)
 
 **Example:**
 ```typescript
 {
-  "cityName": "Львів",
-  "limit": 10
+  "CityName": "Львів",
+  "Limit": 10
 }
 ```
 
-**Note:** Always specify `limit` to avoid large responses that may consume excessive tokens.
+**Note:** Always specify `Limit` to avoid large responses that may consume excessive tokens.
 
 #### `address_search_streets`
 Search for streets within a settlement.
 
 **Parameters:**
-- `settlementRef` (string, required): Settlement reference ID
-- `streetName` (string, required): Street name or fragment
-- `limit` (number, optional): Maximum items to return (**recommended: 10**, default: 10)
+- `SettlementRef` (string, required): Settlement reference ID
+- `StreetName` (string, required): Street name or fragment
+- `Limit` (number, optional): Maximum items to return (**recommended: 10**, default: 10)
 
 **Example:**
 ```typescript
 {
-  "settlementRef": "8d5a980d-391c-11dd-90d9-001a92567626",
-  "streetName": "Хрещатик",
-  "limit": 10
+  "SettlementRef": "8d5a980d-391c-11dd-90d9-001a92567626",
+  "StreetName": "Хрещатик",
+  "Limit": 10
 }
 ```
 
-**Note:** Always specify `limit` to avoid large responses that may consume excessive tokens.
+**Note:** Always specify `Limit` to avoid large responses that may consume excessive tokens.
 
 #### `address_get_warehouses`
 Find warehouses (branches, postomats, pickup points) with advanced filtering.
 
 **Parameters:**
-- `ref` (string, optional): Specific warehouse reference
-- `cityName` (string, optional): City name filter
-- `cityRef` (string, optional): City reference ID
-- `settlementRef` (string, optional): Settlement reference ID
-- `warehouseId` (string, optional): Warehouse number (e.g., "1" for Branch #1)
-- `findByString` (string, optional): Search by name, address, or street
-- `typeOfWarehouseRef` (string, optional): Warehouse type filter
-- `bicycleParking` (string, optional): Filter by bicycle parking (`1`/`0`)
-- `postFinance` (string, optional): Filter by NovaPay cash desk (`1`/`0`)
-- `posTerminal` (string, optional): Filter by POS terminal (`1`/`0`)
-- `page` (number, optional): Page number (default: 1)
-- `limit` (number, optional): Items per page (max: 50, **recommended: 10-20**, default: 10)
-- `language` (string, optional): Language code (`UA`, `RU`, `EN`)
+- `Ref` (string, optional): Specific warehouse reference
+- `CityName` (string, optional): City name filter
+- `CityRef` (string, optional): City reference ID
+- `SettlementRef` (string, optional): Settlement reference ID
+- `WarehouseId` (string, optional): Warehouse number (e.g., "1" for Branch #1)
+- `FindByString` (string, optional): Search by name, address, or street
+- `TypeOfWarehouseRef` (string, optional): Warehouse type filter
+- `BicycleParking` (string, optional): Filter by bicycle parking (`1`/`0`)
+- `PostFinance` (string, optional): Filter by NovaPay cash desk (`1`/`0`)
+- `POSTerminal` (string, optional): Filter by POS terminal (`1`/`0`)
+- `Page` (number, optional): Page number (default: 1)
+- `Limit` (number, optional): Items per page (max: 50, **recommended: 10-20**, default: 10)
+- `Language` (string, optional): Language code (`UA`, `RU`, `EN`)
 
 **Example:**
 ```typescript
 {
-  "cityName": "Київ",
-  "typeOfWarehouseRef": "9a68df70-0267-42a8-bb5c-37f427e36ee4", // Branch
-  "posTerminal": "1",
-  "limit": 10
+  "CityName": "Київ",
+  "TypeOfWarehouseRef": "9a68df70-0267-42a8-bb5c-37f427e36ee4", // Branch
+  "POSTerminal": "1",
+  "Limit": 10
 }
 ```
 
-**Note:** Always specify `limit` to avoid large responses that may consume excessive tokens.
+**Note:** Always specify `Limit` to avoid large responses that may consume excessive tokens.
 
 ---
 
@@ -336,26 +337,26 @@ Find warehouses (branches, postomats, pickup points) with advanced filtering.
 Calculate delivery cost and estimated delivery date.
 
 **Parameters:**
-- `citySender` (string): Sender city reference
-- `cityRecipient` (string): Recipient city reference
-- `serviceType` (string): Service type (e.g., `WarehouseWarehouse`)
-- `weight` (number): Weight in kg
-- `cost` (number): Declared value in UAH
-- `cargoType` (string): Cargo type (e.g., `Parcel`)
-- `seatsAmount` (number): Number of seats
+- `CitySender` (string): Sender city reference
+- `CityRecipient` (string): Recipient city reference
+- `ServiceType` (string): Service type (e.g., `WarehouseWarehouse`)
+- `Weight` (number): Weight in kg
+- `Cost` (number): Declared value in UAH
+- `CargoType` (string): Cargo type (e.g., `Parcel`)
+- `SeatsAmount` (number): Number of seats
 
 Or use `request` object for raw API payload.
 
 **Example:**
 ```typescript
 {
-  "citySender": "8d5a980d-391c-11dd-90d9-001a92567626",
-  "cityRecipient": "db5c88f0-391c-11dd-90d9-001a92567626",
-  "serviceType": "WarehouseWarehouse",
-  "weight": 5,
-  "cost": 1000,
-  "cargoType": "Parcel",
-  "seatsAmount": 1
+  "CitySender": "8d5a980d-391c-11dd-90d9-001a92567626",
+  "CityRecipient": "db5c88f0-391c-11dd-90d9-001a92567626",
+  "ServiceType": "WarehouseWarehouse",
+  "Weight": 5,
+  "Cost": 1000,
+  "CargoType": "Parcel",
+  "SeatsAmount": 1
 }
 ```
 
@@ -377,7 +378,7 @@ Update an existing waybill.
 Delete one or multiple waybills.
 
 **Parameters:**
-- `documentRefs` (array, required): Array of document references to delete
+- `DocumentRefs` (array, required): Array of document references to delete
 
 **Example:**
 ```typescript
@@ -390,10 +391,10 @@ Delete one or multiple waybills.
 Get estimated delivery date for a route.
 
 **Parameters:**
-- `citySender` (string): Sender city reference
-- `cityRecipient` (string): Recipient city reference
-- `serviceType` (string): Service type
-- `dateTime` (string, optional): Shipment date in format `dd.mm.yyyy`
+- `CitySender` (string): Sender city reference
+- `CityRecipient` (string): Recipient city reference
+- `ServiceType` (string): Service type
+- `DateTime` (string, optional): Shipment date in format `dd.mm.yyyy`
 
 Or use `request` object for raw API payload.
 
@@ -423,14 +424,14 @@ Get pallet types with dimensions and weight specifications.
 Get available delivery time intervals for a recipient city.
 
 **Parameters:**
-- `recipientCityRef` (string, required): Recipient city reference
-- `dateTime` (string, optional): Specific date in format `dd.mm.yyyy`
+- `RecipientCityRef` (string, required): Recipient city reference
+- `DateTime` (string, optional): Specific date in format `dd.mm.yyyy`
 
 **Example:**
 ```typescript
 {
-  "recipientCityRef": "8d5a980d-391c-11dd-90d9-001a92567626",
-  "dateTime": "20.01.2025"
+  "RecipientCityRef": "8d5a980d-391c-11dd-90d9-001a92567626",
+  "DateTime": "20.01.2025"
 }
 ```
 
@@ -473,12 +474,12 @@ Find all Nova Poshta branches in Lviv that have POS terminals
 
 **What happens:**
 Claude will:
-1. Use `address_search_cities` to find Lviv city reference (with `limit: 10`)
+1. Use `address_search_cities` to find Lviv city reference (with `Limit: 10`)
 2. Use `address_get_warehouses` with filters:
-   - `cityName`: "Львів"
-   - `typeOfWarehouseRef`: Branch type
-   - `posTerminal`: "1"
-   - `limit`: 10 (to avoid large responses)
+   - `CityName`: "Львів"
+   - `TypeOfWarehouseRef`: Branch type
+   - `POSTerminal`: "1"
+   - `Limit`: 10 (to avoid large responses)
 
 ---
 
@@ -724,9 +725,9 @@ The MCP server automatically handles rate limiting and provides meaningful error
 **Problem**: Token consumption warnings or truncated responses
 
 **Solutions**:
-1. Always use `limit` parameter for search operations:
+1. Always use `Limit` parameter for search operations:
    ```typescript
-   client.address.searchCities({ query: 'Kyiv', limit: 10 })
+   client.address.searchCities({ query: 'Kyiv', Limit: 10 })
    ```
 2. Use pagination for large datasets
 3. Filter results with specific criteria
@@ -805,25 +806,25 @@ A: The MCP server provides error messages when rate limits are hit, but doesn't 
 
 ### Optimize API Calls
 
-1. **Use pagination and limits**: Always specify `limit` parameter to avoid large responses
+1. **Use pagination and limits**: Always specify `Limit` parameter to avoid large responses
    ```typescript
-   { query: 'Kyiv', limit: 10 }
+   { query: 'Kyiv', Limit: 10 }
    ```
 
 2. **Cache reference data**: Cargo types, service types, etc. rarely change
 
 3. **Batch operations**: Use bulk tracking methods for multiple packages
    ```typescript
-   track_multiple_documents({ documentNumbers: ['123', '456', '789'] })
+   track_multiple_documents({ DocumentNumbers: ['123', '456', '789'] })
    ```
 
 4. **Filter early**: Use specific filters to reduce result sets
    ```typescript
    {
-     cityName: 'Київ',
+     CityName: 'Київ',
      typeOfWarehouseRef: 'branch-type-ref',
      posTerminal: '1',
-     limit: 5
+     Limit: 5
    }
    ```
 

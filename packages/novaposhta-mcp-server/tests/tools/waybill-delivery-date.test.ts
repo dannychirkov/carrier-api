@@ -43,65 +43,65 @@ describe('waybill_get_delivery_date validation', () => {
   });
 
   describe('request object validation', () => {
-    it('should fail when request.citySender is missing', async () => {
+    it('should fail when request.CitySender is missing', async () => {
       const result = await handleWaybillTool(
         'waybill_get_delivery_date',
         {
           request: {
-            cityRecipient: 'city2',
-            serviceType: 'WarehouseWarehouse',
+            CityRecipient: 'city2',
+            ServiceType: 'WarehouseWarehouse',
           },
         },
         context,
       );
       expect(result.isError).toBe(true);
-      expect(result.content?.[0]?.text).toContain('request.citySender');
+      expect(result.content?.[0]?.text).toContain('CitySender');
     });
 
-    it('should fail when request.cityRecipient is missing', async () => {
+    it('should fail when request.CityRecipient is missing', async () => {
       const result = await handleWaybillTool(
         'waybill_get_delivery_date',
         {
           request: {
-            citySender: 'city1',
-            serviceType: 'WarehouseWarehouse',
+            CitySender: 'city1',
+            ServiceType: 'WarehouseWarehouse',
           },
         },
         context,
       );
       expect(result.isError).toBe(true);
-      expect(result.content?.[0]?.text).toContain('request.cityRecipient');
+      expect(result.content?.[0]?.text).toContain('CityRecipient');
     });
 
-    it('should fail when request.serviceType is missing', async () => {
+    it('should fail when request.ServiceType is missing', async () => {
       const result = await handleWaybillTool(
         'waybill_get_delivery_date',
         {
           request: {
-            citySender: 'city1',
-            cityRecipient: 'city2',
+            CitySender: 'city1',
+            CityRecipient: 'city2',
           },
         },
         context,
       );
       expect(result.isError).toBe(true);
-      expect(result.content?.[0]?.text).toContain('request.serviceType');
+      expect(result.content?.[0]?.text).toContain('ServiceType');
     });
 
-    it('should fail when request.serviceType is empty string', async () => {
+    it('should fail when request.ServiceType is empty string', async () => {
       const result = await handleWaybillTool(
         'waybill_get_delivery_date',
         {
           request: {
-            citySender: 'city1',
-            cityRecipient: 'city2',
-            serviceType: '',
+            CitySender: 'city1',
+            CityRecipient: 'city2',
+            ServiceType: '',
           },
         },
         context,
       );
       expect(result.isError).toBe(true);
-      expect(result.content?.[0]?.text).toContain('request.serviceType');
+      expect(result.content?.[0]?.text).toContain('ServiceType');
     });
 
     it('should succeed with valid request object', async () => {
@@ -109,9 +109,9 @@ describe('waybill_get_delivery_date validation', () => {
         'waybill_get_delivery_date',
         {
           request: {
-            citySender: 'city1',
-            cityRecipient: 'city2',
-            serviceType: 'WarehouseWarehouse',
+            CitySender: 'city1',
+            CityRecipient: 'city2',
+            ServiceType: 'WarehouseWarehouse',
           },
         },
         context,
@@ -119,22 +119,22 @@ describe('waybill_get_delivery_date validation', () => {
       expect(result.isError).toBeUndefined();
       expect(context.client.waybill.getDeliveryDate).toHaveBeenCalledWith(
         expect.objectContaining({
-          citySender: 'city1',
-          cityRecipient: 'city2',
-          serviceType: 'WarehouseWarehouse',
+          CitySender: 'city1',
+          CityRecipient: 'city2',
+          ServiceType: 'WarehouseWarehouse',
         }),
       );
     });
 
-    it('should succeed with valid request object including optional dateTime', async () => {
+    it('should succeed with valid request object including optional DateTime', async () => {
       const result = await handleWaybillTool(
         'waybill_get_delivery_date',
         {
           request: {
-            citySender: 'city1',
-            cityRecipient: 'city2',
-            serviceType: 'WarehouseWarehouse',
-            dateTime: '20.11.2024',
+            CitySender: 'city1',
+            CityRecipient: 'city2',
+            ServiceType: 'WarehouseWarehouse',
+            DateTime: '20.11.2024',
           },
         },
         context,
@@ -142,36 +142,36 @@ describe('waybill_get_delivery_date validation', () => {
       expect(result.isError).toBeUndefined();
       expect(context.client.waybill.getDeliveryDate).toHaveBeenCalledWith(
         expect.objectContaining({
-          citySender: 'city1',
-          cityRecipient: 'city2',
-          serviceType: 'WarehouseWarehouse',
-          dateTime: '20.11.2024',
+          CitySender: 'city1',
+          CityRecipient: 'city2',
+          ServiceType: 'WarehouseWarehouse',
+          DateTime: '20.11.2024',
         }),
       );
     });
   });
 
   describe('individual parameters validation', () => {
-    it('should fail when citySender is missing', async () => {
+    it('should fail when CitySender is missing', async () => {
       const result = await handleWaybillTool(
         'waybill_get_delivery_date',
         {
-          cityRecipient: 'city2',
-          serviceType: 'WarehouseWarehouse',
+          CityRecipient: 'city2',
+          ServiceType: 'WarehouseWarehouse',
         },
         context,
       );
       expect(result.isError).toBe(true);
-      expect(result.content?.[0]?.text).toContain('citySender');
+      expect(result.content?.[0]?.text).toContain('CitySender');
     });
 
     it('should succeed with valid individual parameters', async () => {
       const result = await handleWaybillTool(
         'waybill_get_delivery_date',
         {
-          citySender: 'city1',
-          cityRecipient: 'city2',
-          serviceType: 'WarehouseWarehouse',
+          CitySender: 'city1',
+          CityRecipient: 'city2',
+          ServiceType: 'WarehouseWarehouse',
         },
         context,
       );

@@ -53,19 +53,19 @@ describe('waybill tools', () => {
         'waybill_calculate_cost',
         {
           request: {
-            citySender: 'city1',
-            cityRecipient: 'city2',
+            CitySender: 'city1',
+            CityRecipient: 'city2',
             // Missing serviceType
-            cargoType: 'Parcel',
-            cost: 100,
-            weight: 1,
-            seatsAmount: 1,
+            CargoType: 'Parcel',
+            Cost: 100,
+            Weight: 1,
+            SeatsAmount: 1,
           },
         },
         context,
       );
       expect(result.isError).toBe(true);
-      expect(result.content?.[0]?.text).toContain('request.serviceType');
+      expect(result.content?.[0]?.text).toContain('ServiceType');
     });
 
     it('validates all required fields when using request object', async () => {
@@ -84,13 +84,13 @@ describe('waybill tools', () => {
         'waybill_calculate_cost',
         {
           request: {
-            citySender: 'city1',
-            cityRecipient: 'city2',
-            serviceType: 'WarehouseWarehouse',
-            cargoType: 'Parcel',
-            cost: 100,
-            weight: 1,
-            seatsAmount: 1,
+            CitySender: 'city1',
+            CityRecipient: 'city2',
+            ServiceType: 'WarehouseWarehouse',
+            CargoType: 'Parcel',
+            Cost: 100,
+            Weight: 1,
+            SeatsAmount: 1,
           },
         },
         context,
@@ -102,13 +102,13 @@ describe('waybill tools', () => {
       const result = await handleWaybillTool(
         'waybill_calculate_cost',
         {
-          citySender: 'city1',
-          cityRecipient: 'city2',
-          serviceType: 'WarehouseWarehouse',
-          cargoType: 'Parcel',
-          cost: 100,
-          weight: 1,
-          seatsAmount: 1,
+          CitySender: 'city1',
+          CityRecipient: 'city2',
+          ServiceType: 'WarehouseWarehouse',
+          CargoType: 'Parcel',
+          Cost: 100,
+          Weight: 1,
+          SeatsAmount: 1,
         },
         context,
       );
@@ -122,14 +122,14 @@ describe('waybill tools', () => {
         'waybill_get_delivery_date',
         {
           request: {
-            citySender: 'city1',
+            CitySender: 'city1',
             // Missing cityRecipient and serviceType
           },
         },
         context,
       );
       expect(result.isError).toBe(true);
-      expect(result.content?.[0]?.text).toContain('request.cityRecipient');
+      expect(result.content?.[0]?.text).toContain('CityRecipient');
     });
 
     it('works with valid request object', async () => {
@@ -137,9 +137,9 @@ describe('waybill tools', () => {
         'waybill_get_delivery_date',
         {
           request: {
-            citySender: 'city1',
-            cityRecipient: 'city2',
-            serviceType: 'WarehouseWarehouse',
+            CitySender: 'city1',
+            CityRecipient: 'city2',
+            ServiceType: 'WarehouseWarehouse',
           },
         },
         context,
@@ -178,13 +178,13 @@ describe('waybill tools', () => {
       const result = await handleWaybillTool(
         'waybill_get_estimate',
         {
-          citySender: 'city1',
-          cityRecipient: 'city2',
-          serviceType: 'WarehouseWarehouse',
-          cargoType: 'Parcel',
-          cost: 100,
-          weight: 1,
-          seatsAmount: 1,
+          CitySender: 'city1',
+          CityRecipient: 'city2',
+          ServiceType: 'WarehouseWarehouse',
+          CargoType: 'Parcel',
+          Cost: 100,
+          Weight: 1,
+          SeatsAmount: 1,
         },
         context,
       );
@@ -215,18 +215,18 @@ describe('waybill tools', () => {
             payerType: 'Sender',
             paymentMethod: 'Cash',
             dateTime: '01.01.2024',
-            cargoType: 'Parcel',
-            weight: 1,
-            serviceType: 'WarehouseWarehouse',
-            seatsAmount: 1,
+            CargoType: 'Parcel',
+            Weight: 1,
+            ServiceType: 'WarehouseWarehouse',
+            SeatsAmount: 1,
             description: 'Test',
-            cost: 100,
-            citySender: 'city1',
+            Cost: 100,
+            CitySender: 'city1',
             sender: 'sender-ref',
             senderAddress: 'address1',
             contactSender: 'contact1',
             sendersPhone: '380501234567',
-            cityRecipient: 'city2',
+            CityRecipient: 'city2',
             recipient: 'recipient-ref',
             recipientAddress: 'address2',
             contactRecipient: 'contact2',
@@ -268,18 +268,18 @@ describe('waybill tools', () => {
             payerType: 'Sender',
             paymentMethod: 'Cash',
             dateTime: '01.01.2024',
-            cargoType: 'Parcel',
-            weight: 1,
-            serviceType: 'WarehouseWarehouse',
-            seatsAmount: 1,
+            CargoType: 'Parcel',
+            Weight: 1,
+            ServiceType: 'WarehouseWarehouse',
+            SeatsAmount: 1,
             description: 'Test',
-            cost: 100,
-            citySender: 'city1',
+            Cost: 100,
+            CitySender: 'city1',
             sender: 'sender-ref',
             senderAddress: 'address1',
             contactSender: 'contact1',
             sendersPhone: '380501234567',
-            cityRecipient: 'city2',
+            CityRecipient: 'city2',
             recipient: 'recipient-ref',
             recipientAddress: 'address2',
             contactRecipient: 'contact2',
@@ -329,14 +329,14 @@ describe('waybill tools', () => {
             {
               payerType: 'Sender',
               paymentMethod: 'Cash',
-              cargoType: 'Parcel',
-              serviceType: 'WarehouseWarehouse',
+              CargoType: 'Parcel',
+              ServiceType: 'WarehouseWarehouse',
             } as any,
             {
               payerType: 'Sender',
               paymentMethod: 'Cash',
-              cargoType: 'Parcel',
-              serviceType: 'WarehouseWarehouse',
+              CargoType: 'Parcel',
+              ServiceType: 'WarehouseWarehouse',
             } as any,
           ],
         },

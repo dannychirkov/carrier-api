@@ -13,16 +13,16 @@ const counterpartyTools: Tool[] = [
     inputSchema: {
       type: 'object',
       properties: {
-        counterpartyProperty: {
+        CounterpartyProperty: {
           type: 'string',
           description: 'Counterparty role: Sender, Recipient, or ThirdPerson.',
           enum: ['Sender', 'Recipient', 'ThirdPerson']
         },
-        page: { type: 'number', description: 'Page number (default 1).' },
-        findByString: { type: 'string', description: 'Search by name, phone, or EDRPOU.' },
-        cityRef: { type: 'string', description: 'Filter by city reference.' }
+        Page: { type: 'number', description: 'Page number (default 1).' },
+        FindByString: { type: 'string', description: 'Search by name, phone, or EDRPOU.' },
+        CityRef: { type: 'string', description: 'Filter by city reference.' }
       },
-      required: ['counterpartyProperty']
+      required: ['CounterpartyProperty']
     }
   },
   {
@@ -32,15 +32,15 @@ const counterpartyTools: Tool[] = [
     inputSchema: {
       type: 'object',
       properties: {
-        ref: { type: 'string', description: 'Counterparty reference from getCounterparties.' },
-        counterpartyProperty: {
+        Ref: { type: 'string', description: 'Counterparty reference from getCounterparties.' },
+        CounterpartyProperty: {
           type: 'string',
           description: 'Counterparty role: Sender or Recipient.',
           enum: ['Sender', 'Recipient']
         },
-        page: { type: 'number', description: 'Page number (default 1).' }
+        Page: { type: 'number', description: 'Page number (default 1).' }
       },
-      required: ['ref']
+      required: ['Ref']
     }
   },
   {
@@ -50,10 +50,10 @@ const counterpartyTools: Tool[] = [
     inputSchema: {
       type: 'object',
       properties: {
-        ref: { type: 'string', description: 'Counterparty reference.' },
-        page: { type: 'number', description: 'Page number (default 1).' }
+        Ref: { type: 'string', description: 'Counterparty reference.' },
+        Page: { type: 'number', description: 'Page number (default 1).' }
       },
-      required: ['ref']
+      required: ['Ref']
     }
   },
   {
@@ -63,25 +63,25 @@ const counterpartyTools: Tool[] = [
     inputSchema: {
       type: 'object',
       properties: {
-        counterpartyType: {
+        CounterpartyType: {
           type: 'string',
           description: 'Type: PrivatePerson or Organization',
           enum: ['PrivatePerson', 'Organization']
         },
-        counterpartyProperty: {
+        CounterpartyProperty: {
           type: 'string',
           description: 'Role: Sender or Recipient',
           enum: ['Sender', 'Recipient']
         },
-        firstName: { type: 'string', description: 'First name (required for PrivatePerson, optional for Organization).' },
-        middleName: { type: 'string', description: 'Middle name (optional).' },
-        lastName: { type: 'string', description: 'Last name (required for PrivatePerson, optional for Organization).' },
-        phone: { type: 'string', description: 'Phone number in format 380XXXXXXXXX (required).' },
-        email: { type: 'string', description: 'Email address (optional).' },
-        ownershipForm: { type: 'string', description: 'Ownership form reference (required for Organization).' },
-        edrpou: { type: 'string', description: 'EDRPOU code (required for Organization).' }
+        FirstName: { type: 'string', description: 'First name (required for PrivatePerson, optional for Organization).' },
+        MiddleName: { type: 'string', description: 'Middle name (optional).' },
+        LastName: { type: 'string', description: 'Last name (required for PrivatePerson, optional for Organization).' },
+        Phone: { type: 'string', description: 'Phone number in format 380XXXXXXXXX (required).' },
+        Email: { type: 'string', description: 'Email address (optional).' },
+        OwnershipForm: { type: 'string', description: 'Ownership form reference (required for Organization).' },
+        EDRPOU: { type: 'string', description: 'EDRPOU code (required for Organization).' }
       },
-      required: ['counterpartyType', 'counterpartyProperty', 'phone']
+      required: ['CounterpartyType', 'CounterpartyProperty', 'Phone']
     }
   },
   {
@@ -91,19 +91,19 @@ const counterpartyTools: Tool[] = [
     inputSchema: {
       type: 'object',
       properties: {
-        ref: { type: 'string', description: 'Counterparty reference to update.' },
-        counterpartyProperty: {
+        Ref: { type: 'string', description: 'Counterparty reference to update.' },
+        CounterpartyProperty: {
           type: 'string',
           description: 'Counterparty role: Sender or Recipient',
           enum: ['Sender', 'Recipient']
         },
-        firstName: { type: 'string', description: 'Updated first name.' },
-        middleName: { type: 'string', description: 'Updated middle name.' },
-        lastName: { type: 'string', description: 'Updated last name.' },
-        phone: { type: 'string', description: 'Updated phone.' },
-        email: { type: 'string', description: 'Updated email.' }
+        FirstName: { type: 'string', description: 'Updated first name.' },
+        MiddleName: { type: 'string', description: 'Updated middle name.' },
+        LastName: { type: 'string', description: 'Updated last name.' },
+        Phone: { type: 'string', description: 'Updated phone.' },
+        Email: { type: 'string', description: 'Updated email.' }
       },
-      required: ['ref', 'counterpartyProperty']
+      required: ['Ref', 'CounterpartyProperty']
     }
   },
   {
@@ -113,9 +113,9 @@ const counterpartyTools: Tool[] = [
     inputSchema: {
       type: 'object',
       properties: {
-        ref: { type: 'string', description: 'Counterparty reference to delete.' }
+        Ref: { type: 'string', description: 'Counterparty reference to delete.' }
       },
-      required: ['ref']
+      required: ['Ref']
     }
   },
   {
@@ -125,9 +125,9 @@ const counterpartyTools: Tool[] = [
     inputSchema: {
       type: 'object',
       properties: {
-        ref: { type: 'string', description: 'Counterparty reference.' }
+        Ref: { type: 'string', description: 'Counterparty reference.' }
       },
-      required: ['ref']
+      required: ['Ref']
     }
   },
 ];
@@ -166,16 +166,16 @@ export async function handleCounterpartyTool(
 }
 
 async function handleGetCounterparties(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
-  const counterpartyProperty = assertString(args?.counterpartyProperty, 'counterpartyProperty') as 'Sender' | 'Recipient' | 'ThirdPerson';
-  const page = assertOptionalNumber(args?.page, 'page');
-  const findByString = assertOptionalString(args?.findByString, 'findByString');
-  const cityRef = assertOptionalString(args?.cityRef, 'cityRef');
+  const counterpartyProperty = assertString(args?.CounterpartyProperty, 'CounterpartyProperty') as 'Sender' | 'Recipient' | 'ThirdPerson';
+  const page = assertOptionalNumber(args?.Page, 'Page');
+  const findByString = assertOptionalString(args?.FindByString, 'FindByString');
+  const cityRef = assertOptionalString(args?.CityRef, 'CityRef');
 
   const response = await context.client.counterparty.getCounterparties({
-    counterpartyProperty,
-    page,
-    findByString,
-    cityRef,
+    CounterpartyProperty: counterpartyProperty,
+    ...(page !== undefined ? { Page: page } : {}),
+    ...(findByString ? { FindByString: findByString } : {}),
+    ...(cityRef ? { CityRef: cityRef } : {}),
   });
 
   if (!response.success) {
@@ -201,14 +201,14 @@ async function handleGetCounterparties(args: ToolArguments, context: ToolContext
 }
 
 async function handleGetCounterpartyAddresses(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
-  const ref = assertString(args?.ref, 'ref');
-  const counterpartyProperty = assertOptionalString(args?.counterpartyProperty, 'counterpartyProperty') as 'Sender' | 'Recipient' | undefined;
-  const page = assertOptionalNumber(args?.page, 'page');
+  const ref = assertString(args?.Ref, 'Ref');
+  const counterpartyProperty = assertOptionalString(args?.CounterpartyProperty, 'CounterpartyProperty') as 'Sender' | 'Recipient' | undefined;
+  const page = assertOptionalNumber(args?.Page, 'Page');
 
   const response = await context.client.counterparty.getCounterpartyAddresses({
-    ref,
-    counterpartyProperty,
-    page,
+    Ref: ref,
+    ...(counterpartyProperty ? { CounterpartyProperty: counterpartyProperty } : {}),
+    ...(page !== undefined ? { Page: page } : {}),
   });
 
   if (!response.success) {
@@ -231,12 +231,12 @@ async function handleGetCounterpartyAddresses(args: ToolArguments, context: Tool
 }
 
 async function handleGetContactPersons(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
-  const ref = assertString(args?.ref, 'ref');
-  const page = assertOptionalNumber(args?.page, 'page');
+  const ref = assertString(args?.Ref, 'Ref');
+  const page = assertOptionalNumber(args?.Page, 'Page');
 
   const response = await context.client.counterparty.getCounterpartyContactPersons({
-    ref,
-    page,
+    Ref: ref,
+    ...(page !== undefined ? { Page: page } : {}),
   });
 
   if (!response.success) {
@@ -262,23 +262,25 @@ async function handleGetContactPersons(args: ToolArguments, context: ToolContext
 }
 
 async function handleSaveCounterparty(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
-  const counterpartyType = assertString(args?.counterpartyType, 'counterpartyType');
-  const counterpartyProperty = assertString(args?.counterpartyProperty, 'counterpartyProperty') as 'Sender' | 'Recipient';
-  const phone = assertString(args?.phone, 'phone');
+  const counterpartyType = assertString(args?.CounterpartyType, 'CounterpartyType');
+  const counterpartyProperty = assertString(args?.CounterpartyProperty, 'CounterpartyProperty') as 'Sender' | 'Recipient';
+  const phone = assertString(args?.Phone, 'Phone');
 
   // Validate based on counterparty type
   if (counterpartyType === 'PrivatePerson') {
-    const firstName = assertString(args?.firstName, 'firstName');
-    const lastName = assertString(args?.lastName, 'lastName');
+    const firstName = assertString(args?.FirstName, 'FirstName');
+    const lastName = assertString(args?.LastName, 'LastName');
+    const middleName = assertOptionalString(args?.MiddleName, 'MiddleName');
+    const email = assertOptionalString(args?.Email, 'Email');
 
     const response = await context.client.counterparty.save({
-      counterpartyType,
-      counterpartyProperty,
-      firstName,
-      lastName,
-      middleName: assertOptionalString(args?.middleName, 'middleName'),
-      phone,
-      email: assertOptionalString(args?.email, 'email'),
+      CounterpartyType: counterpartyType,
+      CounterpartyProperty: counterpartyProperty,
+      FirstName: firstName,
+      LastName: lastName,
+      ...(middleName !== undefined ? { MiddleName: middleName } : {}),
+      Phone: phone,
+      ...(email !== undefined ? { Email: email } : {}),
     });
 
     if (!response.success) {
@@ -293,19 +295,23 @@ async function handleSaveCounterparty(args: ToolArguments, context: ToolContext)
       })
     );
   } else if (counterpartyType === 'Organization') {
-    const ownershipForm = assertString(args?.ownershipForm, 'ownershipForm');
-    const edrpou = assertString(args?.edrpou, 'edrpou');
+    const ownershipForm = assertString(args?.OwnershipForm, 'OwnershipForm');
+    const edrpou = assertString(args?.EDRPOU, 'EDRPOU');
+    const firstNameOpt = assertOptionalString(args?.FirstName, 'FirstName');
+    const lastNameOpt = assertOptionalString(args?.LastName, 'LastName');
+    const middleNameOpt = assertOptionalString(args?.MiddleName, 'MiddleName');
+    const emailOpt = assertOptionalString(args?.Email, 'Email');
 
     const response = await context.client.counterparty.save({
-      counterpartyType,
-      counterpartyProperty,
-      ownershipForm,
-      edrpou,
-      firstName: assertOptionalString(args?.firstName, 'firstName'),
-      lastName: assertOptionalString(args?.lastName, 'lastName'),
-      middleName: assertOptionalString(args?.middleName, 'middleName'),
-      phone,
-      email: assertOptionalString(args?.email, 'email'),
+      CounterpartyType: counterpartyType,
+      CounterpartyProperty: counterpartyProperty,
+      OwnershipForm: ownershipForm,
+      EDRPOU: edrpou,
+      ...(firstNameOpt !== undefined ? { FirstName: firstNameOpt } : {}),
+      ...(lastNameOpt !== undefined ? { LastName: lastNameOpt } : {}),
+      ...(middleNameOpt !== undefined ? { MiddleName: middleNameOpt } : {}),
+      Phone: phone,
+      ...(emailOpt !== undefined ? { Email: emailOpt } : {}),
     });
 
     if (!response.success) {
@@ -325,17 +331,22 @@ async function handleSaveCounterparty(args: ToolArguments, context: ToolContext)
 }
 
 async function handleUpdateCounterparty(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
-  const ref = assertString(args?.ref, 'ref');
-  const counterpartyProperty = assertString(args?.counterpartyProperty, 'counterpartyProperty') as 'Sender' | 'Recipient';
+  const ref = assertString(args?.Ref, 'Ref');
+  const counterpartyProperty = assertString(args?.CounterpartyProperty, 'CounterpartyProperty') as 'Sender' | 'Recipient';
+  const firstName = assertOptionalString(args?.FirstName, 'FirstName');
+  const middleName = assertOptionalString(args?.MiddleName, 'MiddleName');
+  const lastName = assertOptionalString(args?.LastName, 'LastName');
+  const phone = assertOptionalString(args?.Phone, 'Phone');
+  const email = assertOptionalString(args?.Email, 'Email');
 
   const response = await context.client.counterparty.update({
-    ref,
-    counterpartyProperty,
-    firstName: assertOptionalString(args?.firstName, 'firstName'),
-    middleName: assertOptionalString(args?.middleName, 'middleName'),
-    lastName: assertOptionalString(args?.lastName, 'lastName'),
-    phone: assertOptionalString(args?.phone, 'phone'),
-    email: assertOptionalString(args?.email, 'email'),
+    Ref: ref,
+    CounterpartyProperty: counterpartyProperty,
+    ...(firstName !== undefined ? { FirstName: firstName } : {}),
+    ...(middleName !== undefined ? { MiddleName: middleName } : {}),
+    ...(lastName !== undefined ? { LastName: lastName } : {}),
+    ...(phone !== undefined ? { Phone: phone } : {}),
+    ...(email !== undefined ? { Email: email } : {}),
   });
 
   if (!response.success) {
@@ -352,10 +363,10 @@ async function handleUpdateCounterparty(args: ToolArguments, context: ToolContex
 }
 
 async function handleDeleteCounterparty(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
-  const ref = assertString(args?.ref, 'ref');
+  const ref = assertString(args?.Ref, 'Ref');
 
   const response = await context.client.counterparty.delete({
-    ref,
+    Ref: ref,
   });
 
   if (!response.success) {
@@ -371,10 +382,10 @@ async function handleDeleteCounterparty(args: ToolArguments, context: ToolContex
 }
 
 async function handleGetCounterpartyOptions(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
-  const ref = assertString(args?.ref, 'ref');
+  const ref = assertString(args?.Ref, 'Ref');
 
   const response = await context.client.counterparty.getCounterpartyOptions({
-    ref,
+    Ref: ref,
   });
 
   if (!response.success) {

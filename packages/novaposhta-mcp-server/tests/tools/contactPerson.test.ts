@@ -57,22 +57,20 @@ describe('contact person tools', () => {
       const result = await handleContactPersonTool(
         'contact_person_save',
         {
-          counterpartyRef: 'counterparty-ref',
-          firstName: 'Іван',
-          lastName: 'Іванов',
-          phone: '380501234567',
+          CounterpartyRef: 'counterparty-ref',
+          FirstName: 'Іван',
+          LastName: 'Іванов',
+          Phone: '380501234567',
         },
         context,
       );
 
       expect(result.isError).toBeFalsy();
       expect(context.client.contactPerson.save).toHaveBeenCalledWith({
-        counterpartyRef: 'counterparty-ref',
-        firstName: 'Іван',
-        lastName: 'Іванов',
-        phone: '380501234567',
-        middleName: undefined,
-        email: undefined,
+        CounterpartyRef: 'counterparty-ref',
+        FirstName: 'Іван',
+        LastName: 'Іванов',
+        Phone: '380501234567',
       });
       const text = (result.content[0] as any).text;
       expect(text).toContain('contact-person-ref-123');
@@ -101,96 +99,96 @@ describe('contact person tools', () => {
       const result = await handleContactPersonTool(
         'contact_person_save',
         {
-          counterpartyRef: 'counterparty-ref',
-          firstName: 'Петро',
-          middleName: 'Петрович',
-          lastName: 'Петров',
-          phone: '380671234567',
-          email: 'petrov@example.com',
+          CounterpartyRef: 'counterparty-ref',
+          FirstName: 'Петро',
+          MiddleName: 'Петрович',
+          LastName: 'Петров',
+          Phone: '380671234567',
+          Email: 'petrov@example.com',
         },
         context,
       );
 
       expect(result.isError).toBeFalsy();
       expect(context.client.contactPerson.save).toHaveBeenCalledWith({
-        counterpartyRef: 'counterparty-ref',
-        firstName: 'Петро',
-        middleName: 'Петрович',
-        lastName: 'Петров',
-        phone: '380671234567',
-        email: 'petrov@example.com',
+        CounterpartyRef: 'counterparty-ref',
+        FirstName: 'Петро',
+        MiddleName: 'Петрович',
+        LastName: 'Петров',
+        Phone: '380671234567',
+        Email: 'petrov@example.com',
       });
     });
 
-    it('requires counterpartyRef', async () => {
+    it('requires CounterpartyRef', async () => {
       const result = await handleContactPersonTool(
         'contact_person_save',
         {
-          firstName: 'Іван',
-          lastName: 'Іванов',
-          phone: '380501234567',
+          FirstName: 'Іван',
+          LastName: 'Іванов',
+          Phone: '380501234567',
         },
         context,
       );
 
       expect(result.isError).toBe(true);
       const text = (result.content[0] as any).text;
-      expect(text).toContain('counterpartyRef');
+      expect(text).toContain('CounterpartyRef');
     });
 
-    it('requires firstName', async () => {
+    it('requires FirstName', async () => {
       const result = await handleContactPersonTool(
         'contact_person_save',
         {
-          counterpartyRef: 'counterparty-ref',
-          lastName: 'Іванов',
-          phone: '380501234567',
+          CounterpartyRef: 'counterparty-ref',
+          LastName: 'Іванов',
+          Phone: '380501234567',
         },
         context,
       );
 
       expect(result.isError).toBe(true);
       const text = (result.content[0] as any).text;
-      expect(text).toContain('firstName');
+      expect(text).toContain('FirstName');
     });
 
-    it('requires lastName', async () => {
+    it('requires LastName', async () => {
       const result = await handleContactPersonTool(
         'contact_person_save',
         {
-          counterpartyRef: 'counterparty-ref',
-          firstName: 'Іван',
-          phone: '380501234567',
+          CounterpartyRef: 'counterparty-ref',
+          FirstName: 'Іван',
+          Phone: '380501234567',
         },
         context,
       );
 
       expect(result.isError).toBe(true);
       const text = (result.content[0] as any).text;
-      expect(text).toContain('lastName');
+      expect(text).toContain('LastName');
     });
 
-    it('requires phone', async () => {
+    it('requires Phone', async () => {
       const result = await handleContactPersonTool(
         'contact_person_save',
         {
-          counterpartyRef: 'counterparty-ref',
-          firstName: 'Іван',
-          lastName: 'Іванов',
+          CounterpartyRef: 'counterparty-ref',
+          FirstName: 'Іван',
+          LastName: 'Іванов',
         },
         context,
       );
 
       expect(result.isError).toBe(true);
       const text = (result.content[0] as any).text;
-      expect(text).toContain('phone');
+      expect(text).toContain('Phone');
     });
 
     it('handles API errors', async () => {
       vi.mocked(context.client.contactPerson.save).mockResolvedValue({
         success: false,
         data: [],
-        errors: ['Invalid phone number format'],
+        errors: ['Invalid Phone number format'],
         warnings: [],
         info: [],
         messageCodes: [],
@@ -202,17 +200,17 @@ describe('contact person tools', () => {
       const result = await handleContactPersonTool(
         'contact_person_save',
         {
-          counterpartyRef: 'counterparty-ref',
-          firstName: 'Іван',
-          lastName: 'Іванов',
-          phone: 'invalid-phone',
+          CounterpartyRef: 'counterparty-ref',
+          FirstName: 'Іван',
+          LastName: 'Іванов',
+          Phone: 'invalid-Phone',
         },
         context,
       );
 
       expect(result.isError).toBe(true);
       const text = (result.content[0] as any).text;
-      expect(text).toContain('Invalid phone number format');
+      expect(text).toContain('Invalid Phone number format');
     });
   });
 
@@ -238,23 +236,20 @@ describe('contact person tools', () => {
       const result = await handleContactPersonTool(
         'contact_person_update',
         {
-          ref: 'contact-person-ref-123',
-          counterpartyRef: 'counterparty-ref',
-          firstName: 'Updated',
-          lastName: 'Name',
+          Ref: 'contact-person-ref-123',
+          CounterpartyRef: 'counterparty-ref',
+          FirstName: 'Updated',
+          LastName: 'Name',
         },
         context,
       );
 
       expect(result.isError).toBeFalsy();
       expect(context.client.contactPerson.update).toHaveBeenCalledWith({
-        ref: 'contact-person-ref-123',
-        counterpartyRef: 'counterparty-ref',
-        firstName: 'Updated',
-        lastName: 'Name',
-        middleName: undefined,
-        phone: undefined,
-        email: undefined,
+        Ref: 'contact-person-ref-123',
+        CounterpartyRef: 'counterparty-ref',
+        FirstName: 'Updated',
+        LastName: 'Name',
       });
     });
 
@@ -274,22 +269,18 @@ describe('contact person tools', () => {
       const result = await handleContactPersonTool(
         'contact_person_update',
         {
-          ref: 'contact-person-ref-123',
-          counterpartyRef: 'counterparty-ref',
-          phone: '380991234567',
+          Ref: 'contact-person-ref-123',
+          CounterpartyRef: 'counterparty-ref',
+          Phone: '380991234567',
         },
         context,
       );
 
       expect(result.isError).toBeFalsy();
       expect(context.client.contactPerson.update).toHaveBeenCalledWith({
-        ref: 'contact-person-ref-123',
-        counterpartyRef: 'counterparty-ref',
-        firstName: undefined,
-        middleName: undefined,
-        lastName: undefined,
-        phone: '380991234567',
-        email: undefined,
+        Ref: 'contact-person-ref-123',
+        CounterpartyRef: 'counterparty-ref',
+        Phone: '380991234567',
       });
     });
 
@@ -297,30 +288,30 @@ describe('contact person tools', () => {
       const result = await handleContactPersonTool(
         'contact_person_update',
         {
-          counterpartyRef: 'counterparty-ref',
-          firstName: 'Updated',
+          CounterpartyRef: 'counterparty-ref',
+          FirstName: 'Updated',
         },
         context,
       );
 
       expect(result.isError).toBe(true);
       const text = (result.content[0] as any).text;
-      expect(text).toContain('ref');
+      expect(text).toContain('Ref');
     });
 
-    it('requires counterpartyRef', async () => {
+    it('requires CounterpartyRef', async () => {
       const result = await handleContactPersonTool(
         'contact_person_update',
         {
-          ref: 'contact-person-ref-123',
-          firstName: 'Updated',
+          Ref: 'contact-person-ref-123',
+          FirstName: 'Updated',
         },
         context,
       );
 
       expect(result.isError).toBe(true);
       const text = (result.content[0] as any).text;
-      expect(text).toContain('counterpartyRef');
+      expect(text).toContain('CounterpartyRef');
     });
 
     it('handles API errors', async () => {
@@ -339,8 +330,8 @@ describe('contact person tools', () => {
       const result = await handleContactPersonTool(
         'contact_person_update',
         {
-          ref: 'invalid-ref',
-          counterpartyRef: 'counterparty-ref',
+          Ref: 'invalid-ref',
+          CounterpartyRef: 'counterparty-ref',
         },
         context,
       );
@@ -368,16 +359,16 @@ describe('contact person tools', () => {
       const result = await handleContactPersonTool(
         'contact_person_delete',
         {
-          ref: 'contact-person-ref-123',
-          counterpartyRef: 'counterparty-ref',
+          Ref: 'contact-person-ref-123',
+          CounterpartyRef: 'counterparty-ref',
         },
         context,
       );
 
       expect(result.isError).toBeFalsy();
       expect(context.client.contactPerson.delete).toHaveBeenCalledWith({
-        ref: 'contact-person-ref-123',
-        counterpartyRef: 'counterparty-ref',
+        Ref: 'contact-person-ref-123',
+        CounterpartyRef: 'counterparty-ref',
       });
       const text = (result.content[0] as any).text;
       expect(text).toContain('deleted');
@@ -387,28 +378,28 @@ describe('contact person tools', () => {
       const result = await handleContactPersonTool(
         'contact_person_delete',
         {
-          counterpartyRef: 'counterparty-ref',
+          CounterpartyRef: 'counterparty-ref',
         },
         context,
       );
 
       expect(result.isError).toBe(true);
       const text = (result.content[0] as any).text;
-      expect(text).toContain('ref');
+      expect(text).toContain('Ref');
     });
 
-    it('requires counterpartyRef', async () => {
+    it('requires CounterpartyRef', async () => {
       const result = await handleContactPersonTool(
         'contact_person_delete',
         {
-          ref: 'contact-person-ref-123',
+          Ref: 'contact-person-ref-123',
         },
         context,
       );
 
       expect(result.isError).toBe(true);
       const text = (result.content[0] as any).text;
-      expect(text).toContain('counterpartyRef');
+      expect(text).toContain('CounterpartyRef');
     });
 
     it('handles API errors', async () => {
@@ -427,8 +418,8 @@ describe('contact person tools', () => {
       const result = await handleContactPersonTool(
         'contact_person_delete',
         {
-          ref: 'contact-person-ref-123',
-          counterpartyRef: 'counterparty-ref',
+          Ref: 'contact-person-ref-123',
+          CounterpartyRef: 'counterparty-ref',
         },
         context,
       );

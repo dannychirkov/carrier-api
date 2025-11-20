@@ -25,9 +25,9 @@ const referenceTools: Tool[] = [
     inputSchema: {
       type: 'object',
       properties: {
-        length: { type: 'number', description: 'Optional package length filter in cm.' },
-        width: { type: 'number', description: 'Optional package width filter in cm.' },
-        height: { type: 'number', description: 'Optional package height filter in cm.' },
+        Length: { type: 'number', description: 'Optional package length filter in cm.' },
+        Width: { type: 'number', description: 'Optional package width filter in cm.' },
+        Height: { type: 'number', description: 'Optional package height filter in cm.' },
       },
       required: [],
     },
@@ -49,8 +49,8 @@ const referenceTools: Tool[] = [
     inputSchema: {
       type: 'object',
       properties: {
-        findByString: { type: 'string', description: 'Optional search keyword for cargo description.' },
-        page: { type: 'number', description: 'Page number (default 1).' },
+        FindByString: { type: 'string', description: 'Optional search keyword for cargo description.' },
+        Page: { type: 'number', description: 'Page number (default 1).' },
       },
       required: [],
     },
@@ -62,10 +62,10 @@ const referenceTools: Tool[] = [
     inputSchema: {
       type: 'object',
       properties: {
-        cityRef: { type: 'string', description: 'Sender city reference from address_search_cities.' },
-        dateTime: { type: 'string', description: 'Pickup date (dd.mm.yyyy).' },
+        SenderCityRef: { type: 'string', description: 'Sender city reference from address_search_cities.' },
+        DateTime: { type: 'string', description: 'Pickup date (dd.mm.yyyy).' },
       },
-      required: ['cityRef', 'dateTime'],
+      required: ['SenderCityRef', 'DateTime'],
     },
   },
   {
@@ -125,10 +125,10 @@ const referenceTools: Tool[] = [
     inputSchema: {
       type: 'object',
       properties: {
-        recipientCityRef: { type: 'string', description: 'Recipient city reference.' },
-        dateTime: { type: 'string', description: 'Specific date (dd.mm.yyyy).' },
+        RecipientCityRef: { type: 'string', description: 'Recipient city reference.' },
+        DateTime: { type: 'string', description: 'Specific date (dd.mm.yyyy).' },
       },
-      required: ['recipientCityRef'],
+      required: ['RecipientCityRef'],
     },
   },
   {
@@ -148,9 +148,9 @@ const referenceTools: Tool[] = [
     inputSchema: {
       type: 'object',
       properties: {
-        code: { type: 'string', description: 'Message code (e.g., 20000200039).' },
+        MessageCode: { type: 'string', description: 'Message code (e.g., 20000200039).' },
       },
-      required: ['code'],
+      required: ['MessageCode'],
     },
   },
   {
@@ -249,12 +249,12 @@ async function wrapList<T>(
 }
 
 async function handleTimeIntervals(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
-  const recipientCityRef = assertString(args?.recipientCityRef, 'recipientCityRef');
-  const dateTime = assertOptionalString(args?.dateTime, 'dateTime');
+  const recipientCityRef = assertString(args?.RecipientCityRef, 'RecipientCityRef');
+  const dateTime = assertOptionalString(args?.DateTime, 'DateTime');
 
   const request: GetTimeIntervalsRequest = {
-    recipientCityRef,
-    ...(dateTime ? { dateTime } : {}),
+    RecipientCityRef: recipientCityRef,
+    ...(dateTime ? { DateTime: dateTime } : {}),
   };
 
   const response = await context.client.reference.getTimeIntervals(request);
@@ -262,7 +262,7 @@ async function handleTimeIntervals(args: ToolArguments, context: ToolContext): P
 }
 
 async function handleDecodeMessage(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
-  const code = assertString(args?.code, 'code');
+  const code = assertString(args?.MessageCode, 'MessageCode');
   const response = await context.client.reference.getMessageCodeText({});
   const match = response.data?.find(item => item.MessageCode === code);
 
@@ -297,38 +297,38 @@ async function handleGetTypesOfCounterparties(_args: ToolArguments, context: Too
 }
 
 async function handleGetPackList(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
-  const length = args?.length !== undefined ? Number(args.length) : undefined;
-  const width = args?.width !== undefined ? Number(args.width) : undefined;
-  const height = args?.height !== undefined ? Number(args.height) : undefined;
+  const length = args?.Length !== undefined ? Number(args.Length) : undefined;
+  const width = args?.Width !== undefined ? Number(args.Width) : undefined;
+  const height = args?.Height !== undefined ? Number(args.Height) : undefined;
 
   const response = await context.client.reference.getPackList({
-    ...(length !== undefined ? { length } : {}),
-    ...(width !== undefined ? { width } : {}),
-    ...(height !== undefined ? { height } : {}),
+    ...(length !== undefined ? { Length: length } : {}),
+    ...(width !== undefined ? { Width: width } : {}),
+    ...(height !== undefined ? { Height: height } : {}),
   });
 
   return createTextResult(formatAsJson({ packs: response.data, total: response.data?.length ?? 0 }), { response });
 }
 
 async function handleGetCargoDescriptionList(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
-  const findByString = assertOptionalString(args?.findByString, 'findByString');
-  const page = args?.page !== undefined ? Number(args.page) : undefined;
+  const findByString = assertOptionalString(args?.FindByString, 'FindByString');
+  const page = args?.Page !== undefined ? Number(args.Page) : undefined;
 
   const response = await context.client.reference.getCargoDescriptionList({
-    ...(findByString ? { findByString } : {}),
-    ...(page !== undefined ? { page } : {}),
+    ...(findByString ? { FindByString: findByString } : {}),
+    ...(page !== undefined ? { Page: page } : {}),
   });
 
   return createTextResult(formatAsJson({ cargoDescriptions: response.data, total: response.data?.length ?? 0 }), { response });
 }
 
 async function handleGetPickupTimeIntervals(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
-  const cityRef = assertString(args?.cityRef, 'cityRef');
-  const dateTime = assertString(args?.dateTime, 'dateTime');
+  const cityRef = assertString(args?.SenderCityRef, 'SenderCityRef');
+  const dateTime = assertString(args?.DateTime, 'DateTime');
 
   const response = await context.client.reference.getPickupTimeIntervals({
-    senderCityRef: cityRef,
-    dateTime,
+    SenderCityRef: cityRef,
+    DateTime: dateTime,
   });
 
   return createTextResult(formatAsJson({ intervals: response.data, total: response.data?.length ?? 0 }), { response });
