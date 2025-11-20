@@ -979,7 +979,7 @@ Apache License 2.0 - see [LICENSE](./LICENSE) for details.
 
 <div align="center">
 
-Made with ❤️ by [Shopana IO](https://shopana.io)
+Made with ❤️ by [Shopana.io](https://shopana.io)
 
 [⬆ Back to Top](#nova-poshta-mcp-server)
 

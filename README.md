@@ -387,7 +387,7 @@ This project is licensed under the Apache License 2.0, which means:
 
 <div align="center">
 
-**Made with ❤️ by [Shopana IO](https://shopana.io)**
+**Made with ❤️ by [Shopana.io](https://shopana.io)**
 
 [![GitHub stars](https://img.shields.io/github/stars/shopanaio/carrier-api?style=social)](https://github.com/shopanaio/carrier-api)
 [![GitHub forks](https://img.shields.io/github/forks/shopanaio/carrier-api?style=social)](https://github.com/shopanaio/carrier-api/fork)

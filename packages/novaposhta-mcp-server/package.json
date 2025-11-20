@@ -44,7 +44,7 @@
     "server",
     "ukraine"
   ],
-  "author": "Shopana IO",
+  "author": "Shopana.io",
   "license": "Apache-2.0",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.22.0",
