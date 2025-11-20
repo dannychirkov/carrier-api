@@ -233,7 +233,10 @@ export class ReferenceService {
       ...(this.apiKey ? { apiKey: this.apiKey } : {}),
       modelName: NovaPoshtaModel.Common,
       calledMethod: NovaPoshtaMethod.GetPickupTimeIntervals,
-      methodProperties: request as unknown as Record<string, unknown>,
+      methodProperties: {
+        SenderCityRef: request.senderCityRef,
+        DateTime: request.dateTime,
+      },
     };
 
     return await this.transport.request<GetPickupTimeIntervalsResponse['data']>(apiRequest);

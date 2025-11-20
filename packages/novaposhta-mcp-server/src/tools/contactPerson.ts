@@ -1,7 +1,7 @@
 import type { CallToolResult, Tool } from '@modelcontextprotocol/sdk/types.js';
 
 import type { ToolArguments, ToolContext } from '../types/mcp.js';
-import { toErrorResult } from '../utils/error-handler.js';
+import { toErrorResult, formatResponseErrors } from '../utils/error-handler.js';
 import { assertOptionalString, assertString } from '../utils/validation.js';
 import { createTextResult, formatAsJson } from '../utils/tool-response.js';
 
@@ -99,7 +99,7 @@ async function handleSaveContactPerson(args: ToolArguments, context: ToolContext
   });
 
   if (!response.success) {
-    throw new Error(response.errors?.join(', ') || 'Failed to save contact person');
+    throw new Error(formatResponseErrors(response.errors, 'Failed to save contact person'));
   }
 
   return createTextResult(
@@ -126,7 +126,7 @@ async function handleUpdateContactPerson(args: ToolArguments, context: ToolConte
   });
 
   if (!response.success) {
-    throw new Error(response.errors?.join(', ') || 'Failed to update contact person');
+    throw new Error(formatResponseErrors(response.errors, 'Failed to update contact person'));
   }
 
   return createTextResult(
@@ -148,7 +148,7 @@ async function handleDeleteContactPerson(args: ToolArguments, context: ToolConte
   });
 
   if (!response.success) {
-    throw new Error(response.errors?.join(', ') || 'Failed to delete contact person');
+    throw new Error(formatResponseErrors(response.errors, 'Failed to delete contact person'));
   }
 
   return createTextResult(

@@ -89,13 +89,12 @@ export class TrackingService {
     const apiRequest: NovaPoshtaRequest = {
       ...(this.apiKey ? { apiKey: this.apiKey } : {}),
       modelName: NovaPoshtaModel.TrackingDocument,
-      calledMethod: NovaPoshtaMethod.GetDocumentsEWMovement,
+      calledMethod: NovaPoshtaMethod.GetStatusDocuments,
       methodProperties: {
         Documents: request.documents.map(doc => ({
           DocumentNumber: doc.documentNumber,
           Phone: doc.phone,
         })),
-        ShowDeliveryDetails: request.showDeliveryDetails ? '1' : '0',
       },
     };
 

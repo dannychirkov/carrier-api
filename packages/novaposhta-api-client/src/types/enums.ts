@@ -19,7 +19,6 @@ export enum NovaPoshtaModel {
 export enum NovaPoshtaMethod {
   // Tracking methods
   GetStatusDocuments = 'getStatusDocuments',
-  GetDocumentsEWMovement = 'getDocumentsEWMovement',
 
   // Internet document methods
   Save = 'save',

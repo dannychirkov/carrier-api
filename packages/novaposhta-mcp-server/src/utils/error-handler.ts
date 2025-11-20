@@ -14,6 +14,19 @@ export function formatError(error: unknown): string {
   return typeof error === 'string' ? error : 'Unknown error';
 }
 
+/**
+ * Safely formats response errors array
+ * @param errors - Errors from Nova Poshta response
+ * @param fallback - Fallback message if errors is not an array
+ * @returns Formatted error message
+ */
+export function formatResponseErrors(errors: unknown, fallback: string): string {
+  if (Array.isArray(errors) && errors.length > 0) {
+    return errors.join(', ');
+  }
+  return fallback;
+}
+
 export function toErrorResult(error: unknown, prefix = 'Failed to execute tool'): CallToolResult {
   return {
     content: [

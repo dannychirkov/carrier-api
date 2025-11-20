@@ -1,7 +1,7 @@
 import type { CallToolResult, Tool } from '@modelcontextprotocol/sdk/types';
 
 import type { ToolArguments, ToolContext } from '../types/mcp.js';
-import { toErrorResult } from '../utils/error-handler.js';
+import { toErrorResult, formatResponseErrors } from '../utils/error-handler.js';
 import { assertOptionalNumber, assertOptionalString, assertString } from '../utils/validation.js';
 import { createTextResult, formatAsJson } from '../utils/tool-response.js';
 const addressTools: Tool[] = [
@@ -194,7 +194,7 @@ async function handleGetSettlements(args: ToolArguments, context: ToolContext): 
   });
 
   if (!response.success) {
-    throw new Error(response.errors?.join(', ') || 'Failed to get settlements');
+    throw new Error(formatResponseErrors(response.errors, 'Failed to get settlements'));
   }
 
   const settlements = response.data?.map(settlement => ({
@@ -216,7 +216,7 @@ async function handleGetSettlementCountryRegion(args: ToolArguments, context: To
   });
 
   if (!response.success) {
-    throw new Error(response.errors?.join(', ') || 'Failed to get settlement country regions');
+    throw new Error(formatResponseErrors(response.errors, 'Failed to get settlement country regions'));
   }
 
   const regions = response.data?.map(region => ({
@@ -339,8 +339,7 @@ async function handleGetWarehouses(args: ToolArguments, context: ToolContext): P
   });
 
   if (!response.success) {
-    const message = response.errors?.join(', ') || 'Nova Poshta API returned an error';
-    throw new Error(message);
+    throw new Error(formatResponseErrors(response.errors, 'Nova Poshta API returned an error'));
   }
 
   const data = response.data ?? [];
@@ -364,7 +363,7 @@ async function handleSaveAddress(args: ToolArguments, context: ToolContext): Pro
   });
 
   if (!response.success) {
-    throw new Error(response.errors?.join(', ') || 'Failed to save address');
+    throw new Error(formatResponseErrors(response.errors, 'Failed to save address'));
   }
 
   return createTextResult(
@@ -395,7 +394,7 @@ async function handleUpdateAddress(args: ToolArguments, context: ToolContext): P
   });
 
   if (!response.success) {
-    throw new Error(response.errors?.join(', ') || 'Failed to update address');
+    throw new Error(formatResponseErrors(response.errors, 'Failed to update address'));
   }
 
   return createTextResult(
@@ -415,7 +414,7 @@ async function handleDeleteAddress(args: ToolArguments, context: ToolContext): P
   });
 
   if (!response.success) {
-    throw new Error(response.errors?.join(', ') || 'Failed to delete address');
+    throw new Error(formatResponseErrors(response.errors, 'Failed to delete address'));
   }
 
   return createTextResult(

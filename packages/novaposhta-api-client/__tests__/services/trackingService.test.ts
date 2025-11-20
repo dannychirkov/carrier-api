@@ -218,10 +218,9 @@ describe('TrackingService', () => {
       expect(calls).toHaveLength(1);
       expect(calls[0].body).toMatchObject({
         modelName: 'TrackingDocumentGeneral',
-        calledMethod: 'getDocumentsEWMovement',
+        calledMethod: 'getStatusDocuments',
         methodProperties: {
           Documents: [{ DocumentNumber: '20400048799000' }],
-          ShowDeliveryDetails: '1',
         },
       });
       expect(result.success).toBe(true);

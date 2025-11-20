@@ -1,7 +1,7 @@
 import type { CallToolResult, Tool } from '@modelcontextprotocol/sdk/types.js';
 
 import type { ToolArguments, ToolContext } from '../types/mcp.js';
-import { toErrorResult } from '../utils/error-handler.js';
+import { toErrorResult, formatResponseErrors } from '../utils/error-handler.js';
 import { assertOptionalNumber, assertOptionalString, assertString } from '../utils/validation.js';
 import { createTextResult, formatAsJson } from '../utils/tool-response.js';
 
@@ -179,7 +179,7 @@ async function handleGetCounterparties(args: ToolArguments, context: ToolContext
   });
 
   if (!response.success) {
-    throw new Error(response.errors?.join(', ') || 'Failed to get counterparties');
+    throw new Error(formatResponseErrors(response.errors, 'Failed to get counterparties'));
   }
 
   const counterparties = response.data?.map(cp => ({
@@ -212,7 +212,7 @@ async function handleGetCounterpartyAddresses(args: ToolArguments, context: Tool
   });
 
   if (!response.success) {
-    throw new Error(response.errors?.join(', ') || 'Failed to get counterparty addresses');
+    throw new Error(formatResponseErrors(response.errors, 'Failed to get counterparty addresses'));
   }
 
   const addresses = response.data?.map(address => ({
@@ -240,7 +240,7 @@ async function handleGetContactPersons(args: ToolArguments, context: ToolContext
   });
 
   if (!response.success) {
-    throw new Error(response.errors?.join(', ') || 'Failed to get contact persons');
+    throw new Error(formatResponseErrors(response.errors, 'Failed to get contact persons'));
   }
 
   const contactPersons = response.data?.map(person => ({
@@ -282,7 +282,7 @@ async function handleSaveCounterparty(args: ToolArguments, context: ToolContext)
     });
 
     if (!response.success) {
-      throw new Error(response.errors?.join(', ') || 'Failed to save counterparty');
+      throw new Error(formatResponseErrors(response.errors, 'Failed to save counterparty'));
     }
 
     return createTextResult(
@@ -309,7 +309,7 @@ async function handleSaveCounterparty(args: ToolArguments, context: ToolContext)
     });
 
     if (!response.success) {
-      throw new Error(response.errors?.join(', ') || 'Failed to save counterparty');
+      throw new Error(formatResponseErrors(response.errors, 'Failed to save counterparty'));
     }
 
     return createTextResult(
@@ -339,7 +339,7 @@ async function handleUpdateCounterparty(args: ToolArguments, context: ToolContex
   });
 
   if (!response.success) {
-    throw new Error(response.errors?.join(', ') || 'Failed to update counterparty');
+    throw new Error(formatResponseErrors(response.errors, 'Failed to update counterparty'));
   }
 
   return createTextResult(
@@ -359,7 +359,7 @@ async function handleDeleteCounterparty(args: ToolArguments, context: ToolContex
   });
 
   if (!response.success) {
-    throw new Error(response.errors?.join(', ') || 'Failed to delete counterparty');
+    throw new Error(formatResponseErrors(response.errors, 'Failed to delete counterparty'));
   }
 
   return createTextResult(
@@ -378,7 +378,7 @@ async function handleGetCounterpartyOptions(args: ToolArguments, context: ToolCo
   });
 
   if (!response.success) {
-    throw new Error(response.errors?.join(', ') || 'Failed to get counterparty options');
+    throw new Error(formatResponseErrors(response.errors, 'Failed to get counterparty options'));
   }
 
   return createTextResult(

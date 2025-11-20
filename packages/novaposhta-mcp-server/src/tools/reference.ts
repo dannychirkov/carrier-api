@@ -3,7 +3,7 @@ import type { GetTimeIntervalsRequest, NovaPoshtaResponse } from '@shopana/novap
 import { PAYMENT_METHODS } from '@shopana/novaposhta-api-client';
 
 import type { ToolArguments, ToolContext } from '../types/mcp.js';
-import { toErrorResult } from '../utils/error-handler.js';
+import { toErrorResult, formatResponseErrors } from '../utils/error-handler.js';
 import { assertOptionalString, assertString } from '../utils/validation.js';
 import { createTextResult, formatAsJson } from '../utils/tool-response.js';
 
@@ -242,7 +242,7 @@ async function wrapList<T>(
 ): Promise<CallToolResult> {
   const response = await factory();
   if (!response.success) {
-    throw new Error(response.errors?.join(', ') || 'Nova Poshta API returned an error');
+    throw new Error(formatResponseErrors(response.errors, 'Nova Poshta API returned an error'));
   }
 
   return createTextResult(formatAsJson({ [key]: response.data, total: response.data?.length ?? 0 }), { response });

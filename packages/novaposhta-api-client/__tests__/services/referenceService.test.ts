@@ -322,15 +322,15 @@ describe('ReferenceService', () => {
 
       const client = createClient({ transport, baseUrl, apiKey }).use(new ReferenceService());
 
-      const result = await client.reference.getPickupTimeIntervals({ cityRef: 'city-ref-1', dateTime: '01.01.2024' });
+      const result = await client.reference.getPickupTimeIntervals({ senderCityRef: 'city-ref-1', dateTime: '01.01.2024' });
 
       expect(calls).toHaveLength(1);
       expect(calls[0].body).toMatchObject({
         modelName: 'CommonGeneral',
         calledMethod: 'getPickupTimeIntervals',
         methodProperties: {
-          cityRef: 'city-ref-1',
-          dateTime: '01.01.2024',
+          SenderCityRef: 'city-ref-1',
+          DateTime: '01.01.2024',
         },
       });
       expect(result.success).toBe(true);
