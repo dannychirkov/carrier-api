@@ -69,7 +69,7 @@ const referenceTools: Tool[] = [
     },
   },
   {
-    name: 'reference_get_backward_delivery_cargo_types',
+    name: 'reference_get_backward_cargo_types',
     description:
       'List backward delivery cargo types via Common/getBackwardDeliveryCargoTypes (doc 1.18). Returns types of cargo that can be sent back (documents, money, etc.). Used for return shipments and COD. Docs recommend caching monthly.',
     inputSchema: {
@@ -79,7 +79,7 @@ const referenceTools: Tool[] = [
     },
   },
   {
-    name: 'reference_get_types_of_payers_for_redelivery',
+    name: 'reference_get_redelivery_payers',
     description:
       'List payer types for redelivery via Common/getTypesOfPayersForRedelivery (doc 1.19). Returns who can pay for backward delivery (Sender/Recipient). Used with return shipments. Docs recommend caching monthly.',
     inputSchema: {
@@ -206,9 +206,9 @@ export async function handleReferenceTool(
         return await handleGetCargoDescriptionList(args, context);
       case 'reference_get_pickup_time_intervals':
         return await handleGetPickupTimeIntervals(args, context);
-      case 'reference_get_backward_delivery_cargo_types':
+      case 'reference_get_backward_cargo_types':
         return await wrapList(() => context.client.reference.getBackwardDeliveryCargoTypes(), 'backwardDeliveryCargoTypes');
-      case 'reference_get_types_of_payers_for_redelivery':
+      case 'reference_get_redelivery_payers':
         return await wrapList(() => context.client.reference.getTypesOfPayersForRedelivery(), 'payerTypesForRedelivery');
       case 'reference_get_service_types':
         return await wrapList(() => context.client.reference.getServiceTypes(), 'serviceTypes');

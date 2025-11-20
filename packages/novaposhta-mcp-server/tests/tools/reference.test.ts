@@ -205,7 +205,7 @@ describe('reference tools', () => {
     });
   });
 
-  describe('reference_get_backward_delivery_cargo_types', () => {
+  describe('reference_get_backward_cargo_types', () => {
     it('successfully gets backward delivery cargo types', async () => {
       vi.mocked(context.client.reference.getBackwardDeliveryCargoTypes).mockResolvedValue({
         success: true,
@@ -224,12 +224,12 @@ describe('reference tools', () => {
         infoCodes: [],
       });
 
-      const result = await handleReferenceTool('reference_get_backward_delivery_cargo_types', {}, context);
+      const result = await handleReferenceTool('reference_get_backward_cargo_types', {}, context);
       expect(result.isError).toBeFalsy();
     });
   });
 
-  describe('reference_get_types_of_payers_for_redelivery', () => {
+  describe('reference_get_redelivery_payers', () => {
     it('successfully gets types of payers for redelivery', async () => {
       vi.mocked(context.client.reference.getTypesOfPayersForRedelivery).mockResolvedValue({
         success: true,
@@ -248,7 +248,7 @@ describe('reference tools', () => {
         infoCodes: [],
       });
 
-      const result = await handleReferenceTool('reference_get_types_of_payers_for_redelivery', {}, context);
+      const result = await handleReferenceTool('reference_get_redelivery_payers', {}, context);
       expect(result.isError).toBeFalsy();
     });
   });

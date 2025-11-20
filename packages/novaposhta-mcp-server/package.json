@@ -1,6 +1,6 @@
 {
   "name": "@shopana/novaposhta-mcp-server",
-  "version": "0.0.1-alpha.5",
+  "version": "0.0.1-alpha.6",
   "description": "MCP Server for Nova Poshta API integration with AI assistants",
   "mcpName": "io.github.shopanaio/novaposhta",
   "type": "module",
