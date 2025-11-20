@@ -1473,6 +1473,11 @@
   resolved "https://registry.yarnpkg.com/@shikijs/vscode-textmate/-/vscode-textmate-10.0.2.tgz#a90ab31d0cc1dfb54c66a69e515bf624fa7b2224"
   integrity sha512-83yeghZ2xxin3Nj8z1NMd/NCuca+gsYXswywDy5bHvwlWL8tpTQmzGeUuHd9FC3E/SBEMvzJRwWEOz5gGes9Qg==
 
+"@shopana/novaposhta-api-client@^0.0.1-alpha.5":
+  version "0.0.1-alpha.5"
+  resolved "https://registry.yarnpkg.com/@shopana/novaposhta-api-client/-/novaposhta-api-client-0.0.1-alpha.5.tgz#f535ff8b78f929279f0de536ef58247dc85ce24b"
+  integrity sha512-wJew5s1tpvVD0XMA9JK8e+jb9rL4ynAAno8SN+uLWtyOnLn1hg+sRDc+yKrG9wLSX2NlkEZwpcYFDYbqn829wg==
+
 "@shopana/novaposhta-transport-fetch@npm:@shopana/novaposhta-transport-fetch@^0.0.1-alpha.0":
   version "0.0.1-alpha.0"
   resolved "https://registry.yarnpkg.com/@shopana/novaposhta-transport-fetch/-/novaposhta-transport-fetch-0.0.1-alpha.0.tgz#c6bfe3999eb25ed79973e9698f8ae3eca1dc40b1"
