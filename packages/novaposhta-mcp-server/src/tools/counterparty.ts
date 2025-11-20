@@ -96,8 +96,7 @@ const counterpartyTools: Tool[] = [
         middleName: { type: 'string', description: 'Updated middle name.' },
         lastName: { type: 'string', description: 'Updated last name.' },
         phone: { type: 'string', description: 'Updated phone.' },
-        email: { type: 'string', description: 'Updated email.' },
-        cityRef: { type: 'string', description: 'Updated city reference.' }
+        email: { type: 'string', description: 'Updated email.' }
       },
       required: ['ref', 'counterpartyProperty']
     }
@@ -160,7 +159,7 @@ export async function handleCounterpartyTool(
 }
 
 async function handleGetCounterparties(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
-  const counterpartyProperty = assertString(args?.counterpartyProperty, 'counterpartyProperty');
+  const counterpartyProperty = assertString(args?.counterpartyProperty, 'counterpartyProperty') as 'Sender' | 'Recipient' | 'ThirdPerson';
   const page = assertOptionalNumber(args?.page, 'page');
   const findByString = assertOptionalString(args?.findByString, 'findByString');
   const cityRef = assertOptionalString(args?.cityRef, 'cityRef');
@@ -176,25 +175,27 @@ async function handleGetCounterparties(args: ToolArguments, context: ToolContext
     throw new Error(response.errors?.join(', ') || 'Failed to get counterparties');
   }
 
-  // Return preview (first 5 items) to avoid token overflow
-  const preview = response.data?.slice(0, 5).map(cp => ({
+  const counterparties = response.data?.map(cp => ({
     ref: cp.Ref,
     description: cp.Description,
     city: cp.City,
     counterpartyType: cp.CounterpartyType,
-  }));
+    ownershipForm: cp.OwnershipForm,
+    ownershipFormDescription: cp.OwnershipFormDescription,
+    edrpou: cp.EDRPOU,
+  })) ?? [];
 
   return createTextResult(
     formatAsJson({
-      total: response.data?.length ?? 0,
-      preview
+      total: counterparties.length,
+      counterparties
     })
   );
 }
 
 async function handleGetCounterpartyAddresses(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
   const ref = assertString(args?.ref, 'ref');
-  const counterpartyProperty = assertOptionalString(args?.counterpartyProperty, 'counterpartyProperty');
+  const counterpartyProperty = assertOptionalString(args?.counterpartyProperty, 'counterpartyProperty') as 'Sender' | 'Recipient' | undefined;
   const page = assertOptionalNumber(args?.page, 'page');
 
   const response = await context.client.counterparty.getCounterpartyAddresses({
@@ -207,16 +208,17 @@ async function handleGetCounterpartyAddresses(args: ToolArguments, context: Tool
     throw new Error(response.errors?.join(', ') || 'Failed to get counterparty addresses');
   }
 
-  const preview = response.data?.slice(0, 5).map(address => ({
+  const addresses = response.data?.map(address => ({
     ref: address.Ref,
     description: address.Description,
-    addressName: (address as { AddressName?: string }).AddressName,
-  }));
+    streetsType: address.StreetsType,
+    streetsTypeDescription: address.StreetsTypeDescription,
+  })) ?? [];
 
   return createTextResult(
     formatAsJson({
-      total: response.data?.length ?? 0,
-      preview
+      total: addresses.length,
+      addresses
     })
   );
 }
@@ -234,24 +236,27 @@ async function handleGetContactPersons(args: ToolArguments, context: ToolContext
     throw new Error(response.errors?.join(', ') || 'Failed to get contact persons');
   }
 
-  const preview = response.data?.slice(0, 5).map(person => ({
+  const contactPersons = response.data?.map(person => ({
     ref: person.Ref,
     description: person.Description,
-    phones: (person as { Phones?: string }).Phones,
-    email: (person as { Email?: string }).Email,
-  }));
+    phones: person.Phones,
+    email: person.Email,
+    lastName: person.LastName,
+    firstName: person.FirstName,
+    middleName: person.MiddleName,
+  })) ?? [];
 
   return createTextResult(
     formatAsJson({
-      total: response.data?.length ?? 0,
-      preview
+      total: contactPersons.length,
+      contactPersons
     })
   );
 }
 
 async function handleSaveCounterparty(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
   const counterpartyType = assertString(args?.counterpartyType, 'counterpartyType');
-  const counterpartyProperty = assertString(args?.counterpartyProperty, 'counterpartyProperty');
+  const counterpartyProperty = assertString(args?.counterpartyProperty, 'counterpartyProperty') as 'Sender' | 'Recipient';
   const phone = assertString(args?.phone, 'phone');
 
   // Validate based on counterparty type
@@ -314,7 +319,7 @@ async function handleSaveCounterparty(args: ToolArguments, context: ToolContext)
 
 async function handleUpdateCounterparty(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
   const ref = assertString(args?.ref, 'ref');
-  const counterpartyProperty = assertString(args?.counterpartyProperty, 'counterpartyProperty');
+  const counterpartyProperty = assertString(args?.counterpartyProperty, 'counterpartyProperty') as 'Sender' | 'Recipient';
 
   const response = await context.client.counterparty.update({
     ref,
@@ -324,7 +329,6 @@ async function handleUpdateCounterparty(args: ToolArguments, context: ToolContex
     lastName: assertOptionalString(args?.lastName, 'lastName'),
     phone: assertOptionalString(args?.phone, 'phone'),
     email: assertOptionalString(args?.email, 'email'),
-    cityRef: assertOptionalString(args?.cityRef, 'cityRef'),
   });
 
   if (!response.success) {

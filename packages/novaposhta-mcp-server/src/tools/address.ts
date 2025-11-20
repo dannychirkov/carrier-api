@@ -157,7 +157,7 @@ async function handleSearchCities(args: ToolArguments, context: ToolContext): Pr
     limit,
   });
 
-  const preview = response.data?.slice(0, 5).map(city => {
+  const cities = response.data?.map(city => {
     const warehouses = (city as unknown as { Warehouses?: number }).Warehouses ?? 0;
     return {
       description: city.Description,
@@ -165,9 +165,9 @@ async function handleSearchCities(args: ToolArguments, context: ToolContext): Pr
       area: city.Area,
       warehouses: Number(warehouses),
     };
-  });
+  }) ?? [];
 
-  return createTextResult(formatAsJson({ total: response.data?.length ?? 0, preview }));
+  return createTextResult(formatAsJson({ total: cities.length, cities }));
 }
 
 async function handleSearchSettlements(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
@@ -182,7 +182,7 @@ async function handleSearchSettlements(args: ToolArguments, context: ToolContext
   });
 
   const addresses = response.data?.[0]?.Addresses ?? [];
-  const preview = addresses.slice(0, 5).map(address => ({
+  const settlements = addresses.map(address => ({
     name: address.MainDescription,
     area: address.Area,
     region: address.Region,
@@ -191,7 +191,7 @@ async function handleSearchSettlements(args: ToolArguments, context: ToolContext
     deliveryCity: address.DeliveryCity,
   }));
 
-  return createTextResult(formatAsJson({ total: addresses.length, preview }));
+  return createTextResult(formatAsJson({ total: settlements.length, settlements }));
 }
 
 async function handleSearchStreets(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
@@ -206,13 +206,16 @@ async function handleSearchStreets(args: ToolArguments, context: ToolContext): P
   });
 
   const addresses = response.data?.[0]?.Addresses ?? [];
-  const preview = addresses.slice(0, 5).map(street => ({
+  const streets = addresses.map(street => ({
     name: street.SettlementStreetDescription,
+    ref: street.SettlementStreetRef,
     present: street.Present,
     location: street.Location,
+    streetsType: street.StreetsType,
+    streetsTypeDescription: street.StreetsTypeDescription,
   }));
 
-  return createTextResult(formatAsJson({ total: addresses.length, preview }));
+  return createTextResult(formatAsJson({ total: streets.length, streets }));
 }
 
 async function handleGetWarehouses(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
@@ -257,15 +260,8 @@ async function handleGetWarehouses(args: ToolArguments, context: ToolContext): P
   }
 
   const data = response.data ?? [];
-  const preview = data.slice(0, 5).map(warehouse => ({
-    number: warehouse.Number,
-    description: warehouse.Description,
-    shortAddress: warehouse.ShortAddress,
-    type: warehouse.TypeOfWarehouse,
-    schedule: warehouse.Schedule,
-  }));
 
-  return createTextResult(formatAsJson({ total: data.length, preview }));
+  return createTextResult(formatAsJson({ total: data.length, warehouses: data }));
 }
 
 async function handleSaveAddress(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
@@ -300,13 +296,18 @@ async function handleUpdateAddress(args: ToolArguments, context: ToolContext): P
   const ref = assertString(args?.ref, 'ref');
   const counterpartyRef = assertString(args?.counterpartyRef, 'counterpartyRef');
 
+  const streetRef = assertString(args?.streetRef, 'streetRef');
+  const buildingNumber = assertString(args?.buildingNumber, 'buildingNumber');
+  const flat = assertOptionalString(args?.flat, 'flat');
+  const note = assertOptionalString(args?.note, 'note');
+
   const response = await context.client.address.update({
     ref,
     counterpartyRef,
-    streetRef: assertOptionalString(args?.streetRef, 'streetRef'),
-    buildingNumber: assertOptionalString(args?.buildingNumber, 'buildingNumber'),
-    flat: assertOptionalString(args?.flat, 'flat'),
-    note: assertOptionalString(args?.note, 'note'),
+    streetRef,
+    buildingNumber,
+    flat,
+    note,
   });
 
   if (!response.success) {

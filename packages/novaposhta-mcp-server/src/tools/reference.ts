@@ -153,8 +153,7 @@ async function wrapList<T>(
     throw new Error(response.errors?.join(', ') || 'Nova Poshta API returned an error');
   }
 
-  const preview = response.data?.slice(0, 5);
-  return createTextResult(formatAsJson({ [key]: response.data, preview }), { response });
+  return createTextResult(formatAsJson({ [key]: response.data, total: response.data?.length ?? 0 }), { response });
 }
 
 async function handleTimeIntervals(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
