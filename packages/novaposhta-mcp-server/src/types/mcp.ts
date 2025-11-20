@@ -1,4 +1,4 @@
-import type { AddressService, ReferenceService, TrackingService, WaybillService } from '@shopana/novaposhta-api-client';
+import type { AddressService, ReferenceService, TrackingService, WaybillService, CounterpartyService, ContactPersonService } from '@shopana/novaposhta-api-client';
 
 import type { ServerConfig } from '../config.js';
 
@@ -7,6 +7,8 @@ export interface NovaPoshtaClient {
   reference: ReferenceService;
   tracking: TrackingService;
   waybill: WaybillService;
+  counterparty: CounterpartyService;
+  contactPerson: ContactPersonService;
 }
 
 export type ToolArguments = Record<string, unknown> | undefined;

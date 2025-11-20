@@ -76,6 +76,33 @@ const referenceTools: Tool[] = [
       required: ['code'],
     },
   },
+  {
+    name: 'reference_get_types_of_payers',
+    description: 'Get list of payer types (Sender/Recipient/ThirdPerson) for waybill creation.',
+    inputSchema: {
+      type: 'object',
+      properties: {},
+      required: []
+    }
+  },
+  {
+    name: 'reference_get_payment_forms',
+    description: 'Get list of payment forms (Cash/NonCash) for waybill creation.',
+    inputSchema: {
+      type: 'object',
+      properties: {},
+      required: []
+    }
+  },
+  {
+    name: 'reference_get_types_of_counterparties',
+    description: 'Get list of counterparty types (PrivatePerson/Organization).',
+    inputSchema: {
+      type: 'object',
+      properties: {},
+      required: []
+    }
+  },
 ];
 
 export function getReferenceTools(): Tool[] {
@@ -103,6 +130,12 @@ export async function handleReferenceTool(
         return await wrapList(() => context.client.reference.getOwnershipFormsList(), 'ownershipForms');
       case 'reference_decode_message':
         return await handleDecodeMessage(args, context);
+      case 'reference_get_types_of_payers':
+        return await handleGetTypesOfPayers(args, context);
+      case 'reference_get_payment_forms':
+        return await handleGetPaymentForms(args, context);
+      case 'reference_get_types_of_counterparties':
+        return await handleGetTypesOfCounterparties(args, context);
       default:
         throw new Error(`Unknown reference tool: ${name}`);
     }
@@ -155,4 +188,19 @@ async function handleDecodeMessage(args: ToolArguments, context: ToolContext): P
     }),
     { response },
   );
+}
+
+async function handleGetTypesOfPayers(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
+  const response = await context.client.reference.getTypesOfPayers();
+  return createTextResult(formatAsJson({ payerTypes: response.data }), { response });
+}
+
+async function handleGetPaymentForms(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
+  const response = await context.client.reference.getPaymentForms();
+  return createTextResult(formatAsJson({ paymentForms: response.data }), { response });
+}
+
+async function handleGetTypesOfCounterparties(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
+  const response = await context.client.reference.getTypesOfCounterparties();
+  return createTextResult(formatAsJson({ counterpartyTypes: response.data }), { response });
 }

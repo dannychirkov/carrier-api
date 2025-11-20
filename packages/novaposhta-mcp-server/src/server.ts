@@ -14,6 +14,8 @@ import {
   ReferenceService,
   TrackingService,
   WaybillService,
+  CounterpartyService,
+  ContactPersonService,
   createClient,
 } from '@shopana/novaposhta-api-client';
 import { createFetchHttpTransport } from '@shopana/novaposhta-transport-fetch';
@@ -62,7 +64,9 @@ export class NovaPoshtaMCPServer {
       .use(new AddressService())
       .use(new ReferenceService())
       .use(new TrackingService())
-      .use(new WaybillService());
+      .use(new WaybillService())
+      .use(new CounterpartyService())
+      .use(new ContactPersonService());
 
     this.toolContext = {
       client: {
@@ -70,6 +74,8 @@ export class NovaPoshtaMCPServer {
         reference: client.reference,
         tracking: client.tracking,
         waybill: client.waybill,
+        counterparty: client.counterparty,
+        contactPerson: client.contactPerson,
       },
       config,
     };

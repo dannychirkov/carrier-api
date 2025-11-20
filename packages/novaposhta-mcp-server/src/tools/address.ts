@@ -69,6 +69,48 @@ const addressTools: Tool[] = [
       required: [],
     },
   },
+  {
+    name: 'address_save',
+    description: 'Create new address for a counterparty. Returns address ref needed for door-to-door delivery.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        counterpartyRef: { type: 'string', description: 'Counterparty reference.' },
+        streetRef: { type: 'string', description: 'Street reference from address_search_streets.' },
+        buildingNumber: { type: 'string', description: 'Building number (required).' },
+        flat: { type: 'string', description: 'Apartment number (optional).' },
+        note: { type: 'string', description: 'Additional note (optional).' }
+      },
+      required: ['counterpartyRef', 'streetRef', 'buildingNumber']
+    }
+  },
+  {
+    name: 'address_update',
+    description: 'Update existing counterparty address.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        ref: { type: 'string', description: 'Address reference to update.' },
+        counterpartyRef: { type: 'string', description: 'Counterparty reference.' },
+        streetRef: { type: 'string', description: 'Updated street reference.' },
+        buildingNumber: { type: 'string', description: 'Updated building number.' },
+        flat: { type: 'string', description: 'Updated apartment number.' },
+        note: { type: 'string', description: 'Updated note.' }
+      },
+      required: ['ref', 'counterpartyRef']
+    }
+  },
+  {
+    name: 'address_delete',
+    description: 'Delete counterparty address by reference.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        ref: { type: 'string', description: 'Address reference to delete.' }
+      },
+      required: ['ref']
+    }
+  },
 ];
 
 export function getAddressTools(): Tool[] {
@@ -90,6 +132,12 @@ export async function handleAddressTool(
         return await handleSearchStreets(args, context);
       case 'address_get_warehouses':
         return await handleGetWarehouses(args, context);
+      case 'address_save':
+        return await handleSaveAddress(args, context);
+      case 'address_update':
+        return await handleUpdateAddress(args, context);
+      case 'address_delete':
+        return await handleDeleteAddress(args, context);
       default:
         throw new Error(`Unknown address tool: ${name}`);
     }
@@ -218,4 +266,77 @@ async function handleGetWarehouses(args: ToolArguments, context: ToolContext): P
   }));
 
   return createTextResult(formatAsJson({ total: data.length, preview }));
+}
+
+async function handleSaveAddress(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
+  const counterpartyRef = assertString(args?.counterpartyRef, 'counterpartyRef');
+  const streetRef = assertString(args?.streetRef, 'streetRef');
+  const buildingNumber = assertString(args?.buildingNumber, 'buildingNumber');
+  const flat = assertOptionalString(args?.flat, 'flat');
+  const note = assertOptionalString(args?.note, 'note');
+
+  const response = await context.client.address.save({
+    counterpartyRef,
+    streetRef,
+    buildingNumber,
+    flat,
+    note,
+  });
+
+  if (!response.success) {
+    throw new Error(response.errors?.join(', ') || 'Failed to save address');
+  }
+
+  return createTextResult(
+    formatAsJson({
+      success: response.success,
+      ref: response.data?.[0]?.Ref,
+      description: response.data?.[0]?.Description,
+    })
+  );
+}
+
+async function handleUpdateAddress(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
+  const ref = assertString(args?.ref, 'ref');
+  const counterpartyRef = assertString(args?.counterpartyRef, 'counterpartyRef');
+
+  const response = await context.client.address.update({
+    ref,
+    counterpartyRef,
+    streetRef: assertOptionalString(args?.streetRef, 'streetRef'),
+    buildingNumber: assertOptionalString(args?.buildingNumber, 'buildingNumber'),
+    flat: assertOptionalString(args?.flat, 'flat'),
+    note: assertOptionalString(args?.note, 'note'),
+  });
+
+  if (!response.success) {
+    throw new Error(response.errors?.join(', ') || 'Failed to update address');
+  }
+
+  return createTextResult(
+    formatAsJson({
+      success: response.success,
+      ref: response.data?.[0]?.Ref,
+      description: response.data?.[0]?.Description,
+    })
+  );
+}
+
+async function handleDeleteAddress(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
+  const ref = assertString(args?.ref, 'ref');
+
+  const response = await context.client.address.delete({
+    ref,
+  });
+
+  if (!response.success) {
+    throw new Error(response.errors?.join(', ') || 'Failed to delete address');
+  }
+
+  return createTextResult(
+    formatAsJson({
+      success: response.success,
+      message: 'Address deleted successfully',
+    })
+  );
 }

@@ -6,9 +6,18 @@ import { getAddressTools, handleAddressTool } from './address.js';
 import { getReferenceTools, handleReferenceTool } from './reference.js';
 import { getTrackingTools, handleTrackingTool } from './tracking.js';
 import { getWaybillTools, handleWaybillTool } from './waybill.js';
+import { getCounterpartyTools, handleCounterpartyTool } from './counterparty.js';
+import { getContactPersonTools, handleContactPersonTool } from './contactPerson.js';
 
 export function listAllTools(): Tool[] {
-  return [...getTrackingTools(), ...getAddressTools(), ...getWaybillTools(), ...getReferenceTools()];
+  return [
+    ...getTrackingTools(),
+    ...getAddressTools(),
+    ...getWaybillTools(),
+    ...getReferenceTools(),
+    ...getCounterpartyTools(),
+    ...getContactPersonTools(),
+  ];
 }
 
 export async function dispatchTool(name: string, args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
@@ -23,6 +32,12 @@ export async function dispatchTool(name: string, args: ToolArguments, context: T
   }
   if (name.startsWith('reference_')) {
     return handleReferenceTool(name, args, context);
+  }
+  if (name.startsWith('counterparty_')) {
+    return handleCounterpartyTool(name, args, context);
+  }
+  if (name.startsWith('contact_person_')) {
+    return handleContactPersonTool(name, args, context);
   }
 
   throw new Error(`Unknown tool ${name}`);
