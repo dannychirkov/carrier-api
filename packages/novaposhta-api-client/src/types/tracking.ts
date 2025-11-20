@@ -13,13 +13,7 @@ import type {
   Cost,
   Weight,
 } from './base';
-import {
-  PaymentMethod,
-  PayerType,
-  CargoType,
-  ServiceType,
-  DeliveryStatus,
-} from './enums';
+import { PaymentMethod, PayerType, CargoType, ServiceType, DeliveryStatus } from './enums';
 
 // Document tracking request
 export interface TrackDocumentsRequest {
@@ -378,24 +372,29 @@ export type DocumentListResponse = NovaPoshtaResponse<readonly DocumentListData[
 
 // Type guards
 export function isTrackingSuccessful(data: TrackingStatusData): boolean {
-  return data.StatusCode !== DeliveryStatus.NotFound &&
-         data.StatusCode !== DeliveryStatus.Deleted;
+  return data.StatusCode !== DeliveryStatus.NotFound && data.StatusCode !== DeliveryStatus.Deleted;
 }
 
 export function isDocumentDelivered(data: TrackingStatusData): boolean {
-  return data.StatusCode === DeliveryStatus.Received ||
-         data.StatusCode === DeliveryStatus.ReceivedAwaitingMoneyTransfer ||
-         data.StatusCode === DeliveryStatus.ReceivedAndMoneyTransferred;
+  return (
+    data.StatusCode === DeliveryStatus.Received ||
+    data.StatusCode === DeliveryStatus.ReceivedAwaitingMoneyTransfer ||
+    data.StatusCode === DeliveryStatus.ReceivedAndMoneyTransferred
+  );
 }
 
 export function isDocumentInTransit(data: TrackingStatusData): boolean {
-  return data.StatusCode === DeliveryStatus.InTransitToRecipientCity ||
-         data.StatusCode === DeliveryStatus.OnTheWayToRecipient ||
-         data.StatusCode === DeliveryStatus.BeingPacked;
+  return (
+    data.StatusCode === DeliveryStatus.InTransitToRecipientCity ||
+    data.StatusCode === DeliveryStatus.OnTheWayToRecipient ||
+    data.StatusCode === DeliveryStatus.BeingPacked
+  );
 }
 
 export function isDocumentAtWarehouse(data: TrackingStatusData): boolean {
-  return data.StatusCode === DeliveryStatus.ArrivedAtWarehouse ||
-         data.StatusCode === DeliveryStatus.ArrivedAtPostomat ||
-         data.StatusCode === DeliveryStatus.InRecipientCityAwaitingDelivery;
+  return (
+    data.StatusCode === DeliveryStatus.ArrivedAtWarehouse ||
+    data.StatusCode === DeliveryStatus.ArrivedAtPostomat ||
+    data.StatusCode === DeliveryStatus.InRecipientCityAwaitingDelivery
+  );
 }

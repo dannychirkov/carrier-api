@@ -71,6 +71,8 @@ export type { TrackingStatistics, TrackingFilter } from './services/trackingServ
 export { ReferenceService } from './services/referenceService';
 
 export { AddressService } from './services/addressService';
+export { CounterpartyService } from './services/counterpartyService';
+export { ContactPersonService } from './services/contactPersonService';
 
 // Base types
 export type {
@@ -270,6 +272,15 @@ export type {
   GetTypesOfPayersForRedeliveryRequest,
   GetTypesOfPayersForRedeliveryResponse,
   PayerForRedeliveryData,
+  GetTypesOfPayersRequest,
+  GetTypesOfPayersResponse,
+  PayerTypeData,
+  GetPaymentFormsRequest,
+  GetPaymentFormsResponse,
+  PaymentFormData,
+  GetTypesOfCounterpartiesRequest,
+  GetTypesOfCounterpartiesResponse,
+  CounterpartyTypeData,
   ReferenceRequest,
   ReferenceResponse,
   ReferenceData,
@@ -302,10 +313,60 @@ export type {
   GetWarehousesResponse,
   WarehouseData,
   DimensionsLimitation,
+  SaveAddressRequest,
+  SaveAddressResponse,
+  SavedAddressData,
+  UpdateAddressRequest,
+  UpdateAddressResponse,
+  DeleteAddressRequest,
+  DeleteAddressResponse,
+  AddressDeletionData,
   AddressRequest,
   AddressResponse,
   AddressData,
 } from './types/address';
+
+// Counterparty types
+export type {
+  GetCounterpartiesRequest,
+  GetCounterpartiesResponse,
+  CounterpartyData,
+  GetCounterpartyAddressesRequest,
+  GetCounterpartyAddressesResponse,
+  CounterpartyAddressData,
+  GetCounterpartyContactPersonsRequest,
+  GetCounterpartyContactPersonsResponse,
+  CounterpartyContactPersonData,
+  SaveCounterpartyRequest,
+  SaveCounterpartyPrivatePerson,
+  SaveCounterpartyOrganization,
+  SaveCounterpartyResponse,
+  SaveCounterpartyData,
+  UpdateCounterpartyRequest,
+  UpdateCounterpartyResponse,
+  DeleteCounterpartyRequest,
+  DeleteCounterpartyResponse,
+  DeleteCounterpartyData,
+  GetCounterpartyOptionsRequest,
+  GetCounterpartyOptionsResponse,
+  CounterpartyOptionsData,
+  CounterpartyRequest,
+  CounterpartyResponse,
+} from './types/counterparty';
+
+// Contact person types
+export type {
+  SaveContactPersonRequest,
+  SaveContactPersonResponse,
+  ContactPersonData,
+  UpdateContactPersonRequest,
+  UpdateContactPersonResponse,
+  DeleteContactPersonRequest,
+  DeleteContactPersonResponse,
+  DeleteContactPersonData,
+  ContactPersonRequest,
+  ContactPersonResponse,
+} from './types/contactPerson';
 
 // Version information
 export const VERSION = '1.0.0';

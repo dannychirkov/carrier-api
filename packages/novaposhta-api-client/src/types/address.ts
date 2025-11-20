@@ -3,7 +3,15 @@
  * Handles all address-related operations
  */
 
-import type { NovaPoshtaResponse, ObjectRef, SettlementRef, CityRef, StreetRef } from './base';
+import type {
+  NovaPoshtaResponse,
+  ObjectRef,
+  SettlementRef,
+  CityRef,
+  StreetRef,
+  CounterpartyRef,
+  AddressRef,
+} from './base';
 
 // Address-specific types
 export type SettlementAreaRef = string;
@@ -363,6 +371,61 @@ export interface WarehouseData {
 export type GetWarehousesResponse = NovaPoshtaResponse<WarehouseData[]>;
 
 // =============================================================================
+// ADDRESS CRUD OPERATIONS
+// =============================================================================
+
+export interface SaveAddressRequest {
+  /** Counterparty reference (sender or recipient) */
+  readonly counterpartyRef: CounterpartyRef;
+  /** Street reference */
+  readonly streetRef: StreetRef;
+  /** Building number (house) */
+  readonly buildingNumber: string;
+  /** Apartment number */
+  readonly flat?: string;
+  /** Additional note */
+  readonly note?: string;
+}
+
+export interface SavedAddressData {
+  /** Address reference */
+  readonly Ref: AddressRef;
+  /** Human readable description */
+  readonly Description: string;
+}
+
+export type SaveAddressResponse = NovaPoshtaResponse<SavedAddressData[]>;
+
+export interface UpdateAddressRequest {
+  /** Address reference */
+  readonly ref: AddressRef;
+  /** Counterparty reference */
+  readonly counterpartyRef: CounterpartyRef;
+  /** Street reference */
+  readonly streetRef: StreetRef;
+  /** Building number */
+  readonly buildingNumber: string;
+  /** Apartment number */
+  readonly flat?: string;
+  /** Additional note */
+  readonly note?: string;
+}
+
+export type UpdateAddressResponse = NovaPoshtaResponse<SavedAddressData[]>;
+
+export interface DeleteAddressRequest {
+  /** Address reference */
+  readonly ref: AddressRef;
+}
+
+export interface AddressDeletionData {
+  /** Deleted address reference */
+  readonly Ref: AddressRef;
+}
+
+export type DeleteAddressResponse = NovaPoshtaResponse<AddressDeletionData[]>;
+
+// =============================================================================
 // AGGREGATE TYPES
 // =============================================================================
 
@@ -374,7 +437,10 @@ export type AddressRequest =
   | GetStreetRequest
   | SearchSettlementsRequest
   | SearchSettlementStreetsRequest
-  | GetWarehousesRequest;
+  | GetWarehousesRequest
+  | SaveAddressRequest
+  | UpdateAddressRequest
+  | DeleteAddressRequest;
 
 /** All address response types */
 export type AddressResponse =
@@ -384,7 +450,10 @@ export type AddressResponse =
   | GetStreetResponse
   | SearchSettlementsResponse
   | SearchSettlementStreetsResponse
-  | GetWarehousesResponse;
+  | GetWarehousesResponse
+  | SaveAddressResponse
+  | UpdateAddressResponse
+  | DeleteAddressResponse;
 
 /** All address data types */
 export type AddressData =
@@ -394,4 +463,6 @@ export type AddressData =
   | StreetData
   | SearchSettlementsData
   | SearchSettlementStreetsData
-  | WarehouseData;
+  | WarehouseData
+  | SavedAddressData
+  | AddressDeletionData;

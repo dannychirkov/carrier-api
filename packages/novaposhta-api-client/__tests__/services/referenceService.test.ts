@@ -248,7 +248,10 @@ describe('ReferenceService', () => {
 
       const client = createClient({ transport, baseUrl, apiKey }).use(new ReferenceService());
 
-      const result = await client.reference.getTimeIntervals({ recipientCityRef: 'city-ref-1', dateTime: '01.01.2024' });
+      const result = await client.reference.getTimeIntervals({
+        recipientCityRef: 'city-ref-1',
+        dateTime: '01.01.2024',
+      });
 
       expect(calls).toHaveLength(1);
       expect(calls[0].body).toMatchObject({
@@ -315,6 +318,79 @@ describe('ReferenceService', () => {
         },
       });
       expect(result.success).toBe(true);
+      expect(result.data).toEqual(mockData);
+    });
+  });
+
+  describe('getTypesOfPayers', () => {
+    it('should call transport with correct parameters', async () => {
+      const mockData = [
+        {
+          Ref: 'payer-sender',
+          Description: 'Sender',
+        },
+      ];
+      const { transport, calls, setResponse } = createMockTransport();
+      setResponse({ success: true, data: mockData });
+
+      const client = createClient({ transport, baseUrl, apiKey }).use(new ReferenceService());
+
+      const result = await client.reference.getTypesOfPayers({ language: 'ua' });
+
+      expect(calls).toHaveLength(1);
+      expect(calls[0].body).toMatchObject({
+        modelName: 'CommonGeneral',
+        calledMethod: 'getTypesOfPayers',
+        methodProperties: { language: 'ua' },
+      });
+      expect(result.data).toEqual(mockData);
+    });
+  });
+
+  describe('getPaymentForms', () => {
+    it('should call transport with correct parameters', async () => {
+      const mockData = [
+        {
+          Ref: 'cash',
+          Description: 'Готівка',
+        },
+      ];
+      const { transport, calls, setResponse } = createMockTransport();
+      setResponse({ success: true, data: mockData });
+
+      const client = createClient({ transport, baseUrl, apiKey }).use(new ReferenceService());
+
+      const result = await client.reference.getPaymentForms();
+
+      expect(calls).toHaveLength(1);
+      expect(calls[0].body).toMatchObject({
+        modelName: 'CommonGeneral',
+        calledMethod: 'getPaymentForms',
+      });
+      expect(result.data).toEqual(mockData);
+    });
+  });
+
+  describe('getTypesOfCounterparties', () => {
+    it('should call transport with correct parameters', async () => {
+      const mockData = [
+        {
+          Ref: 'PrivatePerson',
+          Description: 'Фізична особа',
+        },
+      ];
+      const { transport, calls, setResponse } = createMockTransport();
+      setResponse({ success: true, data: mockData });
+
+      const client = createClient({ transport, baseUrl, apiKey }).use(new ReferenceService());
+
+      const result = await client.reference.getTypesOfCounterparties();
+
+      expect(calls).toHaveLength(1);
+      expect(calls[0].body).toMatchObject({
+        modelName: 'CommonGeneral',
+        calledMethod: 'getTypesOfCounterparties',
+      });
       expect(result.data).toEqual(mockData);
     });
   });

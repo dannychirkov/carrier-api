@@ -145,7 +145,9 @@ describe('TrackingService', () => {
 
   describe('calculateStatistics', () => {
     it('should calculate statistics from tracking data', () => {
-      const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(new TrackingService());
+      const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(
+        new TrackingService(),
+      );
 
       const mockTrackingData = [
         { StatusCode: 9, DateCreated: '01.01.2024', CitySender: 'Kyiv', CityRecipient: 'Lviv' } as any,
@@ -162,7 +164,9 @@ describe('TrackingService', () => {
     });
 
     it('should calculate failed deliveries', () => {
-      const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(new TrackingService());
+      const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(
+        new TrackingService(),
+      );
 
       const mockTrackingData = [
         { StatusCode: 102, DateCreated: '01.01.2024', CitySender: 'Kyiv', CityRecipient: 'Lviv' } as any,
@@ -176,7 +180,9 @@ describe('TrackingService', () => {
     });
 
     it('should calculate unknown statuses', () => {
-      const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(new TrackingService());
+      const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(
+        new TrackingService(),
+      );
 
       const mockTrackingData = [
         { StatusCode: 999, DateCreated: '01.01.2024', CitySender: 'Kyiv', CityRecipient: 'Lviv' } as any,
@@ -296,7 +302,9 @@ describe('TrackingService', () => {
 
   describe('filterTrackingResults', () => {
     it('should filter results by status', () => {
-      const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(new TrackingService());
+      const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(
+        new TrackingService(),
+      );
 
       const mockResults = [
         { StatusCode: 9, DateCreated: '01.01.2024', CitySender: 'Kyiv', CityRecipient: 'Lviv' } as any,
@@ -310,7 +318,9 @@ describe('TrackingService', () => {
     });
 
     it('should filter results by city', () => {
-      const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(new TrackingService());
+      const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(
+        new TrackingService(),
+      );
 
       const mockResults = [
         { StatusCode: 9, DateCreated: '01.01.2024', CitySender: 'Kyiv', CityRecipient: 'Lviv' } as any,
@@ -324,7 +334,9 @@ describe('TrackingService', () => {
     });
 
     it('should filter results by date range', () => {
-      const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(new TrackingService());
+      const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(
+        new TrackingService(),
+      );
 
       const mockResults = [
         { StatusCode: 9, DateCreated: '2024-01-01', CitySender: 'Kyiv', CityRecipient: 'Lviv' } as any,
@@ -340,7 +352,9 @@ describe('TrackingService', () => {
     });
 
     it('should filter results by recipient city', () => {
-      const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(new TrackingService());
+      const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(
+        new TrackingService(),
+      );
 
       const mockResults = [
         { StatusCode: 9, DateCreated: '01.01.2024', CitySender: 'Kyiv', CityRecipient: 'Lviv' } as any,
@@ -354,7 +368,9 @@ describe('TrackingService', () => {
     });
 
     it('should return empty array when no results match filter', () => {
-      const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(new TrackingService());
+      const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(
+        new TrackingService(),
+      );
 
       const mockResults = [
         { StatusCode: 9, DateCreated: '01.01.2024', CitySender: 'Kyiv', CityRecipient: 'Lviv' } as any,
@@ -368,14 +384,18 @@ describe('TrackingService', () => {
 
   describe('isDelivered', () => {
     it('should return true for delivered status', () => {
-      const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(new TrackingService());
+      const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(
+        new TrackingService(),
+      );
 
       const status = { StatusCode: 9 } as any;
       expect(client.tracking.isDelivered(status)).toBe(true);
     });
 
     it('should return false for non-delivered status', () => {
-      const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(new TrackingService());
+      const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(
+        new TrackingService(),
+      );
 
       const status = { StatusCode: 5 } as any;
       expect(client.tracking.isDelivered(status)).toBe(false);
@@ -384,14 +404,18 @@ describe('TrackingService', () => {
 
   describe('isInTransit', () => {
     it('should return true for in-transit status', () => {
-      const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(new TrackingService());
+      const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(
+        new TrackingService(),
+      );
 
       const status = { StatusCode: 5 } as any;
       expect(client.tracking.isInTransit(status)).toBe(true);
     });
 
     it('should return false for non-transit status', () => {
-      const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(new TrackingService());
+      const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(
+        new TrackingService(),
+      );
 
       const status = { StatusCode: 9 } as any;
       expect(client.tracking.isInTransit(status)).toBe(false);
@@ -400,14 +424,18 @@ describe('TrackingService', () => {
 
   describe('isAtWarehouse', () => {
     it('should return true for warehouse status', () => {
-      const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(new TrackingService());
+      const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(
+        new TrackingService(),
+      );
 
       const status = { StatusCode: 7 } as any;
       expect(client.tracking.isAtWarehouse(status)).toBe(true);
     });
 
     it('should return false for non-warehouse status', () => {
-      const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(new TrackingService());
+      const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(
+        new TrackingService(),
+      );
 
       const status = { StatusCode: 9 } as any;
       expect(client.tracking.isAtWarehouse(status)).toBe(false);
@@ -416,21 +444,27 @@ describe('TrackingService', () => {
 
   describe('getStatusDescription', () => {
     it('should return status description in Ukrainian', () => {
-      const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(new TrackingService());
+      const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(
+        new TrackingService(),
+      );
 
       const description = client.tracking.getStatusDescription(9, 'ua');
       expect(description).toBe('Отримано');
     });
 
     it('should return status description in English', () => {
-      const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(new TrackingService());
+      const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(
+        new TrackingService(),
+      );
 
       const description = client.tracking.getStatusDescription(9, 'en');
       expect(description).toBe('Delivered');
     });
 
     it('should return unknown status for undefined status', () => {
-      const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(new TrackingService());
+      const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(
+        new TrackingService(),
+      );
 
       const description = client.tracking.getStatusDescription(999 as any, 'ua');
       expect(description).toContain('Unknown status');

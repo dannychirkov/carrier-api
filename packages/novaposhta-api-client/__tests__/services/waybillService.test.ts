@@ -161,7 +161,9 @@ describe('WaybillService', () => {
 
   describe('validateWaybill', () => {
     it('should validate waybill data and return boolean', async () => {
-      const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(new WaybillService());
+      const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(
+        new WaybillService(),
+      );
 
       const waybillData = {
         payerType: PayerType.Sender,
@@ -514,7 +516,7 @@ describe('WaybillService', () => {
       let callCount = 0;
 
       const client = createClient({
-        transport: async (args) => {
+        transport: async args => {
           callCount++;
           return {
             status: 200,
@@ -522,7 +524,7 @@ describe('WaybillService', () => {
           };
         },
         baseUrl,
-        apiKey
+        apiKey,
       }).use(new WaybillService());
 
       const result = await client.waybill.getEstimate({
@@ -542,7 +544,9 @@ describe('WaybillService', () => {
 
   describe('canDeliverToPostomat', () => {
     it('should return true for valid postomat delivery', () => {
-      const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(new WaybillService());
+      const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(
+        new WaybillService(),
+      );
 
       const result = client.waybill.canDeliverToPostomat({
         cargoType: CargoType.Parcel,
@@ -554,7 +558,9 @@ describe('WaybillService', () => {
     });
 
     it('should return false for invalid postomat delivery (high cost)', () => {
-      const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(new WaybillService());
+      const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(
+        new WaybillService(),
+      );
 
       const result = client.waybill.canDeliverToPostomat({
         cargoType: CargoType.Parcel,
@@ -566,7 +572,9 @@ describe('WaybillService', () => {
     });
 
     it('should return false for invalid cargo type', () => {
-      const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(new WaybillService());
+      const client = createClient({ transport: createMockTransport().transport, baseUrl, apiKey }).use(
+        new WaybillService(),
+      );
 
       const result = client.waybill.canDeliverToPostomat({
         cargoType: 'Pallet' as any,
@@ -577,5 +585,4 @@ describe('WaybillService', () => {
       expect(result).toBe(false);
     });
   });
-
 });

@@ -7,6 +7,70 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.1-alpha.3] - 2025-11-20
+
+### Added
+- **CounterpartyService** with full CRUD methods plus helper lookups:
+  - `getCounterparties()` - Get counterparties list with filtering
+  - `getCounterpartyAddresses()` - Get addresses for specific counterparty
+  - `getCounterpartyContactPersons()` - Get contact persons list
+  - `save()` - Create new counterparty (PrivatePerson or Organization)
+  - `update()` - Update existing counterparty
+  - `delete()` - Delete counterparty (recipients only)
+  - `getCounterpartyOptions()` - Get counterparty options and permissions
+
+- **ContactPersonService** with complete CRUD operations:
+  - `save()` - Create contact person for counterparty
+  - `update()` - Update contact person details
+  - `delete()` - Delete contact person
+
+- **AddressService CRUD methods**:
+  - `save()` - Create counterparty address
+  - `update()` - Update existing address
+  - `delete()` - Delete address
+
+- **ReferenceService** new dictionary methods:
+  - `getTypesOfPayers()` - Get payer types (Sender/Recipient/ThirdPerson)
+  - `getPaymentForms()` - Get payment forms (Cash/NonCash)
+  - `getTypesOfCounterparties()` - Get counterparty types (PrivatePerson/Organization)
+
+- Discriminated union types for `SaveCounterpartyRequest`:
+  - `SaveCounterpartyPrivatePerson` - with required firstName/lastName
+  - `SaveCounterpartyOrganization` - with required ownershipForm/edrpou
+  - Type-safe compile-time validation for required fields based on counterparty type
+
+- Comprehensive TypeScript type exports:
+  - All new Request/Response interfaces
+  - Data type interfaces with proper PascalCase naming
+  - Aggregate union types for better type inference
+
+### Changed
+- Extended `NovaPoshtaMethod` enum with missing Common and Counterparty endpoints:
+  - `GetTypesOfPayers`, `GetPaymentForms`, `GetTypesOfCounterparties`
+  - `GetCounterparties`, `GetCounterpartyAddresses`, `GetCounterpartyContactPersons`, `GetCounterpartyOptions`
+
+- Improved `SaveCounterpartyRequest` type safety with discriminated unions
+- Enhanced `counterpartyService.save()` logic to handle PrivatePerson vs Organization correctly
+
+- README significantly expanded with:
+  - Complete examples for all new services
+  - Organization counterparty creation examples
+  - Full waybill creation workflow from scratch
+  - Address search and CRUD examples
+  - Reference data retrieval examples
+
+### Fixed
+- Added missing JSDoc comment for `limit` field in `GetCargoDescriptionListRequest`
+- Fixed TypeScript compilation errors with proper type narrowing in counterparty service
+- Code formatting improvements with Prettier
+
+### Testing
+- Added 18+ new unit tests for CounterpartyService (private person, organization, CRUD operations)
+- Added 3+ new unit tests for ReferenceService (new dictionary methods)
+- Added 3+ new unit tests for AddressService CRUD methods
+- All 78 tests passing with 100% success rate
+- Improved test coverage for discriminated union types
+
 ## [0.0.1-alpha.0] - 2025-11-19
 
 ### Added
@@ -91,5 +155,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - TypeScript type documentation
 - Usage examples for all services
 
-[Unreleased]: https://github.com/shopanaio/carrier-api/compare/v0.0.1-alpha.0...HEAD
+[Unreleased]: https://github.com/shopanaio/carrier-api/compare/v0.0.1-alpha.3...HEAD
+[0.0.1-alpha.3]: https://github.com/shopanaio/carrier-api/compare/v0.0.1-alpha.0...v0.0.1-alpha.3
 [0.0.1-alpha.0]: https://github.com/shopanaio/carrier-api/releases/tag/v0.0.1-alpha.0

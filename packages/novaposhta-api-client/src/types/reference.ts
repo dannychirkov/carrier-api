@@ -128,7 +128,7 @@ export interface GetCargoDescriptionListRequest {
   /** Page number (optional, up to 500 records per page) */
   readonly page?: number;
   /** Limit number (optional, up to 500 records per page) */
-
+  readonly limit?: number;
 }
 
 export interface CargoDescriptionData {
@@ -280,6 +280,60 @@ export interface PayerForRedeliveryData {
 export type GetTypesOfPayersForRedeliveryResponse = NovaPoshtaResponse<PayerForRedeliveryData[]>;
 
 // =============================================================================
+// TYPES OF PAYERS
+// =============================================================================
+
+export interface GetTypesOfPayersRequest {
+  /** Response language (ua/ru) */
+  readonly language?: string;
+}
+
+export interface PayerTypeData {
+  /** Payer type identifier */
+  readonly Ref: string;
+  /** Description in Ukrainian */
+  readonly Description: string;
+}
+
+export type GetTypesOfPayersResponse = NovaPoshtaResponse<PayerTypeData[]>;
+
+// =============================================================================
+// PAYMENT FORMS
+// =============================================================================
+
+export interface GetPaymentFormsRequest {
+  /** Response language (ua/ru) */
+  readonly language?: string;
+}
+
+export interface PaymentFormData {
+  /** Payment form identifier */
+  readonly Ref: string;
+  /** Description in Ukrainian */
+  readonly Description: string;
+}
+
+export type GetPaymentFormsResponse = NovaPoshtaResponse<PaymentFormData[]>;
+
+// =============================================================================
+// TYPES OF COUNTERPARTIES
+// =============================================================================
+
+export interface GetTypesOfCounterpartiesRequest {
+  /** Response language (ua/ru) */
+  readonly language?: string;
+}
+
+export interface CounterpartyTypeData {
+  /** Counterparty type identifier */
+  readonly Ref: string;
+  /** Description in Ukrainian */
+  readonly Description: string;
+}
+
+export type GetTypesOfCounterpartiesResponse = NovaPoshtaResponse<CounterpartyTypeData[]>;
+
+// =============================================================================
 // AGGREGATE TYPES
 // =============================================================================
 
@@ -296,7 +350,10 @@ export type ReferenceRequest =
   | GetTimeIntervalsRequest
   | GetPickupTimeIntervalsRequest
   | GetBackwardDeliveryCargoTypesRequest
-  | GetTypesOfPayersForRedeliveryRequest;
+  | GetTypesOfPayersForRedeliveryRequest
+  | GetTypesOfPayersRequest
+  | GetPaymentFormsRequest
+  | GetTypesOfCounterpartiesRequest;
 
 /** All reference response types */
 export type ReferenceResponse =
@@ -311,7 +368,10 @@ export type ReferenceResponse =
   | GetTimeIntervalsResponse
   | GetPickupTimeIntervalsResponse
   | GetBackwardDeliveryCargoTypesResponse
-  | GetTypesOfPayersForRedeliveryResponse;
+  | GetTypesOfPayersForRedeliveryResponse
+  | GetTypesOfPayersResponse
+  | GetPaymentFormsResponse
+  | GetTypesOfCounterpartiesResponse;
 
 /** All reference data types */
 export type ReferenceData =
@@ -326,4 +386,7 @@ export type ReferenceData =
   | TimeIntervalData
   | PickupTimeIntervalData
   | BackwardDeliveryCargoTypeData
-  | PayerForRedeliveryData;
+  | PayerForRedeliveryData
+  | PayerTypeData
+  | PaymentFormData
+  | CounterpartyTypeData;

@@ -316,14 +316,19 @@ export interface ConfigurationError extends NovaPoshtaError {
 }
 
 // Error messages mapping
-export const ERROR_MESSAGES: Partial<Record<NovaPoshtaErrorCode, {
-  en: string;
-  ua: string;
-  ru: string;
-  category: ErrorCategory;
-  severity: ErrorSeverity;
-  retryable: boolean;
-}>> = {
+export const ERROR_MESSAGES: Partial<
+  Record<
+    NovaPoshtaErrorCode,
+    {
+      en: string;
+      ua: string;
+      ru: string;
+      category: ErrorCategory;
+      severity: ErrorSeverity;
+      retryable: boolean;
+    }
+  >
+> = {
   [NovaPoshtaErrorCode.ApiKeyEmpty]: {
     en: 'API key is not specified',
     ua: 'API-ключ не вказано',
@@ -384,7 +389,7 @@ export const ERROR_MESSAGES: Partial<Record<NovaPoshtaErrorCode, {
 } as const;
 
 // Helper functions
-export function getErrorInfo(code: NovaPoshtaErrorCode | string): typeof ERROR_MESSAGES[NovaPoshtaErrorCode] | null {
+export function getErrorInfo(code: NovaPoshtaErrorCode | string): (typeof ERROR_MESSAGES)[NovaPoshtaErrorCode] | null {
   return ERROR_MESSAGES[code as NovaPoshtaErrorCode] || null;
 }
 

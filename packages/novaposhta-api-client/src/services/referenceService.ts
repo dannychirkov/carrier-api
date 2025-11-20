@@ -31,6 +31,12 @@ import type {
   GetBackwardDeliveryCargoTypesResponse,
   GetTypesOfPayersForRedeliveryRequest,
   GetTypesOfPayersForRedeliveryResponse,
+  GetTypesOfPayersRequest,
+  GetTypesOfPayersResponse,
+  GetPaymentFormsRequest,
+  GetPaymentFormsResponse,
+  GetTypesOfCounterpartiesRequest,
+  GetTypesOfCounterpartiesResponse,
 } from '../types/reference';
 import type { NovaPoshtaRequest } from '../types/base';
 import { NovaPoshtaModel, NovaPoshtaMethod } from '../types/enums';
@@ -264,5 +270,55 @@ export class ReferenceService {
     };
 
     return await this.transport.request<GetTypesOfPayersForRedeliveryResponse['data']>(apiRequest);
+  }
+
+  /**
+   * Get types of payers
+   * @description Retrieves list of payer roles (Sender/Recipient/ThirdPerson)
+   * @cacheable 24 hours
+   */
+  async getTypesOfPayers(request: GetTypesOfPayersRequest = {}): Promise<GetTypesOfPayersResponse> {
+    const apiRequest: NovaPoshtaRequest = {
+      ...(this.apiKey ? { apiKey: this.apiKey } : {}),
+      modelName: NovaPoshtaModel.Common,
+      calledMethod: NovaPoshtaMethod.GetTypesOfPayers,
+      methodProperties: request as unknown as Record<string, unknown>,
+    };
+
+    return await this.transport.request<GetTypesOfPayersResponse['data']>(apiRequest);
+  }
+
+  /**
+   * Get payment forms
+   * @description Retrieves list of payment forms (Cash/NonCash)
+   * @cacheable 24 hours
+   */
+  async getPaymentForms(request: GetPaymentFormsRequest = {}): Promise<GetPaymentFormsResponse> {
+    const apiRequest: NovaPoshtaRequest = {
+      ...(this.apiKey ? { apiKey: this.apiKey } : {}),
+      modelName: NovaPoshtaModel.Common,
+      calledMethod: NovaPoshtaMethod.GetPaymentForms,
+      methodProperties: request as unknown as Record<string, unknown>,
+    };
+
+    return await this.transport.request<GetPaymentFormsResponse['data']>(apiRequest);
+  }
+
+  /**
+   * Get types of counterparties
+   * @description Retrieves list of counterparty types (PrivatePerson/Organization)
+   * @cacheable 24 hours
+   */
+  async getTypesOfCounterparties(
+    request: GetTypesOfCounterpartiesRequest = {},
+  ): Promise<GetTypesOfCounterpartiesResponse> {
+    const apiRequest: NovaPoshtaRequest = {
+      ...(this.apiKey ? { apiKey: this.apiKey } : {}),
+      modelName: NovaPoshtaModel.Common,
+      calledMethod: NovaPoshtaMethod.GetTypesOfCounterparties,
+      methodProperties: request as unknown as Record<string, unknown>,
+    };
+
+    return await this.transport.request<GetTypesOfCounterpartiesResponse['data']>(apiRequest);
   }
 }

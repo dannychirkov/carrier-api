@@ -182,4 +182,100 @@ describe('AddressService', () => {
       expect(result.data).toEqual(mockData);
     });
   });
+
+  describe('save', () => {
+    it('should map request fields to PascalCase', async () => {
+      const mockData = [
+        {
+          Ref: 'address-ref',
+          Description: 'Kyiv, Khreshchatyk 1',
+        },
+      ];
+      const { transport, calls, setResponse } = createMockTransport();
+      setResponse({ success: true, data: mockData });
+
+      const client = createClient({ transport, baseUrl, apiKey }).use(new AddressService());
+
+      const result = await client.address.save({
+        counterpartyRef: 'counterparty-ref',
+        streetRef: 'street-ref',
+        buildingNumber: '1',
+        flat: '5',
+        note: 'Door code 123',
+      });
+
+      expect(calls).toHaveLength(1);
+      expect(calls[0].body).toMatchObject({
+        modelName: 'AddressGeneral',
+        calledMethod: 'save',
+        methodProperties: {
+          CounterpartyRef: 'counterparty-ref',
+          StreetRef: 'street-ref',
+          BuildingNumber: '1',
+          Flat: '5',
+          Note: 'Door code 123',
+        },
+      });
+      expect(result.data).toEqual(mockData);
+    });
+  });
+
+  describe('update', () => {
+    it('should forward address reference and other fields', async () => {
+      const mockData = [
+        {
+          Ref: 'address-ref',
+          Description: 'Updated address',
+        },
+      ];
+      const { transport, calls, setResponse } = createMockTransport();
+      setResponse({ success: true, data: mockData });
+
+      const client = createClient({ transport, baseUrl, apiKey }).use(new AddressService());
+
+      const result = await client.address.update({
+        ref: 'address-ref',
+        counterpartyRef: 'counterparty-ref',
+        streetRef: 'street-ref',
+        buildingNumber: '10',
+        note: 'updated note',
+      });
+
+      expect(calls[0].body).toMatchObject({
+        modelName: 'AddressGeneral',
+        calledMethod: 'update',
+        methodProperties: {
+          Ref: 'address-ref',
+          CounterpartyRef: 'counterparty-ref',
+          StreetRef: 'street-ref',
+          BuildingNumber: '10',
+          Note: 'updated note',
+        },
+      });
+      expect(result.data).toEqual(mockData);
+    });
+  });
+
+  describe('delete', () => {
+    it('should call delete with address reference', async () => {
+      const mockData = [
+        {
+          Ref: 'address-ref',
+        },
+      ];
+      const { transport, calls, setResponse } = createMockTransport();
+      setResponse({ success: true, data: mockData });
+
+      const client = createClient({ transport, baseUrl, apiKey }).use(new AddressService());
+
+      const result = await client.address.delete({ ref: 'address-ref' });
+
+      expect(calls[0].body).toMatchObject({
+        modelName: 'AddressGeneral',
+        calledMethod: 'delete',
+        methodProperties: { Ref: 'address-ref' },
+      });
+      expect(result.data).toEqual(mockData);
+    });
+  });
 });

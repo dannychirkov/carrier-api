@@ -52,7 +52,9 @@ export type Client<API> = API & {
 export function createClient<API extends {} = {}>(ctx: ClientContext): Client<API> {
   const self: any = {} as Client<API>;
 
-  self.use = function use<S extends PluggableNamedService<string>>(service: S): Client<API & { [K in S['namespace']]: S }> {
+  self.use = function use<S extends PluggableNamedService<string>>(
+    service: S,
+  ): Client<API & { [K in S['namespace']]: S }> {
     // Inject context into service if supported
     if (typeof service.attach === 'function') {
       service.attach(ctx);

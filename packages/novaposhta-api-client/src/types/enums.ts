@@ -43,6 +43,9 @@ export enum NovaPoshtaMethod {
   GetOwnershipFormsList = 'getOwnershipFormsList',
   GetTimeIntervals = 'getTimeIntervals',
   GetPickupTimeIntervals = 'getPickupTimeIntervals',
+  GetTypesOfPayers = 'getTypesOfPayers',
+  GetPaymentForms = 'getPaymentForms',
+  GetTypesOfCounterparties = 'getTypesOfCounterparties',
 
   // Address methods
   GetSettlements = 'getSettlements',
@@ -55,6 +58,12 @@ export enum NovaPoshtaMethod {
   SearchSettlementStreets = 'searchSettlementStreets',
   GetSettlementAreas = 'getSettlementAreas',
   GetSettlementCountryRegion = 'getSettlementCountryRegion',
+
+  // Counterparty methods
+  GetCounterparties = 'getCounterparties',
+  GetCounterpartyAddresses = 'getCounterpartyAddresses',
+  GetCounterpartyContactPersons = 'getCounterpartyContactPersons',
+  GetCounterpartyOptions = 'getCounterpartyOptions',
 }
 
 // Payment methods

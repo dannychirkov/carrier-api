@@ -21,6 +21,12 @@ import type {
   SearchSettlementStreetsResponse,
   GetWarehousesRequest,
   GetWarehousesResponse,
+  SaveAddressRequest,
+  SaveAddressResponse,
+  UpdateAddressRequest,
+  UpdateAddressResponse,
+  DeleteAddressRequest,
+  DeleteAddressResponse,
 } from '../types/address';
 import type { NovaPoshtaRequest } from '../types/base';
 import { NovaPoshtaModel, NovaPoshtaMethod } from '../types/enums';
@@ -198,5 +204,77 @@ export class AddressService {
     };
 
     return await this.transport.request<GetWarehousesResponse['data']>(apiRequest);
+  }
+
+  /**
+   * Save address
+   * @description Creates a new counterparty address
+   */
+  async save(request: SaveAddressRequest): Promise<SaveAddressResponse> {
+    const methodProperties: Record<string, string | undefined> = {
+      CounterpartyRef: request.counterpartyRef,
+      StreetRef: request.streetRef,
+      BuildingNumber: request.buildingNumber,
+      Flat: request.flat,
+      Note: request.note,
+    };
+
+    const cleanProperties = Object.fromEntries(
+      Object.entries(methodProperties).filter(([, value]) => value !== undefined && value !== ''),
+    );
+
+    const apiRequest: NovaPoshtaRequest = {
+      ...(this.apiKey ? { apiKey: this.apiKey } : {}),
+      modelName: NovaPoshtaModel.Address,
+      calledMethod: NovaPoshtaMethod.Save,
+      methodProperties: cleanProperties,
+    };
+
+    return await this.transport.request<SaveAddressResponse['data']>(apiRequest);
+  }
+
+  /**
+   * Update address
+   * @description Updates existing counterparty address
+   */
+  async update(request: UpdateAddressRequest): Promise<UpdateAddressResponse> {
+    const methodProperties: Record<string, string | undefined> = {
+      Ref: request.ref,
+      CounterpartyRef: request.counterpartyRef,
+      StreetRef: request.streetRef,
+      BuildingNumber: request.buildingNumber,
+      Flat: request.flat,
+      Note: request.note,
+    };
+
+    const cleanProperties = Object.fromEntries(
+      Object.entries(methodProperties).filter(([, value]) => value !== undefined && value !== ''),
+    );
+
+    const apiRequest: NovaPoshtaRequest = {
+      ...(this.apiKey ? { apiKey: this.apiKey } : {}),
+      modelName: NovaPoshtaModel.Address,
+      calledMethod: NovaPoshtaMethod.Update,
+      methodProperties: cleanProperties,
+    };
+
+    return await this.transport.request<UpdateAddressResponse['data']>(apiRequest);
+  }
+
+  /**
+   * Delete address
+   * @description Deletes counterparty address by reference
+   */
+  async delete(request: DeleteAddressRequest): Promise<DeleteAddressResponse> {
+    const apiRequest: NovaPoshtaRequest = {
+      ...(this.apiKey ? { apiKey: this.apiKey } : {}),
+      modelName: NovaPoshtaModel.Address,
+      calledMethod: NovaPoshtaMethod.Delete,
+      methodProperties: {
+        Ref: request.ref,
+      },
+    };
+
+    return await this.transport.request<DeleteAddressResponse['data']>(apiRequest);
   }
 }

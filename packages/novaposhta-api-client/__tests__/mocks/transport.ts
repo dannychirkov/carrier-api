@@ -15,7 +15,7 @@ export function createMockTransport(mockResponse?: any): {
   const calls: MockTransportCall[] = [];
   let response = mockResponse || { success: true, data: [] };
 
-  const transport: HttpPostJsonTransport = async (args) => {
+  const transport: HttpPostJsonTransport = async args => {
     calls.push({ ...args });
     return {
       status: 200,

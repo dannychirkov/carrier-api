@@ -359,17 +359,16 @@ export type PriceCalculationResponse = NovaPoshtaResponse<readonly PriceCalculat
 
 // Validation helpers
 export function isValidPoshtomatDimensions(seat: OptionsSeatItem): seat is PoshtomatOptionsSeatItem {
-  return seat.weight <= 20 &&
-         seat.volumetricWidth <= 40 &&
-         seat.volumetricLength <= 60 &&
-         seat.volumetricHeight <= 30;
+  return seat.weight <= 20 && seat.volumetricWidth <= 40 && seat.volumetricLength <= 60 && seat.volumetricHeight <= 30;
 }
 
 export function isValidPoshtomatCargoType(cargoType: CargoType): cargoType is CargoType.Parcel | CargoType.Documents {
   return cargoType === CargoType.Parcel || cargoType === CargoType.Documents;
 }
 
-export function isValidPoshtomatServiceType(serviceType: ServiceType): serviceType is ServiceType.DoorsWarehouse | ServiceType.WarehouseWarehouse {
+export function isValidPoshtomatServiceType(
+  serviceType: ServiceType,
+): serviceType is ServiceType.DoorsWarehouse | ServiceType.WarehouseWarehouse {
   return serviceType === ServiceType.DoorsWarehouse || serviceType === ServiceType.WarehouseWarehouse;
 }
 
@@ -385,14 +384,20 @@ export function calculateTotalVolume(seats: readonly OptionsSeatItem[]): Volume 
 }
 
 // Type guards
-export function hasAdditionalServices(request: CreateWaybillWithOptionsRequest): request is CreateWaybillWithOptionsRequest & { additionalServices: AdditionalServices } {
+export function hasAdditionalServices(
+  request: CreateWaybillWithOptionsRequest,
+): request is CreateWaybillWithOptionsRequest & { additionalServices: AdditionalServices } {
   return request.additionalServices !== undefined;
 }
 
-export function hasBackwardDelivery(request: CreateWaybillWithOptionsRequest): request is CreateWaybillWithOptionsRequest & { backwardDeliveryData: readonly BackwardDeliveryItem[] } {
+export function hasBackwardDelivery(
+  request: CreateWaybillWithOptionsRequest,
+): request is CreateWaybillWithOptionsRequest & { backwardDeliveryData: readonly BackwardDeliveryItem[] } {
   return request.backwardDeliveryData !== undefined && request.backwardDeliveryData.length > 0;
 }
 
-export function isThirdPersonPayer(request: BaseWaybillProperties): request is BaseWaybillProperties & { thirdPerson: CounterpartyRef } {
+export function isThirdPersonPayer(
+  request: BaseWaybillProperties,
+): request is BaseWaybillProperties & { thirdPerson: CounterpartyRef } {
   return request.payerType === PayerType.ThirdPerson;
 }
