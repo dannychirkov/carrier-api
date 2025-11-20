@@ -44,7 +44,7 @@ Add to your MCP configuration file:
   "mcpServers": {
     "novaposhta": {
       "command": "npx",
-      "args": ["-y", "@shopana/novaposhta-mcp-server"],
+      "args": ["-y", "-p", "@shopana/novaposhta-mcp-server", "novaposhta-mcp"],
       "env": {
         "NOVA_POSHTA_API_KEY": "your_api_key_here",
         "NOVA_POSHTA_SYSTEM": "DevCentre",
@@ -114,7 +114,7 @@ Create or update your `.mcp.json`:
   "mcpServers": {
     "novaposhta": {
       "command": "npx",
-      "args": ["-y", "@shopana/novaposhta-mcp-server"],
+      "args": ["-y", "-p", "@shopana/novaposhta-mcp-server", "novaposhta-mcp"],
       "env": {
         "NOVA_POSHTA_API_KEY": "your_actual_api_key_here",
         "NOVA_POSHTA_SYSTEM": "DevCentre",
@@ -516,7 +516,7 @@ Claude uses `track_multiple_documents` and provides aggregated statistics: deliv
   "mcpServers": {
     "novaposhta": {
       "command": "npx",
-      "args": ["-y", "@shopana/novaposhta-mcp-server"],
+      "args": ["-y", "-p", "@shopana/novaposhta-mcp-server", "novaposhta-mcp"],
       "env": {
         "NOVA_POSHTA_API_KEY": "your_api_key",
         "NOVA_POSHTA_SYSTEM": "DevCentre",
