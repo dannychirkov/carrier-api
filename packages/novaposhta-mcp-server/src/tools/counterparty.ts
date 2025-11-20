@@ -8,7 +8,8 @@ import { createTextResult, formatAsJson } from '../utils/tool-response.js';
 const counterpartyTools: Tool[] = [
   {
     name: 'counterparty_get_counterparties',
-    description: 'Get counterparties list filtered by property (Sender/Recipient/ThirdPerson). Returns counterparty refs needed for waybill creation.',
+    description:
+      'Get counterparties list filtered by property (Sender/Recipient/ThirdPerson) via Counterparty/getCounterparties (doc 1.6). Docs require an API key, recommend caching the directory daily, and note each page tops out at 500 rows so always filter with CounterpartyProperty/FindByString.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -26,7 +27,8 @@ const counterpartyTools: Tool[] = [
   },
   {
     name: 'counterparty_get_addresses',
-    description: 'Get addresses for a specific counterparty. Returns address refs needed for waybill creation.',
+    description:
+      'Get addresses for a specific counterparty using Counterparty/getCounterpartyAddresses (doc 1.6). Requires API key plus CounterpartyProperty/Ref and, per docs, should be refreshed daily because every page is capped at 500 entries.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -43,7 +45,8 @@ const counterpartyTools: Tool[] = [
   },
   {
     name: 'counterparty_get_contact_persons',
-    description: 'Get contact persons for a counterparty. Returns contact person refs needed for waybill creation.',
+    description:
+      'Get contact persons for a counterparty through Counterparty/getCounterpartyContactPersons (doc 1.6). API key is mandatory and the list should be cached daily; use paging to stay under the 500-record response cap.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -55,7 +58,8 @@ const counterpartyTools: Tool[] = [
   },
   {
     name: 'counterparty_save',
-    description: 'Create new counterparty (private person or organization). For private person: firstName and lastName required. For organization: ownershipForm and edrpou required.',
+    description:
+      'Create new counterparty (private person or organization) with Counterparty/save (docs 1.20–1.21). Provide CityRef + CounterpartyProperty/Type; private persons require first/last name while organizations must also send OwnershipForm and EDRPOU. Docs recommend refreshing supporting directories monthly and note an API key is required.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -82,7 +86,8 @@ const counterpartyTools: Tool[] = [
   },
   {
     name: 'counterparty_update',
-    description: 'Update existing counterparty details.',
+    description:
+      'Update existing counterparty details via Counterparty/update (doc 1.22). Nova Poshta only lets you edit a counterparty from creation up until you create a waybill (ІД) with it, so run updates early.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -103,7 +108,8 @@ const counterpartyTools: Tool[] = [
   },
   {
     name: 'counterparty_delete',
-    description: 'Delete counterparty by reference. IMPORTANT: Only recipient counterparties can be deleted.',
+    description:
+      'Delete counterparty by reference using Counterparty/delete (doc 1.22). IMPORTANT: Docs explicitly state only Recipient counterparties can be deleted through the API; Sender cleanup must go through your account manager.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -114,7 +120,8 @@ const counterpartyTools: Tool[] = [
   },
   {
     name: 'counterparty_get_options',
-    description: 'Get counterparty options and permissions.',
+    description:
+      'Get counterparty options and permissions via Counterparty/getCounterpartyOptions (doc 1.23) to see booleans such as CanPayTheThirdPerson, CanSameDayDelivery, HideDeliveryCost, etc., before building a waybill.',
     inputSchema: {
       type: 'object',
       properties: {

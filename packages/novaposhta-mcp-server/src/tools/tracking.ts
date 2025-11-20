@@ -16,7 +16,7 @@ const trackingTools: Tool[] = [
   {
     name: 'track_document',
     description:
-      'Track a single Nova Poshta document by number and optional phone to receive live status, location, and ETA.',
+      'Track a single Nova Poshta document by number and optional phone to receive live status, location, and ETA. Doc 1.2 describes the standard success/data/errors/warnings/info envelope returned by Nova Poshta, which this helper surfaces back to the caller.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -34,7 +34,8 @@ const trackingTools: Tool[] = [
   },
   {
     name: 'track_multiple_documents',
-    description: 'Track multiple Nova Poshta documents at once and receive aggregated statistics.',
+    description:
+      'Track multiple Nova Poshta documents at once and receive aggregated statistics. Doc 1.2 states every API call returns the same envelope, so use the success/errors/warnings fields here to mirror the native batch tracking response.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -51,7 +52,8 @@ const trackingTools: Tool[] = [
   },
   {
     name: 'get_document_movement',
-    description: 'Get movement history for up to 10 documents including statuses and timestamps.',
+    description:
+      'Get movement history for up to 10 documents including statuses and timestamps. Doc 1.2 identifies InternetDocument numbers as the primary shipment identifiers, which this endpoint accepts in batches.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -71,7 +73,8 @@ const trackingTools: Tool[] = [
   },
   {
     name: 'get_document_list',
-    description: 'List documents created in the given date range.',
+    description:
+      'List documents created in the given date range. Per doc 1.2, these queries target the InternetDocument model used for оформлення відправлень, so date filters help keep the success/data/errors response manageable.',
     inputSchema: {
       type: 'object',
       properties: {

@@ -10,7 +10,8 @@ import { createTextResult, formatAsJson } from '../utils/tool-response.js';
 const referenceTools: Tool[] = [
   {
     name: 'reference_get_cargo_types',
-    description: 'List available cargo types supported by Nova Poshta.',
+    description:
+      'List available cargo types supported by Nova Poshta via Common/getCargoTypes (doc 1.8). Docs advise caching this API-key-protected directory monthly; expect values such as Parcel, Cargo, Documents, TiresWheels, Pallet.',
     inputSchema: {
       type: 'object',
       properties: {},
@@ -19,7 +20,8 @@ const referenceTools: Tool[] = [
   },
   {
     name: 'reference_get_service_types',
-    description: 'List delivery service types (warehouse-door etc.).',
+    description:
+      'List delivery service types (warehouse-door etc.) through Common/getServiceType (doc 1.9). Docs say to refresh monthly and point out the four core technologies: WarehouseWarehouse, WarehouseDoors, DoorsWarehouse, DoorsDoors.',
     inputSchema: {
       type: 'object',
       properties: {},
@@ -28,7 +30,8 @@ const referenceTools: Tool[] = [
   },
   {
     name: 'reference_get_payment_methods',
-    description: 'List supported payment methods for shipments.',
+    description:
+      'List supported payment methods for shipments (Cash/NonCash) matching the Common/getPaymentForm directory from doc 1.7, which notes that non-cash payments are only available to customers with a Nova Poshta contract.',
     inputSchema: {
       type: 'object',
       properties: {},
@@ -37,7 +40,8 @@ const referenceTools: Tool[] = [
   },
   {
     name: 'reference_get_pallet_types',
-    description: 'List pallet types with dimensions and weight.',
+    description:
+      'List pallet types with dimensions and weight via Common/getPalletsList (doc 1.13). Refresh monthly per docs, especially when offering reverse delivery of pallets.',
     inputSchema: {
       type: 'object',
       properties: {},
@@ -46,7 +50,8 @@ const referenceTools: Tool[] = [
   },
   {
     name: 'reference_get_time_intervals',
-    description: 'Get available delivery time intervals for recipient city.',
+    description:
+      'Get available delivery time intervals for recipient city using Common/getTimeIntervals (doc 1.16). Requires RecipientCityRef (and optional DateTime) and returns Number/Start/End entries that docs recommend caching monthly.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -58,7 +63,8 @@ const referenceTools: Tool[] = [
   },
   {
     name: 'reference_get_ownership_forms',
-    description: 'List corporate ownership forms required for counterparty creation.',
+    description:
+      'List corporate ownership forms required for counterparty creation via Common/getOwnershipFormsList (doc 1.11). Docs provide both short and full names for refs such as ТОВ, ПрАТ, ФГ and recommend a monthly refresh.',
     inputSchema: {
       type: 'object',
       properties: {},
@@ -67,7 +73,8 @@ const referenceTools: Tool[] = [
   },
   {
     name: 'reference_decode_message',
-    description: 'Decode Nova Poshta API message code into human readable text.',
+    description:
+      'Decode Nova Poshta API message code into human readable text. Doc 1.2 explains how every response contains success/data/errors/warnings/info blocks with numeric codes; this helper calls getMessageCodeText to map those codes to UA/RU descriptions.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -78,7 +85,8 @@ const referenceTools: Tool[] = [
   },
   {
     name: 'reference_get_types_of_payers',
-    description: 'Get list of payer types (Sender/Recipient/ThirdPerson) for waybill creation.',
+    description:
+      'Get list of payer types (Sender/Recipient/ThirdPerson) for waybill creation via Common/getTypesOfPayers (doc 1.7). Docs stress the ThirdPerson payer is accessible only after signing a service contract and that the directory should be cached monthly.',
     inputSchema: {
       type: 'object',
       properties: {},
@@ -87,7 +95,8 @@ const referenceTools: Tool[] = [
   },
   {
     name: 'reference_get_payment_forms',
-    description: 'Get list of payment forms (Cash/NonCash) for waybill creation.',
+    description:
+      'Get list of payment forms (Cash/NonCash) for waybill creation with Common/getPaymentForm (doc 1.7). Nova Poshta notes non-cash payments are available only to contracted clients, so keep a cached copy to validate user choices.',
     inputSchema: {
       type: 'object',
       properties: {},
@@ -96,7 +105,8 @@ const referenceTools: Tool[] = [
   },
   {
     name: 'reference_get_types_of_counterparties',
-    description: 'Get list of counterparty types (PrivatePerson/Organization).',
+    description:
+      'Get list of counterparty types (PrivatePerson/Organization) via Common/getTypesOfCounterparties (doc 1.14). Requires API key and, per docs, should be refreshed monthly to stay aligned with sender/recipient onboarding rules.',
     inputSchema: {
       type: 'object',
       properties: {},

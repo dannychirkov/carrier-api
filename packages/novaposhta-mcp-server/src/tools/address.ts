@@ -8,7 +8,7 @@ const addressTools: Tool[] = [
   {
     name: 'address_search_cities',
     description:
-      'Find Nova Poshta cities by name or postal index. IMPORTANT: Always use limit parameter (recommended: 10) to avoid large responses.',
+      'Find Nova Poshta cities by name or postal index using Address/getCities (doc 1.3). Docs note the city directory is public (no API key) but must be cached and refreshed daily because it exposes Area and Delivery1-Delivery7 flags. IMPORTANT: Always use limit parameter (recommended: 10) to avoid large responses.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -22,7 +22,7 @@ const addressTools: Tool[] = [
   {
     name: 'address_search_settlements',
     description:
-      'Search for settlements (city, town, village) with pagination. IMPORTANT: Always use limit parameter (recommended: 10) to avoid large responses.',
+      'Search for settlements (city, town, village) with pagination over the same Address/getCities dataset described in doc 1.3 (Area + Delivery1-Delivery7 fields, daily refresh recommended). IMPORTANT: Always use limit parameter (recommended: 10) to avoid large responses.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -36,7 +36,7 @@ const addressTools: Tool[] = [
   {
     name: 'address_search_streets',
     description:
-      'Search for streets inside a settlement. IMPORTANT: Always use limit parameter (recommended: 10) to avoid large responses.',
+      'Search for streets inside a settlement via Address/getStreet (doc 1.4). Used for door pickup/delivery flows, limited to 500 records per page, public but should be cached and refreshed daily. IMPORTANT: Always use limit parameter (recommended: 10) to avoid large responses.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -50,7 +50,7 @@ const addressTools: Tool[] = [
   {
     name: 'address_get_warehouses',
     description:
-      'List Nova Poshta warehouses (branches, postomats, pickup points) filtered by city, settlement, type, number, or search string. IMPORTANT: Always use limit parameter (recommended: 10-20) to avoid large responses.',
+      'List Nova Poshta warehouses (branches, postomats, pickup points) via Address/getWarehouses (doc 1.5). Docs emphasize caching the branch directory daily to leverage schedule arrays, max weight limits, and warehouse types without re-fetching thousands of rows. IMPORTANT: Always use limit parameter (recommended: 10-20) to avoid large responses.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -79,7 +79,8 @@ const addressTools: Tool[] = [
   },
   {
     name: 'address_save',
-    description: 'Create new address for a counterparty. Returns address ref needed for door-to-door delivery.',
+    description:
+      'Create new address for a counterparty via Address/save (doc 1.24). Requires API key plus CounterpartyRef, StreetRef, BuildingNumber; response returns the Ref and Description needed for door-to-door delivery.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -94,7 +95,8 @@ const addressTools: Tool[] = [
   },
   {
     name: 'address_update',
-    description: 'Update existing counterparty address.',
+    description:
+      'Update existing counterparty address with Address/update (doc 1.25). Nova Poshta docs stress you can edit an address only until a waybill is created with it, so run this immediately after address creation.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -110,7 +112,8 @@ const addressTools: Tool[] = [
   },
   {
     name: 'address_delete',
-    description: 'Delete counterparty address by reference.',
+    description:
+      'Delete counterparty address by reference using Address/delete (doc 1.25). Allowed only before the address participates in an Internet document; afterward the API blocks deletion.',
     inputSchema: {
       type: 'object',
       properties: {

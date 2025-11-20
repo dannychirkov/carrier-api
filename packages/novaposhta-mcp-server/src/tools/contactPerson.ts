@@ -8,7 +8,8 @@ import { createTextResult, formatAsJson } from '../utils/tool-response.js';
 const contactPersonTools: Tool[] = [
   {
     name: 'contact_person_save',
-    description: 'Create new contact person for a counterparty. Returns contact person ref for waybill creation.',
+    description:
+      'Create new contact person for a counterparty via ContactPerson/save (doc 1.26). Docs require entering all fields in Ukrainian and with an API key; response returns the Ref/Description pair referenced in waybills.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -24,7 +25,8 @@ const contactPersonTools: Tool[] = [
   },
   {
     name: 'contact_person_update',
-    description: 'Update existing contact person details.',
+    description:
+      'Update existing contact person details via ContactPerson/update (doc 1.27). Only legal entities may edit full profiles, private persons can change phone only, and edits are allowed solely before a waybill is issued for that counterparty.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -41,7 +43,8 @@ const contactPersonTools: Tool[] = [
   },
   {
     name: 'contact_person_delete',
-    description: 'Delete contact person by reference.',
+    description:
+      'Delete contact person by reference using ContactPerson/delete (doc 1.27). Nova Poshta allows deletions via API only for legal entities and only until the contact was used on an Internet document.',
     inputSchema: {
       type: 'object',
       properties: {

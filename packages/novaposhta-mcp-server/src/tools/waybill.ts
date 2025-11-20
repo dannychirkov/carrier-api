@@ -15,7 +15,8 @@ import { createTextResult, formatAsJson } from '../utils/tool-response.js';
 const waybillTools: Tool[] = [
   {
     name: 'waybill_calculate_cost',
-    description: 'Calculate delivery cost and optional delivery date estimation for a shipment.',
+    description:
+      'Calculate delivery cost and optional delivery date estimation for a shipment. Doc 1.2 explains that every Nova Poshta call sends apiKey/modelName/calledMethod/methodProperties, so this helper either forwards your raw InternetDocument payload or builds one from typed fields.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -36,7 +37,8 @@ const waybillTools: Tool[] = [
   },
   {
     name: 'waybill_create',
-    description: 'Create a Nova Poshta waybill (Internet document). Provide full request payload.',
+    description:
+      'Create a Nova Poshta waybill (Internet document). Doc 1.2 highlights InternetDocument as the model for оформлення відправлень, so provide the exact methodProperties payload (with your API key) that the official docs expect.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -50,7 +52,8 @@ const waybillTools: Tool[] = [
   },
   {
     name: 'waybill_update',
-    description: 'Update an existing waybill. Provide raw update payload.',
+    description:
+      'Update an existing waybill. Per doc 1.2 the same InternetDocument request envelope is used for update calls, so pass the raw payload (must include DocumentRef) exactly as defined by Nova Poshta.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -64,7 +67,8 @@ const waybillTools: Tool[] = [
   },
   {
     name: 'waybill_delete',
-    description: 'Delete one or multiple waybills by their DocumentRef.',
+    description:
+      'Delete one or multiple waybills by their DocumentRef. Doc 1.2 covers the uniform request structure, so supply the InternetDocument delete payload (list of DocumentRef values) you would normally POST to Nova Poshta.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -79,7 +83,8 @@ const waybillTools: Tool[] = [
   },
   {
     name: 'waybill_get_delivery_date',
-    description: 'Get estimated delivery date for a city pair and service type.',
+    description:
+      'Get estimated delivery date for a city pair and service type. Doc 1.2 outlines the generic Nova Poshta envelope, and this helper builds the methodProperties (citySender, cityRecipient, serviceType, optional dateTime) expected by the delivery-date method.',
     inputSchema: {
       type: 'object',
       properties: {
