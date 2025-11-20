@@ -2,6 +2,13 @@
 
 All notable changes to the Nova Poshta MCP Server will be documented in this file.
 
+## [0.0.1-alpha.1] - 2025-11-20
+
+### Fixed
+- Fixed excessive token consumption in address tools by removing full API response from structuredContent
+- Address search tools now return only preview data (first 5 items) instead of complete dataset
+- Reduced token usage from ~2.4M to ~200-500 tokens per address search request
+
 ## [0.0.1-alpha.0] - 2025-11-20
 
 ### Added
