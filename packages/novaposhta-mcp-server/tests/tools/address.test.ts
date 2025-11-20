@@ -49,6 +49,50 @@ describe('address tools', () => {
       const result = await handleAddressTool('address_search_cities', { query: 'Київ' }, context);
       expect(result.isError).toBeFalsy();
     });
+
+    it('passes limit and page parameters to getCities', async () => {
+      vi.mocked(context.client.address.getCities).mockResolvedValue({
+        success: true,
+        data: [{ Description: 'Київ', Ref: 'ref-123' } as any],
+        errors: [],
+        warnings: [],
+        info: [],
+        messageCodes: [],
+        errorCodes: [],
+        warningCodes: [],
+        infoCodes: [],
+      });
+
+      await handleAddressTool('address_search_cities', { query: 'Київ', page: 2, limit: 20 }, context);
+
+      expect(context.client.address.getCities).toHaveBeenCalledWith({
+        findByString: 'Київ',
+        page: 2,
+        limit: 20,
+      });
+    });
+
+    it('uses default limit of 10 when not provided', async () => {
+      vi.mocked(context.client.address.getCities).mockResolvedValue({
+        success: true,
+        data: [],
+        errors: [],
+        warnings: [],
+        info: [],
+        messageCodes: [],
+        errorCodes: [],
+        warningCodes: [],
+        infoCodes: [],
+      });
+
+      await handleAddressTool('address_search_cities', { query: 'test' }, context);
+
+      expect(context.client.address.getCities).toHaveBeenCalledWith({
+        findByString: 'test',
+        page: 1,
+        limit: 10,
+      });
+    });
   });
 
   describe('address_get_warehouses', () => {

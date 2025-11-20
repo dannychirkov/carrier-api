@@ -102,11 +102,23 @@ export class AddressService {
    * @cacheable 12 hours
    */
   async getCities(request: GetCitiesRequest = {}): Promise<GetCitiesResponse> {
+    const methodProperties: Record<string, string | undefined> = {
+      Ref: request.ref,
+      FindByString: request.findByString,
+      Page: request.page?.toString(),
+      Limit: request.limit?.toString(),
+    };
+
+    // Remove undefined values
+    const cleanProperties = Object.fromEntries(
+      Object.entries(methodProperties).filter(([, value]) => value !== undefined && value !== ''),
+    );
+
     const apiRequest: NovaPoshtaRequest = {
       ...(this.apiKey ? { apiKey: this.apiKey } : {}),
       modelName: NovaPoshtaModel.Address,
       calledMethod: NovaPoshtaMethod.GetCities,
-      methodProperties: request as unknown as Record<string, unknown>,
+      methodProperties: cleanProperties,
     };
 
     return await this.transport.request<GetCitiesResponse['data']>(apiRequest);

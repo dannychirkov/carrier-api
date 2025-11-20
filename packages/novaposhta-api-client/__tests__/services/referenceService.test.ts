@@ -258,12 +258,28 @@ describe('ReferenceService', () => {
         modelName: 'CommonGeneral',
         calledMethod: 'getTimeIntervals',
         methodProperties: {
-          recipientCityRef: 'city-ref-1',
-          dateTime: '01.01.2024',
+          RecipientCityRef: 'city-ref-1',
+          DateTime: '01.01.2024',
         },
       });
       expect(result.success).toBe(true);
       expect(result.data).toEqual(mockData);
+    });
+
+    it('should map camelCase to PascalCase for API request', async () => {
+      const mockData = [{ Number: '1', Start: '10:00', End: '14:00' }];
+      const { transport, calls, setResponse } = createMockTransport();
+      setResponse({ success: true, data: mockData });
+
+      const client = createClient({ transport, baseUrl, apiKey }).use(new ReferenceService());
+
+      await client.reference.getTimeIntervals({
+        recipientCityRef: 'test-city-ref',
+      });
+
+      expect(calls[0].body.methodProperties).toHaveProperty('RecipientCityRef', 'test-city-ref');
+      expect(calls[0].body.methodProperties).not.toHaveProperty('recipientCityRef');
+      expect(calls[0].body.methodProperties).not.toHaveProperty('DateTime');
     });
   });
 

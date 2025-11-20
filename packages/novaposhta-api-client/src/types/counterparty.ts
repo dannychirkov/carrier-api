@@ -80,6 +80,7 @@ interface SaveCounterpartyBase {
   readonly counterpartyProperty: 'Sender' | 'Recipient';
   readonly phone: string;
   readonly email?: string;
+  readonly cityRef?: CityRef;
 }
 
 /**

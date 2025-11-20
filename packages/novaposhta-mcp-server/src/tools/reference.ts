@@ -185,9 +185,10 @@ async function handleDecodeMessage(args: ToolArguments, context: ToolContext): P
   const match = response.data?.find(item => item.MessageCode === code);
 
   if (!match) {
-    return createTextResult(`Message code ${code} not found`, { response });
+    return createTextResult(`Message code ${code} not found`);
   }
 
+  // Return only the matched code, not the entire response (which contains 230K+ tokens)
   return createTextResult(
     formatAsJson({
       code,
@@ -195,7 +196,6 @@ async function handleDecodeMessage(args: ToolArguments, context: ToolContext): P
       descriptionUA: match.MessageDescriptionUA,
       descriptionRU: match.MessageDescriptionRU,
     }),
-    { response },
   );
 }
 

@@ -138,6 +138,7 @@ export class CounterpartyService {
       CounterpartyProperty: request.counterpartyProperty,
       Phone: request.phone,
       Email: request.email,
+      CityRef: request.cityRef,
     };
 
     if (request.counterpartyType === 'PrivatePerson') {

@@ -212,7 +212,10 @@ export class ReferenceService {
       ...(this.apiKey ? { apiKey: this.apiKey } : {}),
       modelName: NovaPoshtaModel.Common,
       calledMethod: NovaPoshtaMethod.GetTimeIntervals,
-      methodProperties: request as unknown as Record<string, unknown>,
+      methodProperties: {
+        RecipientCityRef: request.recipientCityRef,
+        ...(request.dateTime ? { DateTime: request.dateTime } : {}),
+      },
     };
 
     return await this.transport.request<GetTimeIntervalsResponse['data']>(apiRequest);

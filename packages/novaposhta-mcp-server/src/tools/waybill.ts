@@ -213,7 +213,31 @@ async function handleDeliveryDate(args: ToolArguments, context: ToolContext): Pr
 
 function buildPriceRequest(args: ToolArguments): PriceCalculationRequest {
   if (args?.request && typeof args.request === 'object') {
-    return args.request as PriceCalculationRequest;
+    const req = args.request as Record<string, unknown>;
+
+    // Validate required fields
+    const citySender = assertString(req.citySender, 'request.citySender');
+    const cityRecipient = assertString(req.cityRecipient, 'request.cityRecipient');
+    const serviceType = assertString(req.serviceType, 'request.serviceType');
+    const cargoType = assertString(req.cargoType, 'request.cargoType');
+    const cost = Number(req.cost);
+    const weight = Number(req.weight);
+    const seatsAmount = Number(req.seatsAmount ?? 1);
+
+    if ([cost, weight, seatsAmount].some(value => Number.isNaN(value))) {
+      throw new Error('request.cost, request.weight, and request.seatsAmount must be valid numbers');
+    }
+
+    return {
+      ...req,
+      citySender,
+      cityRecipient,
+      serviceType,
+      cargoType,
+      cost,
+      weight,
+      seatsAmount,
+    } as PriceCalculationRequest;
   }
 
   const citySender = assertString(args?.citySender, 'citySender');
@@ -241,7 +265,21 @@ function buildPriceRequest(args: ToolArguments): PriceCalculationRequest {
 
 function buildDeliveryDateRequest(args: ToolArguments): DeliveryDateRequest {
   if (args?.request && typeof args.request === 'object') {
-    return args.request as DeliveryDateRequest;
+    const req = args.request as Record<string, unknown>;
+
+    // Validate required fields
+    const citySender = assertString(req.citySender, 'request.citySender');
+    const cityRecipient = assertString(req.cityRecipient, 'request.cityRecipient');
+    const serviceType = assertString(req.serviceType, 'request.serviceType');
+    const dateTime = assertOptionalString(req.dateTime, 'request.dateTime');
+
+    return {
+      ...req,
+      citySender,
+      cityRecipient,
+      serviceType,
+      ...(dateTime ? { dateTime } : {}),
+    } as DeliveryDateRequest;
   }
 
   const citySender = assertString(args?.citySender, 'citySender');

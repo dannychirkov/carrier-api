@@ -27,7 +27,32 @@ describe('AddressService', () => {
       expect(calls[0].body).toMatchObject({
         modelName: 'AddressGeneral',
         calledMethod: 'getCities',
-        methodProperties: { findByString: 'Kyiv' },
+        methodProperties: { FindByString: 'Kyiv' },
+      });
+      expect(result.success).toBe(true);
+      expect(result.data).toEqual(mockData);
+    });
+
+    it('should transform page and limit parameters correctly', async () => {
+      const mockData = [
+        {
+          Ref: 'city-ref-1',
+          Description: 'Kyiv',
+          DescriptionRu: 'Киев',
+        },
+      ];
+      const { transport, calls, setResponse } = createMockTransport();
+      setResponse({ success: true, data: mockData });
+
+      const client = createClient({ transport, baseUrl, apiKey }).use(new AddressService());
+
+      const result = await client.address.getCities({ findByString: 'Kyiv', page: 1, limit: 10 });
+
+      expect(calls).toHaveLength(1);
+      expect(calls[0].body).toMatchObject({
+        modelName: 'AddressGeneral',
+        calledMethod: 'getCities',
+        methodProperties: { FindByString: 'Kyiv', Page: '1', Limit: '10' },
       });
       expect(result.success).toBe(true);
       expect(result.data).toEqual(mockData);
