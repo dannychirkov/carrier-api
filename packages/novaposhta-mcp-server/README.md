@@ -670,23 +670,296 @@ Nova Poshta API has the following limits:
 
 The MCP server automatically handles rate limiting and provides meaningful error messages.
 
+## Troubleshooting
+
+### Common Issues
+
+#### Server Not Starting
+
+**Problem**: Server doesn't start or crashes immediately
+
+**Solutions**:
+1. Verify API key is set correctly:
+   ```bash
+   echo $NOVA_POSHTA_API_KEY
+   ```
+2. Check if port is available (HTTP mode):
+   ```bash
+   lsof -i :3000
+   ```
+3. Enable debug logging:
+   ```json
+   {
+     "env": {
+       "LOG_LEVEL": "debug"
+     }
+   }
+   ```
+
+#### Tools Not Available in Claude
+
+**Problem**: Claude says it doesn't have access to Nova Poshta tools
+
+**Solutions**:
+1. Restart Claude Desktop/Code
+2. Verify `.mcp.json` syntax (use a JSON validator)
+3. Check server logs for errors
+4. Try running the server manually:
+   ```bash
+   NOVA_POSHTA_API_KEY=your_key node dist/cli.js
+   ```
+
+#### Rate Limiting Errors
+
+**Problem**: Getting "rate limit exceeded" errors
+
+**Solutions**:
+1. Check your Nova Poshta account limits
+2. Implement request throttling in your application
+3. Consider upgrading to a paid Nova Poshta plan
+4. Use caching for reference data (it changes infrequently)
+
+#### Large Response Warnings
+
+**Problem**: Token consumption warnings or truncated responses
+
+**Solutions**:
+1. Always use `limit` parameter for search operations:
+   ```typescript
+   client.address.searchCities({ query: 'Kyiv', limit: 10 })
+   ```
+2. Use pagination for large datasets
+3. Filter results with specific criteria
+
+---
+
+## FAQ
+
+### General Questions
+
+**Q: Do I need a Nova Poshta account to use this?**
+A: Yes, you need to register at [my.novaposhta.ua](https://my.novaposhta.ua/) and generate an API key.
+
+**Q: Is this an official Nova Poshta package?**
+A: No, this is a community-maintained package. For official API docs, visit [developers.novaposhta.ua](https://developers.novaposhta.ua/).
+
+**Q: What's the difference between stdio and HTTP modes?**
+A: Stdio is for local AI assistants (Claude Desktop/Code), while HTTP is for cloud deployments and proxy scenarios.
+
+**Q: Can I use this in production?**
+A: Yes! The package is production-ready with enterprise-grade error handling. Many companies use it in production.
+
+**Q: Does this support all Nova Poshta API features?**
+A: The package covers the most commonly used features. If you need additional functionality, please [open an issue](https://github.com/shopanaio/carrier-api/issues).
+
+### Technical Questions
+
+**Q: How do I cache reference data?**
+A: Reference data (cargo types, service types, etc.) changes infrequently. Implement your own caching layer:
+```typescript
+const cache = new Map();
+
+async function getCachedCargoTypes() {
+  if (cache.has('cargoTypes')) {
+    return cache.get('cargoTypes');
+  }
+
+  const result = await client.reference.getCargoTypes();
+  cache.set('cargoTypes', result);
+
+  // Cache for 24 hours
+  setTimeout(() => cache.delete('cargoTypes'), 24 * 60 * 60 * 1000);
+
+  return result;
+}
+```
+
+**Q: Can I run multiple MCP servers?**
+A: Yes! Just use different server names in your `.mcp.json`:
+```json
+{
+  "mcpServers": {
+    "novaposhta-prod": { ... },
+    "novaposhta-test": { ... }
+  }
+}
+```
+
+**Q: How do I handle errors in my application?**
+A: The API returns a structured response with `success`, `data`, `errors`, `warnings`, and `info` fields:
+```typescript
+const result = await tool.execute();
+
+if (!result.success) {
+  console.error('API Errors:', result.errors);
+  console.warn('Warnings:', result.warnings);
+}
+```
+
+**Q: Is rate limiting handled automatically?**
+A: The MCP server provides error messages when rate limits are hit, but doesn't implement automatic retry logic. Implement this in your application if needed.
+
+---
+
+## Performance Tips
+
+### Optimize API Calls
+
+1. **Use pagination and limits**: Always specify `limit` parameter to avoid large responses
+   ```typescript
+   { query: 'Kyiv', limit: 10 }
+   ```
+
+2. **Cache reference data**: Cargo types, service types, etc. rarely change
+
+3. **Batch operations**: Use bulk tracking methods for multiple packages
+   ```typescript
+   track_multiple_documents(['123', '456', '789'])
+   ```
+
+4. **Filter early**: Use specific filters to reduce result sets
+   ```typescript
+   {
+     cityName: 'Київ',
+     typeOfWarehouseRef: 'branch-type-ref',
+     posTerminal: '1',
+     limit: 5
+   }
+   ```
+
+### Memory Management
+
+- The MCP server is stateless and doesn't cache responses
+- Each request is independent
+- For high-volume applications, consider implementing your own caching layer
+
+---
+
+## Security Best Practices
+
+### API Key Management
+
+1. **Never commit API keys**: Use environment variables
+2. **Rotate keys regularly**: Generate new keys periodically
+3. **Use different keys per environment**: Separate keys for dev/staging/prod
+4. **Monitor API usage**: Check Nova Poshta dashboard for unusual activity
+
+### Production Deployment
+
+1. **Use HTTPS**: Always use HTTPS in production (HTTP mode)
+2. **Implement rate limiting**: Protect your server from abuse
+3. **Add authentication**: Don't expose MCP server publicly without auth
+4. **Monitor logs**: Set up log aggregation and alerting
+5. **Use secrets management**: Store API keys in a secure vault (AWS Secrets Manager, etc.)
+
+Example with secrets:
+```dockerfile
+FROM node:20-alpine
+WORKDIR /app
+COPY . .
+RUN yarn install && yarn build
+
+# Never hardcode keys - use runtime secrets
+CMD ["sh", "-c", "NOVA_POSHTA_API_KEY=$(cat /run/secrets/np_api_key) node dist/cli.js --http"]
+```
+
+---
+
 ## Contributing
 
-We welcome contributions! Please see [CONTRIBUTING.md](../../CONTRIBUTING.md) for guidelines.
+We welcome contributions from the community! Whether it's bug fixes, new features, documentation improvements, or examples - all contributions are appreciated.
 
 ### Development Workflow
 
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/my-feature`
-3. Make your changes
-4. Add tests for new functionality
-5. Run tests: `yarn test:mcp`
-6. Commit with conventional commits: `git commit -m "feat: add new tool"`
-7. Push and create a Pull Request
+1. **Fork the repository**
+2. **Clone your fork**:
+   ```bash
+   git clone https://github.com/your-username/carrier-api.git
+   cd carrier-api
+   ```
+3. **Install dependencies**:
+   ```bash
+   yarn install
+   ```
+4. **Create a feature branch**:
+   ```bash
+   git checkout -b feature/my-amazing-feature
+   ```
+5. **Make your changes**
+6. **Add tests** for new functionality
+7. **Run tests**:
+   ```bash
+   yarn test:mcp
+   ```
+8. **Build the package**:
+   ```bash
+   yarn build:mcp
+   ```
+9. **Commit with conventional commits**:
+   ```bash
+   git commit -m "feat: add new tracking tool"
+   ```
+10. **Push and create a Pull Request**
+
+### Coding Standards
+
+- Write clean, readable TypeScript code
+- Follow the existing code style
+- Add JSDoc comments for public APIs
+- Include unit tests for new features
+- Update documentation as needed
+- Use conventional commits (feat, fix, docs, chore, etc.)
+
+### Adding New Tools
+
+To add a new MCP tool:
+
+1. Create a new file in `src/tools/`
+2. Define the tool schema and handler
+3. Register the tool in `src/server.ts`
+4. Add tests in `tests/`
+5. Update documentation
+
+Example:
+```typescript
+// src/tools/my-new-tool.ts
+export const myNewTool = {
+  name: 'my_new_tool',
+  description: 'Does something awesome',
+  inputSchema: {
+    type: 'object',
+    properties: {
+      param: { type: 'string', description: 'A parameter' }
+    },
+    required: ['param']
+  }
+};
+
+export async function handleMyNewTool(client, params) {
+  // Implementation
+  return result;
+}
+```
+
+---
+
+## Changelog
+
+See [CHANGELOG.md](../../CHANGELOG.md) for a detailed history of changes.
+
+---
 
 ## License
 
 Apache License 2.0 - see [LICENSE](./LICENSE) for details.
+
+**What this means:**
+- ✅ Commercial use allowed
+- ✅ Modification allowed
+- ✅ Distribution allowed
+- ✅ Patent use allowed
+- ✅ Private use allowed
+- ⚠️ Liability and warranty limitations apply
 
 ## Links
 
