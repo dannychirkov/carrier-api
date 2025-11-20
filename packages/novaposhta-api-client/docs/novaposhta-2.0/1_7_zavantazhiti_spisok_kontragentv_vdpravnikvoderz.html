@@ -1,0 +1,912 @@
+<!DOCTYPE html><html lang="uk"><head>
+        
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>1.6 &#x417;&#x430;&#x432;&#x430;&#x43D;&#x442;&#x430;&#x436;&#x438;&#x442;&#x438; &#x441;&#x43F;&#x438;&#x441;&#x43E;&#x43A; &#x43A;&#x43E;&#x43D;&#x442;&#x440;&#x430;&#x433;&#x435;&#x43D;&#x442;&#x456;&#x432; &#x432;&#x456;&#x434;&#x43F;&#x440;&#x430;&#x432;&#x43D;&#x438;&#x43A;&#x456;&#x432;/&#x43E;&#x434;&#x435;&#x440;&#x436;&#x443;&#x432;&#x430;&#x447;&#x456;&#x432; (&#x43C;&#x435;&#x442;&#x43E;&#x434; &#xAB;getCounterparties&#xBB;). | API &#x41D;&#x41E;&#x412;&#x410; &#x41F;&#x41E;&#x428;&#x422;&#x410;</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content>
+        <meta name="generator" content="GitBook 2.6.7">
+        <meta name="author" content="Alex Pseha">
+        
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <link rel="apple-touch-icon-precomposed" sizes="152x152" href="https://alexpseha.gitbooks.io/api_test_one_chapter/content/gitbook/images/apple-touch-icon-precomposed-152.png">
+        <link rel="shortcut icon" href="https://gstatic.gitbook.com/images/b1c4c86ca817a71628d2debe73be9a64.ico" type="image/x-icon">
+        
+    <link rel="stylesheet" href="gitbook/style.css">
+    
+        
+        <link rel="stylesheet" href="gitbook/plugins/gitbook-plugin-comment/plugin.css">
+        
+    
+        
+        <link rel="stylesheet" href="gitbook/plugins/gitbook-plugin-highlight/website.css">
+        
+    
+        
+        <link rel="stylesheet" href="gitbook/plugins/gitbook-plugin-search/search.css">
+        
+    
+        
+        <link rel="stylesheet" href="gitbook/plugins/gitbook-plugin-fontsettings/website.css">
+        
+    
+    
+
+        
+    
+    
+    <link rel="next" href="1_7_otrimati_spisok_vidv_ta_form_platnikv.html">
+    
+    
+    <link rel="prev" href="1_5_zavantazhiti_dovdnik_vddlen_kompan_nova_poshta_.html">
+    
+
+        
+    
+<style>
+    .book .book-summary .book-search,
+    .book .book-summary ul.summary {
+        position: relative;
+        top: auto;
+        left: auto;
+        right: auto;
+        bottom: auto;
+    }
+    .book-summary {
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        flex-direction: column;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        overflow-y: auto;
+    }
+    .book-summary > nav {
+        flex: 1 1 auto;
+        overflow-y: auto;
+        overflow-y: overlay;
+    }
+    .gl-wrapper {
+        margin: 0;
+        display: block;
+        padding: 0;
+        position: relative;
+        line-height: 15px;
+        background: #fafafa;
+    }
+    .gl-wrapper:before {
+        background: -webkit-linear-gradient(to bottom, rgba(250,250,250,0) 0%, #fafafa 100%);
+        background: -moz-linear-gradient(to bottom, rgba(250,250,250,0) 0%, #fafafa 100%);
+        top: -24px;
+        width: 100%;
+        height: 24px;
+        content: "";
+        display: block;
+        position: absolute;
+        background: linear-gradient(to bottom, rgba(250,250,250,0) 0%, #fafafa 100%);
+    }
+    .book.color-theme-1 .gl-wrapper {
+        background: #121212;
+    }
+    .book.color-theme-1 .gl-wrapper:before {
+        background: -webkit-linear-gradient(to bottom, rgba(18,18,18,0) 0%, #121212 100%);
+        background: -moz-linear-gradient(to bottom, rgba(18,18,18,0) 0%, #121212 100%);
+        background: linear-gradient(to bottom, rgba(18,18,18,0) 0%, #121212 100%);
+    }
+    .book.color-theme-2 .gl-wrapper {
+        background: #2e3243;
+    }
+    .book.color-theme-2 .gl-wrapper:before {
+        background: -webkit-linear-gradient(to bottom, rgba(46,50,67,0) 0%, #2e3243 100%);
+        background: -moz-linear-gradient(to bottom, rgba(46,50,67,0) 0%, #2e3243 100%);
+        background: linear-gradient(to bottom, rgba(46,50,67,0) 0%, #2e3243 100%);
+    }
+    .gl-wrapper .gitbook-link {
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        color: #9DAAB6;
+        margin: 16px;
+        display: flex;
+        padding: 0;
+        align-items: center;
+        margin-left: 32px;
+        padding-top: 8px;
+        padding-left: 16px;
+        border-radius: 3px;
+        padding-right: 16px;
+        padding-bottom: 8px;
+        text-decoration: none;
+        background-color: #E6ECF1;
+        -webkit-box-align: center;
+    }
+    .gl-wrapper .tm-logo {
+        margin: 0;
+        display: block;
+        padding: 0;
+        font-size: 40px;
+    }
+    .gl-wrapper .tm-content {
+        flex: 1;
+        margin: 0;
+        display: block;
+        padding: 0;
+        padding-left: 16px;
+    }
+    .gl-wrapper .tm-content .container {
+        margin: 0;
+        display: block;
+        padding: 0;
+    }
+    .gl-wrapper .tm-content .tm-container .tm-text {
+        font-size: 12px;
+        font-family: "Roboto", sans-serif;
+        font-weight: 400;
+        line-height: 1.625;
+    }
+</style></head>
+    <body>
+        
+        
+    <div class="book" data-level="7" data-chapter-title="1.6 &#x417;&#x430;&#x432;&#x430;&#x43D;&#x442;&#x430;&#x436;&#x438;&#x442;&#x438; &#x441;&#x43F;&#x438;&#x441;&#x43E;&#x43A; &#x43A;&#x43E;&#x43D;&#x442;&#x440;&#x430;&#x433;&#x435;&#x43D;&#x442;&#x456;&#x432; &#x432;&#x456;&#x434;&#x43F;&#x440;&#x430;&#x432;&#x43D;&#x438;&#x43A;&#x456;&#x432;/&#x43E;&#x434;&#x435;&#x440;&#x436;&#x443;&#x432;&#x430;&#x447;&#x456;&#x432; (&#x43C;&#x435;&#x442;&#x43E;&#x434; &#xAB;getCounterparties&#xBB;)." data-filepath="1_7_zavantazhiti_spisok_kontragentv_vdpravnikvoderz.md" data-basepath="." data-revision="Wed May 11 2016 13:08:39 GMT+0000 (UTC)" data-innerlanguage>
+    
+
+<div class="book-summary">
+    <nav role="navigation">
+        <ul class="summary">
+            
+            
+            
+                
+                <li>
+                    <a href="https://www.gitbook.com/book/alexpseha/api_test_one_chapter" target="blank" class="custom-link">API &#x41D;&#x41E;&#x412;&#x410; &#x41F;&#x41E;&#x428;&#x422;&#x410;</a>
+                </li>
+            
+            
+
+            
+            <li class="divider"></li>
+            
+
+            
+    
+        <li class="chapter " data-level="0" data-path="index.html">
+            
+                
+                    <a href="index.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                        API &#x41D;&#x41E;&#x412;&#x410; &#x41F;&#x41E;&#x428;&#x422;&#x410;
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1" data-path="dovdnik.html">
+            
+                
+                    <a href="dovdnik.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.</b>
+                        
+                        &#x414;&#x43E;&#x432;&#x456;&#x434;&#x43D;&#x438;&#x43A;
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2" data-path="1_1_osobistii_kabnet_api_20br.html">
+            
+                
+                    <a href="1_1_osobistii_kabnet_api_20br.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.</b>
+                        
+                        1.1 &#x41E;&#x441;&#x43E;&#x431;&#x438;&#x441;&#x442;&#x438;&#x439; &#x43A;&#x430;&#x431;&#x456;&#x43D;&#x435;&#x442; API 2.0
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="3" data-path="1_2_opis_zagalnih_parametrv.html">
+            
+                
+                    <a href="1_2_opis_zagalnih_parametrv.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>3.</b>
+                        
+                        1.2 &#x41E;&#x43F;&#x438;&#x441; &#x437;&#x430;&#x433;&#x430;&#x43B;&#x44C;&#x43D;&#x438;&#x445; &#x43F;&#x430;&#x440;&#x430;&#x43C;&#x435;&#x442;&#x440;&#x456;&#x432;
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="4" data-path="1_3_zavantazhiti_dovdnik_mst_kompan_nova_poshta_met.html">
+            
+                
+                    <a href="1_3_zavantazhiti_dovdnik_mst_kompan_nova_poshta_met.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>4.</b>
+                        
+                        1.3 &#x417;&#x430;&#x432;&#x430;&#x43D;&#x442;&#x430;&#x436;&#x438;&#x442;&#x438; &#x434;&#x43E;&#x432;&#x456;&#x434;&#x43D;&#x438;&#x43A; &#x43C;&#x456;&#x441;&#x442; &#x43A;&#x43E;&#x43C;&#x43F;&#x430;&#x43D;&#x456;&#x457; &#xAB;&#x41D;&#x43E;&#x432;&#x430; &#x41F;&#x43E;&#x448;&#x442;&#x430;&#xBB; (&#x43C;&#x435;&#x442;&#x43E;&#x434; &#xAB;getCities&#xBB;)
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="5" data-path="1_4_zavantazhiti_dovdnik_vulits_kompan_nova_poshta_.html">
+            
+                
+                    <a href="1_4_zavantazhiti_dovdnik_vulits_kompan_nova_poshta_.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>5.</b>
+                        
+                        1.4 &#x417;&#x430;&#x432;&#x430;&#x43D;&#x442;&#x430;&#x436;&#x438;&#x442;&#x438; &#x434;&#x43E;&#x432;&#x456;&#x434;&#x43D;&#x438;&#x43A; &#x432;&#x443;&#x43B;&#x438;&#x446;&#x44C; &#x43A;&#x43E;&#x43C;&#x43F;&#x430;&#x43D;&#x456;&#x457; &#xAB;&#x41D;&#x43E;&#x432;&#x430; &#x41F;&#x43E;&#x448;&#x442;&#x430; (&#x43C;&#x435;&#x442;&#x43E;&#x434; &#xAB;getStreet&#xBB;)
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="6" data-path="1_5_zavantazhiti_dovdnik_vddlen_kompan_nova_poshta_.html">
+            
+                
+                    <a href="1_5_zavantazhiti_dovdnik_vddlen_kompan_nova_poshta_.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>6.</b>
+                        
+                        1.5 &#x417;&#x430;&#x432;&#x430;&#x43D;&#x442;&#x430;&#x436;&#x438;&#x442;&#x438; &#x434;&#x43E;&#x432;&#x456;&#x434;&#x43D;&#x438;&#x43A; &#x432;&#x456;&#x434;&#x434;&#x456;&#x43B;&#x435;&#x43D;&#x44C; &#x43A;&#x43E;&#x43C;&#x43F;&#x430;&#x43D;&#x456;&#x457; &#xAB;&#x41D;&#x43E;&#x432;&#x430; &#x43F;&#x43E;&#x448;&#x442;&#x430;&#xBB; (&#x43C;&#x435;&#x442;&#x43E;&#x434; &#xAB;getWarehouses&#xBB;)
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter active" data-level="7" data-path="1_7_zavantazhiti_spisok_kontragentv_vdpravnikvoderz.html">
+            
+                
+                    <a href="1_7_zavantazhiti_spisok_kontragentv_vdpravnikvoderz.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>7.</b>
+                        
+                        1.6 &#x417;&#x430;&#x432;&#x430;&#x43D;&#x442;&#x430;&#x436;&#x438;&#x442;&#x438; &#x441;&#x43F;&#x438;&#x441;&#x43E;&#x43A; &#x43A;&#x43E;&#x43D;&#x442;&#x440;&#x430;&#x433;&#x435;&#x43D;&#x442;&#x456;&#x432; &#x432;&#x456;&#x434;&#x43F;&#x440;&#x430;&#x432;&#x43D;&#x438;&#x43A;&#x456;&#x432;/&#x43E;&#x434;&#x435;&#x440;&#x436;&#x443;&#x432;&#x430;&#x447;&#x456;&#x432; (&#x43C;&#x435;&#x442;&#x43E;&#x434; &#xAB;getCounterparties&#xBB;).
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="8" data-path="1_7_otrimati_spisok_vidv_ta_form_platnikv.html">
+            
+                
+                    <a href="1_7_otrimati_spisok_vidv_ta_form_platnikv.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>8.</b>
+                        
+                        1.7 &#x41E;&#x442;&#x440;&#x438;&#x43C;&#x430;&#x442;&#x438; &#x441;&#x43F;&#x438;&#x441;&#x43E;&#x43A; &#x432;&#x438;&#x434;&#x456;&#x432; &#x442;&#x430; &#x444;&#x43E;&#x440;&#x43C; &#x43F;&#x43B;&#x430;&#x442;&#x43D;&#x438;&#x43A;&#x456;&#x432;
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="9" data-path="1_8_otrimati_spisok_tipv_vantazhu.html">
+            
+                
+                    <a href="1_8_otrimati_spisok_tipv_vantazhu.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>9.</b>
+                        
+                        1.8 &#x41E;&#x442;&#x440;&#x438;&#x43C;&#x430;&#x442;&#x438; &#x441;&#x43F;&#x438;&#x441;&#x43E;&#x43A; &#x442;&#x438;&#x43F;&#x456;&#x432; &#x432;&#x430;&#x43D;&#x442;&#x430;&#x436;&#x443;
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="10" data-path="1_9_otrimati_spisok_tehnologi_dostavki.html">
+            
+                
+                    <a href="1_9_otrimati_spisok_tehnologi_dostavki.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>10.</b>
+                        
+                        1.9 &#x41E;&#x442;&#x440;&#x438;&#x43C;&#x430;&#x442;&#x438; &#x441;&#x43F;&#x438;&#x441;&#x43E;&#x43A; &#x442;&#x435;&#x445;&#x43D;&#x43E;&#x43B;&#x43E;&#x433;&#x456;&#x439; &#x434;&#x43E;&#x441;&#x442;&#x430;&#x432;&#x43A;&#x438;
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="11" data-path="1_10_otrimati_spisok_opisu_vantazhu.html">
+            
+                
+                    <a href="1_10_otrimati_spisok_opisu_vantazhu.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>11.</b>
+                        
+                        1.10 &#x41E;&#x442;&#x440;&#x438;&#x43C;&#x430;&#x442;&#x438; &#x441;&#x43F;&#x438;&#x441;&#x43E;&#x43A; &#x43E;&#x43F;&#x438;&#x441;&#x443; &#x432;&#x430;&#x43D;&#x442;&#x430;&#x436;&#x443;
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="12" data-path="1_10_otrimati_spisok_form_vlasnost_metod_getownersh.html">
+            
+                
+                    <a href="1_10_otrimati_spisok_form_vlasnost_metod_getownersh.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>12.</b>
+                        
+                        1.11 &#x41E;&#x442;&#x440;&#x438;&#x43C;&#x430;&#x442;&#x438; &#x441;&#x43F;&#x438;&#x441;&#x43E;&#x43A; &#x444;&#x43E;&#x440;&#x43C; &#x432;&#x43B;&#x430;&#x441;&#x43D;&#x43E;&#x441;&#x442;&#x456; (&#x41C;&#x435;&#x442;&#x43E;&#x434; &#xAB;getOwnershipFormsList&#xBB;)
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="13" data-path="1_12_otrimati_spisok_vidv_zvorotno_dostavki_metod_g.html">
+            
+                
+                    <a href="1_12_otrimati_spisok_vidv_zvorotno_dostavki_metod_g.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>13.</b>
+                        
+                        1.12 &#x41E;&#x442;&#x440;&#x438;&#x43C;&#x430;&#x442;&#x438; &#x441;&#x43F;&#x438;&#x441;&#x43E;&#x43A; &#x432;&#x438;&#x434;&#x456;&#x432; &#x437;&#x432;&#x43E;&#x440;&#x43E;&#x442;&#x43D;&#x43E;&#x457; &#x434;&#x43E;&#x441;&#x442;&#x430;&#x432;&#x43A;&#x438; (&#x43C;&#x435;&#x442;&#x43E;&#x434; &#xAB;getBackwardDeliveryCargoTypes&#xBB;)
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="14" data-path="1_13_otrimati_spisok_vidv_palet_metod_getpalletslis.html">
+            
+                
+                    <a href="1_13_otrimati_spisok_vidv_palet_metod_getpalletslis.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>14.</b>
+                        
+                        1.13 &#x41E;&#x442;&#x440;&#x438;&#x43C;&#x430;&#x442;&#x438; &#x441;&#x43F;&#x438;&#x441;&#x43E;&#x43A; &#x432;&#x438;&#x434;&#x456;&#x432; &#x43F;&#x430;&#x43B;&#x435;&#x442; (&#x43C;&#x435;&#x442;&#x43E;&#x434; &#xAB;getPalletsList&#xBB;)
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="15" data-path="1_14_otrimati_spisok_tipv_kontragentv_vdpravnikv_me.html">
+            
+                
+                    <a href="1_14_otrimati_spisok_tipv_kontragentv_vdpravnikv_me.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>15.</b>
+                        
+                        1.14 &#x41E;&#x442;&#x440;&#x438;&#x43C;&#x430;&#x442;&#x438; &#x441;&#x43F;&#x438;&#x441;&#x43E;&#x43A; &#x442;&#x438;&#x43F;&#x456;&#x432; &#x43A;&#x43E;&#x43D;&#x442;&#x440;&#x430;&#x433;&#x435;&#x43D;&#x442;&#x456;&#x432; &#x432;&#x456;&#x434;&#x43F;&#x440;&#x430;&#x432;&#x43D;&#x438;&#x43A;&#x456;&#x432; (&#x43C;&#x435;&#x442;&#x43E;&#x434; &#xAB;getTypesOfCounterparties&#xBB;)
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="16" data-path="1_15_otrimati_spisok_vidv_platnikv_zvorotno_dostavk.html">
+            
+                
+                    <a href="1_15_otrimati_spisok_vidv_platnikv_zvorotno_dostavk.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>16.</b>
+                        
+                        1.15 &#x41E;&#x442;&#x440;&#x438;&#x43C;&#x430;&#x442;&#x438; &#x441;&#x43F;&#x438;&#x441;&#x43E;&#x43A; &#x432;&#x438;&#x434;&#x456;&#x432; &#x43F;&#x43B;&#x430;&#x442;&#x43D;&#x438;&#x43A;&#x456;&#x432; &#x437;&#x432;&#x43E;&#x440;&#x43E;&#x442;&#x43D;&#x43E;&#x457; &#x434;&#x43E;&#x441;&#x442;&#x430;&#x432;&#x43A;&#x438; (&#x43C;&#x435;&#x442;&#x43E;&#x434; &#xAB;getTypesOfPayersForRedelivery&#xBB;)
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="17" data-path="1_16_otrimati_spisok_chasovih_ntervalv_metod_gettim.html">
+            
+                
+                    <a href="1_16_otrimati_spisok_chasovih_ntervalv_metod_gettim.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>17.</b>
+                        
+                        1.16 &#x41E;&#x442;&#x440;&#x438;&#x43C;&#x430;&#x442;&#x438; &#x441;&#x43F;&#x438;&#x441;&#x43E;&#x43A; &#x447;&#x430;&#x441;&#x43E;&#x432;&#x438;&#x445; &#x456;&#x43D;&#x442;&#x435;&#x440;&#x432;&#x430;&#x43B;&#x456;&#x432; (&#x43C;&#x435;&#x442;&#x43E;&#x434; &#xAB;getTimeIntervals&#xBB;)
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="18" data-path="1_17_otrimati_spisok_shin__diskv_metod_gettireswhee.html">
+            
+                
+                    <a href="1_17_otrimati_spisok_shin__diskv_metod_gettireswhee.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>18.</b>
+                        
+                        1.17 &#x41E;&#x442;&#x440;&#x438;&#x43C;&#x430;&#x442;&#x438; &#x441;&#x43F;&#x438;&#x441;&#x43E;&#x43A; &#x448;&#x438;&#x43D; &#x456; &#x434;&#x438;&#x441;&#x43A;&#x456;&#x432; (&#x43C;&#x435;&#x442;&#x43E;&#x434; &#xAB;getTiresWheelsList&#xBB;)
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="19" data-path="1_18_otrimati_spisok_tipv_pddonv,_yakscho_zamovlena.html">
+            
+                
+                    <a href="https://alexpseha.gitbooks.io/api_test_one_chapter/content/1_18_otrimati_spisok_tipv_pddonv,_yakscho_zamovlena.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>19.</b>
+                        
+                        1.18 &#x41E;&#x442;&#x440;&#x438;&#x43C;&#x430;&#x442;&#x438; &#x441;&#x43F;&#x438;&#x441;&#x43E;&#x43A; &#x442;&#x438;&#x43F;&#x456;&#x432; &#x43F;&#x456;&#x434;&#x434;&#x43E;&#x43D;&#x456;&#x432;, &#x44F;&#x43A;&#x449;&#x43E; &#x437;&#x430;&#x43C;&#x43E;&#x432;&#x43B;&#x435;&#x43D;&#x430; &#x43F;&#x43E;&#x441;&#x43B;&#x443;&#x433;&#x430; &#x437;&#x432;&#x43E;&#x440;&#x43E;&#x442;&#x43D;&#x43E;&#x457; &#x434;&#x43E;&#x441;&#x442;&#x430;&#x432;&#x43A;&#x438; &#x43F;&#x456;&#x434;&#x434;&#x43E;&#x43D;&#x456;&#x432; (&#x43C;&#x435;&#x442;&#x43E;&#x434; &#xAB;getTraysList&#xBB;)
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="20" data-path="1_19_otrimati_spisok_statusv_dokumentv_metod_getdoc.html">
+            
+                
+                    <a href="https://alexpseha.gitbooks.io/api_test_one_chapter/content/1_19_otrimati_spisok_statusv_dokumentv_metod_getdoc.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>20.</b>
+                        
+                        1.19 &#x41E;&#x442;&#x440;&#x438;&#x43C;&#x430;&#x442;&#x438; &#x441;&#x43F;&#x438;&#x441;&#x43E;&#x43A; &#x441;&#x442;&#x430;&#x442;&#x443;&#x441;&#x456;&#x432; &#x434;&#x43E;&#x43A;&#x443;&#x43C;&#x435;&#x43D;&#x442;&#x456;&#x432; (&#x43C;&#x435;&#x442;&#x43E;&#x434; &#xAB;getDocumentStatuses&#xBB;)
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="21" data-path="1_20_zberezhennya_kontragenta_metod_save.html">
+            
+                
+                    <a href="1_20_zberezhennya_kontragenta_metod_save.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>21.</b>
+                        
+                        1.20 &#x417;&#x431;&#x435;&#x440;&#x435;&#x436;&#x435;&#x43D;&#x43D;&#x44F; &#x43A;&#x43E;&#x43D;&#x442;&#x440;&#x430;&#x433;&#x435;&#x43D;&#x442;&#x430; (&#x41C;&#x435;&#x442;&#x43E;&#x434; &#xAB;save&#xBB;)
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="22" data-path="1_21_zberegti_kontragenta_z_tipom_yuridichna_osoba_.html">
+            
+                
+                    <a href="1_21_zberegti_kontragenta_z_tipom_yuridichna_osoba_.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>22.</b>
+                        
+                        1.21 &#x417;&#x431;&#x435;&#x440;&#x435;&#x433;&#x442;&#x438; &#x43A;&#x43E;&#x43D;&#x442;&#x440;&#x430;&#x433;&#x435;&#x43D;&#x442;&#x430; &#x437; &#x442;&#x438;&#x43F;&#x43E;&#x43C; (&#x44E;&#x440;&#x438;&#x434;&#x438;&#x447;&#x43D;&#x430; &#x43E;&#x441;&#x43E;&#x431;&#x430;/&#x442;&#x440;&#x435;&#x442;&#x44F; &#x43E;&#x441;&#x43E;&#x431;&#x430;)
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="23" data-path="1_22_onoviti_dan_kontragenta_metod_update.html">
+            
+                
+                    <a href="1_22_onoviti_dan_kontragenta_metod_update.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>23.</b>
+                        
+                        1.22 &#x41E;&#x43D;&#x43E;&#x432;&#x438;&#x442;&#x438;/&#x432;&#x438;&#x434;&#x430;&#x43B;&#x438;&#x442;&#x438; &#x434;&#x430;&#x43D;&#x456; &#x43A;&#x43E;&#x43D;&#x442;&#x440;&#x430;&#x433;&#x435;&#x43D;&#x442;&#x430; (&#x43C;&#x435;&#x442;&#x43E;&#x434; &#xAB;update/delet&#xBB;)
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="24" data-path="1_23_zavantazhiti_parametri_kontragenta_metod_getco.html">
+            
+                
+                    <a href="1_23_zavantazhiti_parametri_kontragenta_metod_getco.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>24.</b>
+                        
+                        1.23 &#x417;&#x430;&#x432;&#x430;&#x43D;&#x442;&#x430;&#x436;&#x438;&#x442;&#x438; &#x43F;&#x430;&#x440;&#x430;&#x43C;&#x435;&#x442;&#x440;&#x438; &#x43A;&#x43E;&#x43D;&#x442;&#x440;&#x430;&#x433;&#x435;&#x43D;&#x442;&#x430; (&#x43C;&#x435;&#x442;&#x43E;&#x434; &#xAB;getCounterpartyOptions&#xBB;)
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="25" data-path="1_24_stvorennya_adresi_vdpravnikaotrimuvacha_metod_.html">
+            
+                
+                    <a href="1_24_stvorennya_adresi_vdpravnikaotrimuvacha_metod_.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>25.</b>
+                        
+                        1.24 &#x421;&#x442;&#x432;&#x43E;&#x440;&#x435;&#x43D;&#x43D;&#x44F; &#x430;&#x434;&#x440;&#x435;&#x441;&#x438; &#x432;&#x456;&#x434;&#x43F;&#x440;&#x430;&#x432;&#x43D;&#x438;&#x43A;&#x430;/&#x43E;&#x442;&#x440;&#x438;&#x43C;&#x443;&#x432;&#x430;&#x447;&#x430; (&#x43C;&#x435;&#x442;&#x43E;&#x434; &#xAB;save&#xBB;)
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="26" data-path="1_25_onovlennyavidalennya_adresi_kontragenta_vdprav.html">
+            
+                
+                    <a href="1_25_onovlennyavidalennya_adresi_kontragenta_vdprav.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>26.</b>
+                        
+                        1.25 &#x41E;&#x43D;&#x43E;&#x432;&#x43B;&#x435;&#x43D;&#x43D;&#x44F;/&#x432;&#x438;&#x434;&#x430;&#x43B;&#x435;&#x43D;&#x43D;&#x44F; &#x430;&#x434;&#x440;&#x435;&#x441;&#x438; &#x43A;&#x43E;&#x43D;&#x442;&#x440;&#x430;&#x433;&#x435;&#x43D;&#x442;&#x430; &#x432;&#x456;&#x434;&#x43F;&#x440;&#x430;&#x432;&#x43D;&#x438;&#x43A;&#x430;/&#x43E;&#x442;&#x440;&#x438;&#x43C;&#x443;&#x432;&#x430;&#x447;&#x430; (&#x43C;&#x435;&#x442;&#x43E;&#x434; &#xAB;update/delete&#xBB;)
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="27" data-path="1_26_zberezhennya_danih_kontaktno_osobi_vdpravnikao.html">
+            
+                
+                    <a href="1_26_zberezhennya_danih_kontaktno_osobi_vdpravnikao.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>27.</b>
+                        
+                        1.26 &#x417;&#x431;&#x435;&#x440;&#x435;&#x436;&#x435;&#x43D;&#x43D;&#x44F; &#x434;&#x430;&#x43D;&#x438;&#x445; &#x43A;&#x43E;&#x43D;&#x442;&#x430;&#x43A;&#x442;&#x43D;&#x43E;&#x457; &#x43E;&#x441;&#x43E;&#x431;&#x438; &#x432;&#x456;&#x434;&#x43F;&#x440;&#x430;&#x432;&#x43D;&#x438;&#x43A;&#x430;/&#x43E;&#x442;&#x440;&#x438;&#x43C;&#x443;&#x432;&#x430;&#x447;&#x430; (&#x43C;&#x435;&#x442;&#x43E;&#x434; &#xAB;save&#xBB;)
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="28" data-path="1_27_onovlennyaredaguvannya_danih_kontaktno_osobi_k.html">
+            
+                
+                    <a href="1_27_onovlennyaredaguvannya_danih_kontaktno_osobi_k.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>28.</b>
+                        
+                        1.27 &#x41E;&#x43D;&#x43E;&#x432;&#x43B;&#x435;&#x43D;&#x43D;&#x44F;/&#x440;&#x435;&#x434;&#x430;&#x433;&#x443;&#x432;&#x430;&#x43D;&#x43D;&#x44F; &#x434;&#x430;&#x43D;&#x438;&#x445; &#x43A;&#x43E;&#x43D;&#x442;&#x430;&#x43A;&#x442;&#x43D;&#x43E;&#x457; &#x43E;&#x441;&#x43E;&#x431;&#x438; &#x43A;&#x43E;&#x43D;&#x440; &#x430;&#x433;&#x435;&#x43D;&#x442;&#x430; (&#x41C;&#x435;&#x442;&#x43E;&#x434; &#xAB;update&#xBB; )
+                    </a>
+            
+            
+        </li>
+    
+
+
+            
+            <li class="divider"></li>
+            
+            
+        </ul>
+    </nav>
+
+<div class="gl-wrapper">
+    <a class="gitbook-link" href="https://www.gitbook.com?utm_source=public_site_legacy&amp;utm_medium=referral&amp;utm_campaign=trademark&amp;utm_term=alexpseha&amp;utm_content=powered_by" target="blank">
+        <div class="tm-logo">
+            <svg preserveAspectRatio="xMidYMid meet" height="1em" width="1em" fill="currentColor" viewBox="0 0 1067 769" xmlns="http://www.w3.org/2000/svg" stroke="none" class="icon-7f6730be--text-3f89f380"><g><path d="M480.026 640.677c17.205 0 31.2 13.997 31.2 31.194s-13.995 31.193-31.2 31.193c-17.197 0-31.193-13.996-31.193-31.193 0-17.197 13.996-31.194 31.193-31.194m489.93-193.226c-17.203 0-31.2-13.998-31.2-31.195 0-17.204 13.997-31.2 31.2-31.2 17.198 0 31.194 13.996 31.194 31.2 0 17.197-13.996 31.195-31.193 31.195m0-127.804c-53.269 0-96.609 43.34-96.609 96.609 0 10.373 1.723 20.702 5.123 30.741L559.328 616.879c-18.132-26.128-47.521-41.617-79.302-41.617-36.821 0-70.391 21.065-86.63 54.003L106.68 478.109c-30.288-15.927-52.965-65.817-50.56-111.223 1.248-23.687 9.438-42.071 21.897-49.17 7.916-4.493 17.436-4.099 27.526 1.188l1.916 1.01c75.96 40.022 324.6 170.981 335.063 175.844 16.157 7.47 25.14 10.5 52.659-2.547l513.958-267.3c7.53-2.844 16.315-10.062 16.315-21.023 0-15.205-15.72-21.199-15.765-21.199-29.218-14.018-74.163-35.054-117.987-55.57C798.033 84.26 691.861 34.547 645.23 10.132c-40.253-21.072-72.655-3.311-78.432.282l-11.227 5.555C345.727 119.743 64.898 258.826 48.911 268.553 20.278 285.973 2.547 320.679.252 363.768c-3.586 68.304 31.261 139.506 81.069 165.634l303.172 156.354c6.83 47.306 47.55 82.725 95.532 82.725 52.78 0 95.808-42.546 96.603-95.14L910.541 492.38c16.93 13.233 37.92 20.486 59.416 20.486 53.268 0 96.61-43.341 96.61-96.61s-43.342-96.61-96.61-96.61" fill-rule="evenodd"/></g></svg>
+        </div>
+        <div class="tm-content">
+            <div class="tm-container">
+                <span class="tm-text">
+                    Powered by <b>GitBook</b>
+                </span>
+            </div>
+        </div>
+    </a>
+</div></div>
+
+    <div class="book-body">
+        <div class="body-inner">
+            <div class="book-header" role="navigation">
+    <!-- Actions Left -->
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="index.html">API &#x41D;&#x41E;&#x412;&#x410; &#x41F;&#x41E;&#x428;&#x422;&#x410;</a>
+    </h1>
+</div>
+
+            <div class="page-wrapper" tabindex="-1" role="main">
+                <div class="page-inner">
+                
+                
+                    <section class="normal" id="section-">
+                    
+                        <h1 id="16-&#x437;&#x430;&#x432;&#x430;&#x43D;&#x442;&#x430;&#x436;&#x438;&#x442;&#x438;-&#x441;&#x43F;&#x438;&#x441;&#x43E;&#x43A;-&#x43A;&#x43E;&#x43D;&#x442;&#x440;&#x430;&#x433;&#x435;&#x43D;&#x442;&#x456;&#x432;-&#x432;&#x456;&#x434;&#x43F;&#x440;&#x430;&#x432;&#x43D;&#x438;&#x43A;&#x456;&#x432;&#x43E;&#x434;&#x435;&#x440;&#x436;&#x443;&#x432;&#x430;&#x447;&#x456;&#x432;&#x430;&#x434;&#x440;&#x435;&#x441;-&#x43A;&#x43E;&#x43D;&#x442;&#x440;&#x430;&#x433;&#x435;&#x43D;&#x442;&#x456;&#x432;&#x43A;&#x43E;&#x43D;&#x442;&#x430;&#x43A;&#x442;&#x43D;&#x456;&#x445;-&#x43E;&#x441;&#x456;&#x431;getcounterpartiesgetcounterpartyaddressegetcounterpartycontactperson">1.6 &#x417;&#x430;&#x432;&#x430;&#x43D;&#x442;&#x430;&#x436;&#x438;&#x442;&#x438; &#x441;&#x43F;&#x438;&#x441;&#x43E;&#x43A; &#x43A;&#x43E;&#x43D;&#x442;&#x440;&#x430;&#x433;&#x435;&#x43D;&#x442;&#x456;&#x432; &#x432;&#x456;&#x434;&#x43F;&#x440;&#x430;&#x432;&#x43D;&#x438;&#x43A;&#x456;&#x432;/&#x43E;&#x434;&#x435;&#x440;&#x436;&#x443;&#x432;&#x430;&#x447;&#x456;&#x432;/&#x430;&#x434;&#x440;&#x435;&#x441; &#x43A;&#x43E;&#x43D;&#x442;&#x440;&#x430;&#x433;&#x435;&#x43D;&#x442;&#x456;&#x432;/&#x43A;&#x43E;&#x43D;&#x442;&#x430;&#x43A;&#x442;&#x43D;&#x456;&#x445; &#x43E;&#x441;&#x456;&#x431;(getCounterparties/getCounterpartyAddresse/getCounterpartyContactPerson)</h1>
+<p>&#x41C;&#x435;&#x442;&#x43E;&#x434; <strong>&#xAB;getCounterparties&#xBB;</strong>, &#x43F;&#x440;&#x430;&#x446;&#x44E;&#x454; &#x432; &#x43C;&#x43E;&#x434;&#x435;&#x43B;&#x456; <strong>&quot;Counterparty&quot;</strong>, &#x446;&#x435;&#x439; &#x43C;&#x435;&#x442;&#x43E;&#x434; &#x437;&#x430;&#x432;&#x430;&#x43D;&#x442;&#x430;&#x436;&#x443;&#x454; &#x441;&#x43F;&#x438;&#x441;&#x43E;&#x43A; &#x43A;&#x43E;&#x43D;&#x442;&#x440;&#x430;&#x433;&#x435;&#x43D;&#x442;&#x456;&#x432; &#x432;&#x456;&#x434;&#x43F;&#x440;&#x430;&#x432;&#x43D;&#x438;&#x43A;&#x456;&#x432;/&#x43E;&#x434;&#x435;&#x440;&#x436;&#x443;&#x432;&#x430;&#x447;&#x456;&#x432; &#x41D;&#x41F;. &#x41D;&#x435;&#x43E;&#x431;&#x445;&#x456;&#x434;&#x43D;&#x43E; &#x437;&#x431;&#x435;&#x440;&#x456;&#x433;&#x430;&#x442;&#x438; &#x43A;&#x43E;&#x43F;&#x456;&#x44E; &#x434;&#x43E;&#x432;&#x456;&#x434;&#x43D;&#x438;&#x43A;&#x456;&#x432; &#x43D;&#x430; &#x441;&#x442;&#x43E;&#x440;&#x43E;&#x43D;&#x456; &#x43A;&#x43B;&#x456;&#x454;&#x43D;&#x442;&#x430; &#x442;&#x430; &#x43F;&#x456;&#x434;&#x442;&#x440;&#x438;&#x43C;&#x443;&#x432;&#x430;&#x442;&#x438; &#x457;&#x457; &#x432; &#x430;&#x43A;&#x442;&#x443;&#x430;&#x43B;&#x44C;&#x43D;&#x43E;&#x43C;&#x443; &#x441;&#x442;&#x430;&#x43D;&#x456;. &#x420;&#x435;&#x43A;&#x43E;&#x43C;&#x435;&#x43D;&#x434;&#x443;&#x454;&#x442;&#x44C;&#x441;&#x44F; &#x43F;&#x440;&#x43E;&#x432;&#x43E;&#x434;&#x438;&#x442;&#x438; &#x43E;&#x43D;&#x43E;&#x432;&#x43B;&#x435;&#x43D;&#x43D;&#x44F; &#x434;&#x43E;&#x432;&#x456;&#x434;&#x43D;&#x438;&#x43A;&#x456;&#x432; &#x440;&#x430;&#x437; &#x43D;&#x430; &#x434;&#x43E;&#x431;&#x443;. 
+<br>&#x414;&#x43E;&#x441;&#x442;&#x443;&#x43F;&#x43D;&#x456;&#x441;&#x442;&#x44C;: &#x41F;&#x43E;&#x442;&#x440;&#x435;&#x431;&#x443;&#x454; &#x432;&#x438;&#x43A;&#x43E;&#x440;&#x438;&#x441;&#x442;&#x430;&#x43D;&#x43D;&#x44F; API-&#x43A;&#x43B;&#x44E;&#x447;&#x430;.</p>
+<h3 id="xml">XML</h3>
+<pre><code class="lang-xml"><span class="hljs-pi">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">file</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">apiKey</span>&gt;</span>&#x412;&#x430;&#x448; &#x43A;&#x43B;&#x44E;&#x447; &#x410;&#x420;&#x406; 2.0<span class="hljs-tag">&lt;/<span class="hljs-title">apiKey</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">calledMethod</span>&gt;</span>getCounterparties<span class="hljs-tag">&lt;/<span class="hljs-title">calledMethod</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">methodProperties</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">CounterpartyProperty</span>&gt;</span>Sender<span class="hljs-tag">&lt;/<span class="hljs-title">CounterpartyProperty</span>&gt;</span> &#x430;&#x431;&#x43E; &quot;Recipient&quot;
+<span class="hljs-tag">&lt;<span class="hljs-title">Page</span>&gt;</span>1<span class="hljs-tag">&lt;/<span class="hljs-title">Page</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">methodProperties</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">modelName</span>&gt;</span>Counterparty<span class="hljs-tag">&lt;/<span class="hljs-title">modelName</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">file</span>&gt;</span>
+</code></pre>
+<h3 id="json">JSON</h3>
+<pre><code class="lang-json">{
+<span class="hljs-string">&quot;apiKey&quot;</span>: <span class="hljs-string">&quot;&#x432;&#x430;&#x448; &#x43A;&#x43B;&#x44E;&#x447; &#x410;&#x420;&#x406; 2.0&quot;</span>,
+<span class="hljs-string">&quot;modelName&quot;</span>: <span class="hljs-string">&quot;Counterparty&quot;</span>,
+<span class="hljs-string">&quot;calledMethod&quot;</span>: <span class="hljs-string">&quot;getCounterparties&quot;</span>,
+<span class="hljs-string">&quot;methodProperties&quot;</span>: {
+<span class="hljs-string">&quot;CounterpartyProperty&quot;</span>: <span class="hljs-string">&quot;Sender&quot;</span>, &#x430;&#x431;&#x43E; <span class="hljs-string">&quot;Recipient&quot;</span> &#x44F;&#x43A;&#x449;&#x43E; &#x43E;&#x434;&#x435;&#x440;&#x436;&#x443;&#x432;&#x430;&#x447;
+<span class="hljs-string">&quot;Page&quot;</span>: <span class="hljs-string">&quot;1&quot;</span>
+}
+}
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>&#x41F;&#x430;&#x440;&#x430;&#x43C;&#x435;&#x442;&#x440;</th>
+<th>&#x422;&#x438;&#x43F;</th>
+<th>&#x41E;&#x43F;&#x438;&#x441;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CounterpartyProperty</td>
+<td>string[36]</td>
+<td>&#x412;&#x438;&#x434; &#x43A;&#x43E;&#x43D;&#x442;&#x440;&#x430;&#x433;&#x435;&#x43D;&#x442;&#x430;</td>
+</tr>
+<tr>
+<td>Sender/Recipient</td>
+<td>string[36]</td>
+<td>&#x412;&#x456;&#x434;&#x43F;&#x440;&#x430;&#x432;&#x43D;&#x438;&#x43A; &#x430;&#x431;&#x43E; &#x43E;&#x434;&#x435;&#x440;&#x436;&#x443;&#x432;&#x430;&#x447;</td>
+</tr>
+<tr>
+<td>Page</td>
+<td>int</td>
+<td>&#x421;&#x442;&#x43E;&#x440;&#x456;&#x43D;&#x43A;&#x430; &#x437; &#x456;&#x43D;&#x444;&#x43E;&#x440;&#x43C;&#x430;&#x446;&#x456;&#x454;&#x44E; &#x434;&#x43B;&#x44F; &#x432;&#x456;&#x434;&#x43E;&#x431;&#x440;&#x430;&#x436;&#x435;&#x43D;&#x43D;&#x44F; (&#x41D;&#x435; &#x431;&#x456;&#x43B;&#x44C;&#x448;&#x435; 500 &#x437;&#x430;&#x43F;&#x438;&#x441;&#x456;&#x432; &#x43D;&#x430; &#x43E;&#x434;&#x43D;&#x456;&#x439; &#x441;&#x442;&#x43E;&#x440;&#x456;&#x43D;&#x446;&#x456;)</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>&#x42F;&#x43A;&#x449;&#x43E; &#x432; &#x446;&#x435;&#x439; &#x437;&#x430;&#x43F;&#x438;&#x442; &#x434;&#x43E;&#x434;&#x430;&#x442;&#x438; &#x43F;&#x430;&#x440;&#x430;&#x43C;&#x435;&#x442;&#x440; &#xAB;FindByString&#xBB; (&#x43F;&#x43E;&#x448;&#x443;&#x43A; &#x43F;&#x43E; &#x440;&#x44F;&#x434;&#x43A;&#x430;&#x43C;) &#x456; &#x432; &#x439;&#x43E;&#x433;&#x43E; &#x432;&#x43B;&#x430;&#x441;&#x442;&#x438;&#x432;&#x43E;&#x441;&#x442;&#x44F;&#x445; &#x43F;&#x440;&#x43E;&#x43F;&#x438;&#x441;&#x430;&#x442;&#x438; &#x43D;&#x430;&#x437;&#x432;&#x443; &#x43A;&#x43E;&#x43D;&#x442;&#x440;&#x430;&#x433;&#x435;&#x43D;&#x442;&#x430; (&#x422;&#x430;&#x43B;&#x456;&#x441;&#x43C;&#x430;&#x43D;) &#x44F;&#x43A;&#x438;&#x439; &#x43F;&#x43E;&#x442;&#x440;&#x456;&#x431;&#x43D;&#x43E; &#x437;&#x43D;&#x430;&#x439;&#x442;&#x438;,</p>
+<pre><code class="lang-json">{
+<span class="hljs-string">&quot;apiKey&quot;</span>: <span class="hljs-string">&quot;&#x432;&#x430;&#x448; &#x43A;&#x43B;&#x44E;&#x447; &#x410;&#x420;&#x406; 2.0&quot;</span>,
+<span class="hljs-string">&quot;modelName&quot;</span>: <span class="hljs-string">&quot;Counterparty&quot;</span>,
+<span class="hljs-string">&quot;calledMethod&quot;</span>: <span class="hljs-string">&quot;getCounterparties&quot;</span>,
+<span class="hljs-string">&quot;methodProperties&quot;</span>: {
+<span class="hljs-string">&quot;CounterpartyProperty&quot;</span>: <span class="hljs-string">&quot;Sender&quot;</span>,
+<span class="hljs-string">&quot;Page&quot;</span>: <span class="hljs-string">&quot;1&quot;</span>,
+<span class="hljs-string">&quot;FindByString&quot;</span>:<span class="hljs-string">&quot;&#x422;&#x430;&#x43B;&#x456;&#x441;&#x43C;&#x430;&#x43D;&quot;</span>
+}
+}
+</code></pre>
+<p>&#x442;&#x43E; &#x43E;&#x442;&#x440;&#x438;&#x43C;&#x430;&#x454;&#x43C;&#x43E; &#x437;&#x430;&#x43F;&#x438;&#x442; &#x437;&#x430; &#x434;&#x43E;&#x43F;&#x43E;&#x43C;&#x43E;&#x433;&#x43E;&#x44E; &#x44F;&#x43A;&#x43E;&#x433;&#x43E; &#x432; &#x434;&#x43E;&#x432;&#x456;&#x434;&#x43D;&#x438;&#x43A;&#x443; &#x437;&#x43D;&#x430;&#x445;&#x43E;&#x434;&#x438;&#x442;&#x44C;&#x441;&#x44F; &#x43F;&#x43E;&#x442;&#x440;&#x456;&#x431;&#x43D;&#x438;&#x439; &#x43A;&#x43E;&#x43D;&#x442;&#x440;&#x430;&#x433;&#x435;&#x43D;&#x442;.</p>
+</blockquote>
+<hr>
+<p>&#x41C;&#x435;&#x442;&#x43E;&#x434; <strong>&#xAB;getCounterpartyAddresse&#xBB;</strong>, &#x43F;&#x440;&#x430;&#x446;&#x44E;&#x454; &#x432; &#x43C;&#x43E;&#x434;&#x435;&#x43B;&#x456; <strong>&quot;Counterparty&quot;</strong>, &#x446;&#x435;&#x439; &#x43C;&#x435;&#x442;&#x43E;&#x434; &#x437;&#x430;&#x432;&#x430;&#x43D;&#x442;&#x430;&#x436;&#x443;&#x454; &#x441;&#x43F;&#x438;&#x441;&#x43E;&#x43A; &#x43A;&#x43E;&#x43D;&#x442;&#x440;&#x430;&#x433;&#x435;&#x43D;&#x442;&#x456;&#x432; &#x432;&#x456;&#x434;&#x43F;&#x440;&#x430;&#x432;&#x43D;&#x438;&#x43A;&#x456;&#x432;/&#x43E;&#x434;&#x435;&#x440;&#x436;&#x443;&#x432;&#x430;&#x447;&#x456;&#x432; &#x41D;&#x41F;. &#x41D;&#x435;&#x43E;&#x431;&#x445;&#x456;&#x434;&#x43D;&#x43E; &#x437;&#x431;&#x435;&#x440;&#x456;&#x433;&#x430;&#x442;&#x438; &#x43A;&#x43E;&#x43F;&#x456;&#x44E; &#x434;&#x43E;&#x432;&#x456;&#x434;&#x43D;&#x438;&#x43A;&#x456;&#x432; &#x43D;&#x430; &#x441;&#x442;&#x43E;&#x440;&#x43E;&#x43D;&#x456; &#x43A;&#x43B;&#x456;&#x454;&#x43D;&#x442;&#x430; &#x442;&#x430; &#x43F;&#x456;&#x434;&#x442;&#x440;&#x438;&#x43C;&#x443;&#x432;&#x430;&#x442;&#x438; &#x457;&#x457; &#x432; &#x430;&#x43A;&#x442;&#x443;&#x430;&#x43B;&#x44C;&#x43D;&#x43E;&#x43C;&#x443; &#x441;&#x442;&#x430;&#x43D;&#x456;. &#x420;&#x435;&#x43A;&#x43E;&#x43C;&#x435;&#x43D;&#x434;&#x443;&#x454;&#x442;&#x44C;&#x441;&#x44F; &#x43F;&#x440;&#x43E;&#x432;&#x43E;&#x434;&#x438;&#x442;&#x438; &#x43E;&#x43D;&#x43E;&#x432;&#x43B;&#x435;&#x43D;&#x43D;&#x44F; &#x434;&#x43E;&#x432;&#x456;&#x434;&#x43D;&#x438;&#x43A;&#x456;&#x432; &#x440;&#x430;&#x437; &#x43D;&#x430; &#x434;&#x43E;&#x431;&#x443;. 
+<br>&#x414;&#x43E;&#x441;&#x442;&#x443;&#x43F;&#x43D;&#x456;&#x441;&#x442;&#x44C;: &#x41F;&#x43E;&#x442;&#x440;&#x435;&#x431;&#x443;&#x454; &#x432;&#x438;&#x43A;&#x43E;&#x440;&#x438;&#x441;&#x442;&#x430;&#x43D;&#x43D;&#x44F; API-&#x43A;&#x43B;&#x44E;&#x447;&#x430;.</p>
+<h3 id="xml">XML</h3>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;file&gt;
+&lt;apiKey&gt;&#x412;&#x430;&#x448; &#x43A;&#x43B;&#x44E;&#x447; &#x410;&#x420;&#x406; 2.0&lt;/apiKey&gt;
+&lt;calledMethod&gt;getCounterpartyAddresses&lt;/calledMethod&gt;
+&lt;methodProperties&gt;
+&lt;CounterpartyProperty&gt;Sender&lt;/CounterpartyProperty&gt; &#x430;&#x431;&#x43E; &quot;Recipient&quot; &#x44F;&#x43A;&#x449;&#x43E; &#x43E;&#x434;&#x435;&#x440;&#x436;&#x443;&#x432;&#x430;&#x447;
+&lt;Ref&gt;6e9acced-d072-11e3-95eb-0050568046cd&lt;/Ref&gt;
+&lt;/methodProperties&gt;
+&lt;modelName&gt;Counterparty&lt;/modelName&gt;
+&lt;/file&gt;
+</code></pre><h3 id="json">JSON</h3>
+<pre><code class="lang-json">{
+<span class="hljs-string">&quot;apiKey&quot;</span>: <span class="hljs-string">&quot;&#x432;&#x430;&#x448; &#x43A;&#x43B;&#x44E;&#x447; &#x410;&#x420;&#x406; 2.0&quot;</span>,
+<span class="hljs-string">&quot;modelName&quot;</span>: <span class="hljs-string">&quot;Counterparty&quot;</span>,
+<span class="hljs-string">&quot;calledMethod&quot;</span>: <span class="hljs-string">&quot;getCounterpartyAddresses&quot;</span>,
+<span class="hljs-string">&quot;methodProperties&quot;</span>: {
+<span class="hljs-string">&quot;Ref&quot;</span>: <span class="hljs-string">&quot;5953fb16-08d8-11e4-8958-0025909b4e33&quot;</span>,
+<span class="hljs-string">&quot;CounterpartyProperty&quot;</span>: <span class="hljs-string">&quot;Sender&quot;</span> &#x430;&#x431;&#x43E; <span class="hljs-string">&quot;Recipient&quot;</span> &#x44F;&#x43A;&#x449;&#x43E; &#x43E;&#x442;&#x440;&#x438;&#x43C;&#x443;&#x432;&#x430;&#x447;
+}
+}
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>&#x41F;&#x430;&#x440;&#x430;&#x43C;&#x435;&#x442;&#x440;</th>
+<th>&#x422;&#x438;&#x43F;</th>
+<th>&#x41E;&#x43F;&#x438;&#x441;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CounterpartyProperty</td>
+<td>string[36]</td>
+<td>&#x412;&#x438;&#x434; &#x43A;&#x43E;&#x43D;&#x442;&#x440;&#x430;&#x433;&#x435;&#x43D;&#x442;&#x430;</td>
+</tr>
+<tr>
+<td>Ref</td>
+<td>string[36]</td>
+<td>&#x406;&#x434;&#x435;&#x43D;&#x442;&#x438;&#x444;&#x456;&#x43A;&#x430;&#x442;&#x43E;&#x440; &#x43A;&#x43E;&#x43D;&#x442;&#x440;&#x430;&#x433;&#x435;&#x43D;&#x442;&#x430;</td>
+</tr>
+<tr>
+<td>Sender/Recipient</td>
+<td>string[36]</td>
+<td>&#x412;&#x456;&#x434;&#x43F;&#x440;&#x430;&#x432;&#x43D;&#x438;&#x43A; &#x430;&#x431;&#x43E; &#x43E;&#x434;&#x435;&#x440;&#x436;&#x443;&#x432;&#x430;&#x447;</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p>&#x41C;&#x435;&#x442;&#x43E;&#x434; <strong>&#xAB;getCounterpartyContactPerson&#xBB;</strong>, &#x43F;&#x440;&#x430;&#x446;&#x44E;&#x454; &#x432; &#x43C;&#x43E;&#x434;&#x435;&#x43B;&#x456; <strong>&quot;Counterparty&quot;</strong>, &#x446;&#x435;&#x439; &#x43C;&#x435;&#x442;&#x43E;&#x434; &#x437;&#x430;&#x432;&#x430;&#x43D;&#x442;&#x430;&#x436;&#x443;&#x454; &#x43A;&#x43E;&#x43D;&#x442;&#x430;&#x43A;&#x442;&#x43D;&#x438;&#x445; &#x43E;&#x441;&#x456;&#x431; &#x43A;&#x43E;&#x43D;&#x442;&#x440;&#x430;&#x433;&#x435;&#x43D;&#x442;&#x456;&#x432; &#x41D;&#x41F;. &#x41D;&#x435;&#x43E;&#x431;&#x445;&#x456;&#x434;&#x43D;&#x43E; &#x437;&#x431;&#x435;&#x440;&#x456;&#x433;&#x430;&#x442;&#x438; &#x43A;&#x43E;&#x43F;&#x456;&#x44E; &#x434;&#x43E;&#x432;&#x456;&#x434;&#x43D;&#x438;&#x43A;&#x456;&#x432; &#x43D;&#x430; &#x441;&#x442;&#x43E;&#x440;&#x43E;&#x43D;&#x456; &#x43A;&#x43B;&#x456;&#x454;&#x43D;&#x442;&#x430; &#x442;&#x430; &#x43F;&#x456;&#x434;&#x442;&#x440;&#x438;&#x43C;&#x443;&#x432;&#x430;&#x442;&#x438; &#x457;&#x457; &#x432; &#x430;&#x43A;&#x442;&#x443;&#x430;&#x43B;&#x44C;&#x43D;&#x43E;&#x43C;&#x443; &#x441;&#x442;&#x430;&#x43D;&#x456;. &#x420;&#x435;&#x43A;&#x43E;&#x43C;&#x435;&#x43D;&#x434;&#x443;&#x454;&#x442;&#x44C;&#x441;&#x44F; &#x43F;&#x440;&#x43E;&#x432;&#x43E;&#x434;&#x438;&#x442;&#x438; &#x43E;&#x43D;&#x43E;&#x432;&#x43B;&#x435;&#x43D;&#x43D;&#x44F; &#x434;&#x43E;&#x432;&#x456;&#x434;&#x43D;&#x438;&#x43A;&#x456;&#x432; &#x440;&#x430;&#x437; &#x43D;&#x430; &#x434;&#x43E;&#x431;&#x443;. 
+<br>&#x414;&#x43E;&#x441;&#x442;&#x443;&#x43F;&#x43D;&#x456;&#x441;&#x442;&#x44C;: &#x41F;&#x43E;&#x442;&#x440;&#x435;&#x431;&#x443;&#x454; &#x432;&#x438;&#x43A;&#x43E;&#x440;&#x438;&#x441;&#x442;&#x430;&#x43D;&#x43D;&#x44F; API-&#x43A;&#x43B;&#x44E;&#x447;&#x430;.</p>
+<h3 id="xml">XML</h3>
+<pre><code class="lang-xml"><span class="hljs-pi">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">file</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">apiKey</span>&gt;</span>&#x412;&#x430;&#x448; &#x43A;&#x43B;&#x44E;&#x447; &#x410;&#x420;&#x406; 2.0<span class="hljs-tag">&lt;/<span class="hljs-title">apiKey</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">calledMethod</span>&gt;</span>getCounterpartyContactPersons<span class="hljs-tag">&lt;/<span class="hljs-title">calledMethod</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">methodProperties</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">Ref</span>&gt;</span>6e9acced-d072-11e3-95eb-0050568046cd<span class="hljs-tag">&lt;/<span class="hljs-title">Ref</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">methodProperties</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">modelName</span>&gt;</span>Counterparty<span class="hljs-tag">&lt;/<span class="hljs-title">modelName</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">file</span>&gt;</span>
+</code></pre>
+<h3 id="json">JSON</h3>
+<pre><code class="lang-json">{
+<span class="hljs-string">&quot;apiKey&quot;</span>: <span class="hljs-string">&quot;&#x432;&#x430;&#x448; &#x43A;&#x43B;&#x44E;&#x447; &#x410;&#x420;&#x406; 2.0&quot;</span>,
+<span class="hljs-string">&quot;modelName&quot;</span>: <span class="hljs-string">&quot;Counterparty&quot;</span>,
+<span class="hljs-string">&quot;calledMethod&quot;</span>: <span class="hljs-string">&quot;getCounterpartyContactPersons&quot;</span>,
+<span class="hljs-string">&quot;methodProperties&quot;</span>: {
+<span class="hljs-string">&quot;Ref&quot;</span>: <span class="hljs-string">&quot;5953fb16-08d8-11e4-8958-0025909b4e33&quot;</span>
+}
+}
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>&#x41F;&#x430;&#x440;&#x430;&#x43C;&#x435;&#x442;&#x440;</th>
+<th>&#x422;&#x438;&#x43F;</th>
+<th>&#x41E;&#x43F;&#x438;&#x441;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ref</td>
+<td>string[36]</td>
+<td>&#x406;&#x434;&#x435;&#x43D;&#x442;&#x438;&#x444;&#x456;&#x43A;&#x430;&#x442;&#x43E;&#x440; &#x43A;&#x43E;&#x43D;&#x442;&#x440;&#x430;&#x433;&#x435;&#x43D;&#x442;&#x430;</td>
+</tr>
+</tbody>
+</table>
+<h3 id="&#x43E;&#x43F;&#x438;&#x441;-&#x432;&#x456;&#x434;&#x43F;&#x43E;&#x432;&#x456;&#x434;&#x456;-&#x43D;&#x430;-&#x437;&#x430;&#x43F;&#x438;&#x442;&#x438;">&#x41E;&#x43F;&#x438;&#x441; &#x432;&#x456;&#x434;&#x43F;&#x43E;&#x432;&#x456;&#x434;&#x456; &#x43D;&#x430; &#x437;&#x430;&#x43F;&#x438;&#x442;&#x438;</h3>
+<table>
+<thead>
+<tr>
+<th>&#x41F;&#x430;&#x440;&#x430;&#x43C;&#x435;&#x442;&#x440;&#x438;</th>
+<th>&#x422;&#x438;&#x43F;</th>
+<th>&#x41E;&#x43F;&#x438;&#x441;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LastName</td>
+<td>string[50]</td>
+<td>&#x41F;&#x440;&#x456;&#x437;&#x432;&#x438;&#x449;&#x435;</td>
+</tr>
+<tr>
+<td>FirstName</td>
+<td>string[25]</td>
+<td>&#x406;&#x43C;&#x2019;&#x44F;</td>
+</tr>
+<tr>
+<td>MiddleName</td>
+<td>string[25]</td>
+<td>&#x41F;&#x43E; &#x431;&#x430;&#x442;&#x44C;&#x43A;&#x43E;&#x432;&#x456;</td>
+</tr>
+<tr>
+<td>Phone</td>
+<td>string[18]</td>
+<td>&#x41A;&#x43E;&#x43D;&#x442;&#x430;&#x43A;&#x442;&#x43D;&#x438;&#x439; &#x442;&#x435;&#x43B;&#x435;&#x444;&#x43E;&#x43D;</td>
+</tr>
+<tr>
+<td>Email</td>
+<td>int[36]</td>
+<td>&#x415;&#x43B;&#x435;&#x43A;&#x442;&#x440;&#x43E;&#x43D;&#x43D;&#x430; &#x430;&#x434;&#x440;&#x435;&#x441;&#x430; &#x43F;&#x43E;&#x448;&#x442;&#x43E;&#x432;&#x43E;&#x457; &#x441;&#x43A;&#x440;&#x438;&#x43D;&#x44C;&#x43A;&#x438;</td>
+</tr>
+<tr>
+<td>Description</td>
+<td>string[50]</td>
+<td>&#x43E;&#x43F;&#x438;&#x441; (&#x43A;&#x43E;&#x43D;&#x442;&#x430;&#x43A;&#x442;&#x43D;&#x430; &#x43E;&#x441;&#x43E;&#x431;&#x430;)</td>
+</tr>
+<tr>
+<td>Ref</td>
+<td>int[36]</td>
+<td>&#x456;&#x434;&#x435;&#x43D;&#x442;&#x438;&#x444;&#x456;&#x43A;&#x430;&#x442;&#x43E;&#x440; &#x43A;&#x43E;&#x43D;&#x442;&#x430;&#x43A;&#x442;&#x43D;&#x43E;&#x457; &#x43E;&#x441;&#x43E;&#x431;&#x438;</td>
+</tr>
+</tbody>
+</table>
+
+                    
+                    </section>
+                
+                
+                </div>
+            </div>
+        </div>
+
+        
+        <a href="1_5_zavantazhiti_dovdnik_vddlen_kompan_nova_poshta_.html" class="navigation navigation-prev " aria-label="Previous page: 1.5 &#x417;&#x430;&#x432;&#x430;&#x43D;&#x442;&#x430;&#x436;&#x438;&#x442;&#x438; &#x434;&#x43E;&#x432;&#x456;&#x434;&#x43D;&#x438;&#x43A; &#x432;&#x456;&#x434;&#x434;&#x456;&#x43B;&#x435;&#x43D;&#x44C; &#x43A;&#x43E;&#x43C;&#x43F;&#x430;&#x43D;&#x456;&#x457; &#xAB;&#x41D;&#x43E;&#x432;&#x430; &#x43F;&#x43E;&#x448;&#x442;&#x430;&#xBB; (&#x43C;&#x435;&#x442;&#x43E;&#x434; &#xAB;getWarehouses&#xBB;)"><i class="fa fa-angle-left"></i></a>
+        
+        
+        <a href="1_7_otrimati_spisok_vidv_ta_form_platnikv.html" class="navigation navigation-next " aria-label="Next page: 1.7 &#x41E;&#x442;&#x440;&#x438;&#x43C;&#x430;&#x442;&#x438; &#x441;&#x43F;&#x438;&#x441;&#x43E;&#x43A; &#x432;&#x438;&#x434;&#x456;&#x432; &#x442;&#x430; &#x444;&#x43E;&#x440;&#x43C; &#x43F;&#x43B;&#x430;&#x442;&#x43D;&#x438;&#x43A;&#x456;&#x432;"><i class="fa fa-angle-right"></i></a>
+        
+    </div>
+</div>
+
+        
+<script src="gitbook/app.js"></script>
+
+    
+    <script src="gitbook/plugins/gitbook-plugin-comment/plugin.js"></script>
+    
+
+    
+    <script src="gitbook/plugins/gitbook-plugin-search/lunr.min.js"></script>
+    
+
+    
+    <script src="gitbook/plugins/gitbook-plugin-search/search.js"></script>
+    
+
+    
+    <script src="gitbook/plugins/gitbook-plugin-sharing/buttons.js"></script>
+    
+
+    
+    <script src="gitbook/plugins/gitbook-plugin-fontsettings/buttons.js"></script>
+    
+
+<script>
+require(["gitbook"], function(gitbook) {
+    var config = {"comment":{"highlightCommented":true},"autocover":{},"highlight":{},"search":{"maxIndexSize":1000000},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2}};
+    gitbook.start(config);
+});
+</script>
+
+        
+    
+    
+
+</body></html>
