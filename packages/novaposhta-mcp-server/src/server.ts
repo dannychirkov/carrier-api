@@ -3,9 +3,7 @@ import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
 import {
   CallToolRequestSchema,
-  ListResourcesRequestSchema,
   ListToolsRequestSchema,
-  ReadResourceRequestSchema,
   type CallToolRequest,
   isInitializeRequest,
 } from '@modelcontextprotocol/sdk/types.js';
@@ -50,7 +48,6 @@ export class NovaPoshtaMCPServer {
       {
         capabilities: {
           tools: {},
-          resources: {},
         },
       },
     );
@@ -103,7 +100,7 @@ export class NovaPoshtaMCPServer {
       if (req.url === '/mcp') {
         try {
           // Read request body for POST requests
-          let body: any = undefined;
+          let body: unknown = undefined;
           if (req.method === 'POST') {
             let rawBody = '';
             for await (const chunk of req) {
@@ -234,59 +231,6 @@ export class NovaPoshtaMCPServer {
       this.logger.debug(`Tool call: ${name}`, args);
       const result = await dispatchTool(name, (args ?? {}) as ToolArguments, this.toolContext);
       return result;
-    });
-
-    this.server.setRequestHandler(ListResourcesRequestSchema, async () => ({
-      resources: [
-        {
-          uri: 'novaposhta://docs/api',
-          name: 'Nova Poshta API Documentation',
-          description: 'https://devcenter.novaposhta.ua/',
-          mimeType: 'text/uri-list',
-        },
-        {
-          uri: 'novaposhta://docs/tracking',
-          name: 'Tracking Guide',
-          description: 'Tips for tracking shipments via MCP tools.',
-          mimeType: 'text/plain',
-        },
-      ],
-    }));
-
-    this.server.setRequestHandler(ReadResourceRequestSchema, async request => {
-      switch (request.params.uri) {
-        case 'novaposhta://docs/api':
-          return {
-            contents: [
-              {
-                uri: request.params.uri,
-                text: 'Nova Poshta API docs: https://devcenter.novaposhta.ua/',
-                mimeType: 'text/plain',
-              },
-            ],
-          };
-        case 'novaposhta://docs/tracking':
-          return {
-            contents: [
-              {
-                uri: request.params.uri,
-                text:
-                  'Tracking instructions: use track_document for single EN, track_multiple_documents for batches, and get_document_movement for history.',
-                mimeType: 'text/plain',
-              },
-            ],
-          };
-        default:
-          return {
-            contents: [
-              {
-                uri: request.params.uri,
-                text: `Resource ${request.params.uri} is not available.`,
-                mimeType: 'text/plain',
-              },
-            ],
-          };
-      }
     });
   }
 }

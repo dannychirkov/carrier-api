@@ -1,14 +1,14 @@
-import type { CallToolResult, Tool } from '@modelcontextprotocol/sdk/types.js';
+import type { CallToolResult, Tool } from '@modelcontextprotocol/sdk/types';
 
 import type { ToolArguments, ToolContext } from '../types/mcp.js';
 import { toErrorResult } from '../utils/error-handler.js';
 import { assertOptionalNumber, assertOptionalString, assertString } from '../utils/validation.js';
 import { createTextResult, formatAsJson } from '../utils/tool-response.js';
-
 const addressTools: Tool[] = [
   {
     name: 'address_search_cities',
-    description: 'Find Nova Poshta cities by name or postal index. IMPORTANT: Always use limit parameter (recommended: 10) to avoid large responses.',
+    description:
+      'Find Nova Poshta cities by name or postal index. IMPORTANT: Always use limit parameter (recommended: 10) to avoid large responses.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -21,7 +21,8 @@ const addressTools: Tool[] = [
   },
   {
     name: 'address_search_settlements',
-    description: 'Search for settlements (city, town, village) with pagination. IMPORTANT: Always use limit parameter (recommended: 10) to avoid large responses.',
+    description:
+      'Search for settlements (city, town, village) with pagination. IMPORTANT: Always use limit parameter (recommended: 10) to avoid large responses.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -34,7 +35,8 @@ const addressTools: Tool[] = [
   },
   {
     name: 'address_search_streets',
-    description: 'Search for streets inside a settlement. IMPORTANT: Always use limit parameter (recommended: 10) to avoid large responses.',
+    description:
+      'Search for streets inside a settlement. IMPORTANT: Always use limit parameter (recommended: 10) to avoid large responses.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -58,12 +60,18 @@ const addressTools: Tool[] = [
         settlementRef: { type: 'string', description: 'Settlement reference from searchSettlements.' },
         warehouseId: { type: 'string', description: 'Warehouse number (e.g., "1" for Branch #1).' },
         findByString: { type: 'string', description: 'Search string for warehouse name, address, or street.' },
-        typeOfWarehouseRef: { type: 'string', description: 'Filter by warehouse type (Branch, Postomat, Pickup Point).' },
+        typeOfWarehouseRef: {
+          type: 'string',
+          description: 'Filter by warehouse type (Branch, Postomat, Pickup Point).',
+        },
         bicycleParking: { type: 'string', description: 'Filter by bicycle parking availability (1/0).' },
         postFinance: { type: 'string', description: 'Filter by NovaPay cash desk availability (1/0).' },
         posTerminal: { type: 'string', description: 'Filter by POS terminal availability (1/0).' },
         page: { type: 'number', description: 'Page number (default 1).' },
-        limit: { type: 'number', description: 'Items per page (default 50). Recommended: 10-20 to avoid large responses.' },
+        limit: {
+          type: 'number',
+          description: 'Items per page (default 50). Recommended: 10-20 to avoid large responses.',
+        },
         language: { type: 'string', description: 'Language code (UA, RU, EN).' },
       },
       required: [],
@@ -79,10 +87,10 @@ const addressTools: Tool[] = [
         streetRef: { type: 'string', description: 'Street reference from address_search_streets.' },
         buildingNumber: { type: 'string', description: 'Building number (required).' },
         flat: { type: 'string', description: 'Apartment number (optional).' },
-        note: { type: 'string', description: 'Additional note (optional).' }
+        note: { type: 'string', description: 'Additional note (optional).' },
       },
-      required: ['counterpartyRef', 'streetRef', 'buildingNumber']
-    }
+      required: ['counterpartyRef', 'streetRef', 'buildingNumber'],
+    },
   },
   {
     name: 'address_update',
@@ -95,10 +103,10 @@ const addressTools: Tool[] = [
         streetRef: { type: 'string', description: 'Updated street reference.' },
         buildingNumber: { type: 'string', description: 'Updated building number.' },
         flat: { type: 'string', description: 'Updated apartment number.' },
-        note: { type: 'string', description: 'Updated note.' }
+        note: { type: 'string', description: 'Updated note.' },
       },
-      required: ['ref', 'counterpartyRef']
-    }
+      required: ['ref', 'counterpartyRef'],
+    },
   },
   {
     name: 'address_delete',
@@ -106,10 +114,10 @@ const addressTools: Tool[] = [
     inputSchema: {
       type: 'object',
       properties: {
-        ref: { type: 'string', description: 'Address reference to delete.' }
+        ref: { type: 'string', description: 'Address reference to delete.' },
       },
-      required: ['ref']
-    }
+      required: ['ref'],
+    },
   },
 ];
 
@@ -157,15 +165,16 @@ async function handleSearchCities(args: ToolArguments, context: ToolContext): Pr
     limit,
   });
 
-  const cities = response.data?.map(city => {
-    const warehouses = (city as unknown as { Warehouses?: number }).Warehouses ?? 0;
-    return {
-      description: city.Description,
-      ref: city.Ref,
-      area: city.Area,
-      warehouses: Number(warehouses),
-    };
-  }) ?? [];
+  const cities =
+    response.data?.map(city => {
+      const warehouses = (city as unknown as { Warehouses?: number }).Warehouses ?? 0;
+      return {
+        description: city.Description,
+        ref: city.Ref,
+        area: city.Area,
+        warehouses: Number(warehouses),
+      };
+    }) ?? [];
 
   return createTextResult(formatAsJson({ total: cities.length, cities }));
 }
@@ -288,7 +297,7 @@ async function handleSaveAddress(args: ToolArguments, context: ToolContext): Pro
       success: response.success,
       ref: response.data?.[0]?.Ref,
       description: response.data?.[0]?.Description,
-    })
+    }),
   );
 }
 
@@ -319,7 +328,7 @@ async function handleUpdateAddress(args: ToolArguments, context: ToolContext): P
       success: response.success,
       ref: response.data?.[0]?.Ref,
       description: response.data?.[0]?.Description,
-    })
+    }),
   );
 }
 
@@ -338,6 +347,6 @@ async function handleDeleteAddress(args: ToolArguments, context: ToolContext): P
     formatAsJson({
       success: response.success,
       message: 'Address deleted successfully',
-    })
+    }),
   );
 }

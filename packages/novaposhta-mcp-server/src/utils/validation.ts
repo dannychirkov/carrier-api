@@ -36,11 +36,6 @@ export function sanitizePhone(phone: string): string {
   // Remove all non-digit characters and trim
   let sanitized = phone.replace(/\D/g, '');
 
-  // If starts with +380, remove the +
-  if (phone.startsWith('+')) {
-    sanitized = sanitized;
-  }
-
   // If starts with 80, replace with 380
   if (sanitized.startsWith('80')) {
     sanitized = '3' + sanitized;

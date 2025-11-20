@@ -32,7 +32,6 @@ export class Logger {
     }
 
     const payload = extra !== undefined ? { message, extra } : { message };
-    // eslint-disable-next-line no-console
     console.error(JSON.stringify({ level, timestamp: new Date().toISOString(), ...payload }));
   }
 }
