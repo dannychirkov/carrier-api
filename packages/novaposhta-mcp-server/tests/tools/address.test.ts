@@ -28,8 +28,8 @@ describe('address tools', () => {
     vi.clearAllMocks();
   });
 
-  it('exposes four address tools', () => {
-    expect(getAddressTools()).toHaveLength(4);
+  it('exposes seven address tools', () => {
+    expect(getAddressTools()).toHaveLength(7);
   });
 
   describe('address_search_cities', () => {

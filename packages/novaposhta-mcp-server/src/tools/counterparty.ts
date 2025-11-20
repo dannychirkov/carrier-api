@@ -74,7 +74,6 @@ const counterpartyTools: Tool[] = [
         lastName: { type: 'string', description: 'Last name (required for PrivatePerson, optional for Organization).' },
         phone: { type: 'string', description: 'Phone number in format 380XXXXXXXXX (required).' },
         email: { type: 'string', description: 'Email address (optional).' },
-        cityRef: { type: 'string', description: 'City reference (optional).' },
         ownershipForm: { type: 'string', description: 'Ownership form reference (required for Organization).' },
         edrpou: { type: 'string', description: 'EDRPOU code (required for Organization).' }
       },
@@ -268,7 +267,6 @@ async function handleSaveCounterparty(args: ToolArguments, context: ToolContext)
       middleName: assertOptionalString(args?.middleName, 'middleName'),
       phone,
       email: assertOptionalString(args?.email, 'email'),
-      cityRef: assertOptionalString(args?.cityRef, 'cityRef'),
     });
 
     if (!response.success) {
@@ -296,7 +294,6 @@ async function handleSaveCounterparty(args: ToolArguments, context: ToolContext)
       middleName: assertOptionalString(args?.middleName, 'middleName'),
       phone,
       email: assertOptionalString(args?.email, 'email'),
-      cityRef: assertOptionalString(args?.cityRef, 'cityRef'),
     });
 
     if (!response.success) {
