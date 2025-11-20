@@ -8,13 +8,20 @@ const createMockContext = (): ToolContext => ({
     waybill: {
       getPrice: vi.fn().mockResolvedValue({ success: true, data: [{ Cost: 100 }] }),
       getDeliveryDate: vi.fn().mockResolvedValue({ success: true, data: [{ DeliveryDate: '2024-01-01' }] }),
+      getEstimate: vi.fn(),
       create: vi.fn(),
+      createWithOptions: vi.fn(),
+      createForPostomat: vi.fn(),
+      createBatch: vi.fn(),
       update: vi.fn(),
       delete: vi.fn(),
+      deleteBatch: vi.fn(),
     },
     tracking: {} as any,
     address: {} as any,
     reference: {} as any,
+    counterparty: {} as any,
+    contactPerson: {} as any,
   },
   config: {
     apiKey: 'test',
@@ -31,8 +38,8 @@ describe('waybill tools', () => {
     context = createMockContext();
   });
 
-  it('exposes five waybill tools', () => {
-    expect(getWaybillTools()).toHaveLength(5);
+  it('exposes ten waybill tools', () => {
+    expect(getWaybillTools()).toHaveLength(10);
   });
 
   it('requires document refs for delete tool', async () => {
@@ -138,6 +145,241 @@ describe('waybill tools', () => {
         context,
       );
       expect(result.isError).toBeUndefined();
+    });
+  });
+
+  describe('waybill_get_estimate', () => {
+    it('successfully gets estimate with price and delivery date', async () => {
+      vi.mocked(context.client.waybill.getEstimate).mockResolvedValue({
+        price: {
+          success: true,
+          data: [{ Cost: 150 }],
+          errors: [],
+          warnings: [],
+          info: [],
+          messageCodes: [],
+          errorCodes: [],
+          warningCodes: [],
+          infoCodes: [],
+        },
+        deliveryDate: {
+          success: true,
+          data: [{ DeliveryDate: { date: '2024-01-05' } }],
+          errors: [],
+          warnings: [],
+          info: [],
+          messageCodes: [],
+          errorCodes: [],
+          warningCodes: [],
+          infoCodes: [],
+        },
+      });
+
+      const result = await handleWaybillTool(
+        'waybill_get_estimate',
+        {
+          citySender: 'city1',
+          cityRecipient: 'city2',
+          serviceType: 'WarehouseWarehouse',
+          cargoType: 'Parcel',
+          cost: 100,
+          weight: 1,
+          seatsAmount: 1,
+        },
+        context,
+      );
+
+      expect(result.isError).toBeUndefined();
+      expect(context.client.waybill.getEstimate).toHaveBeenCalled();
+    });
+  });
+
+  describe('waybill_create_with_options', () => {
+    it('successfully creates waybill with options', async () => {
+      vi.mocked(context.client.waybill.createWithOptions).mockResolvedValue({
+        success: true,
+        data: [{ Ref: 'doc-ref-123', IntDocNumber: '20400048799000' }] as any,
+        errors: [],
+        warnings: [],
+        info: [],
+        messageCodes: [],
+        errorCodes: [],
+        warningCodes: [],
+        infoCodes: [],
+      });
+
+      const result = await handleWaybillTool(
+        'waybill_create_with_options',
+        {
+          request: {
+            payerType: 'Sender',
+            paymentMethod: 'Cash',
+            dateTime: '01.01.2024',
+            cargoType: 'Parcel',
+            weight: 1,
+            serviceType: 'WarehouseWarehouse',
+            seatsAmount: 1,
+            description: 'Test',
+            cost: 100,
+            citySender: 'city1',
+            sender: 'sender-ref',
+            senderAddress: 'address1',
+            contactSender: 'contact1',
+            sendersPhone: '380501234567',
+            cityRecipient: 'city2',
+            recipient: 'recipient-ref',
+            recipientAddress: 'address2',
+            contactRecipient: 'contact2',
+            recipientsPhone: '380501234568',
+            backwardDeliveryData: [],
+          },
+        },
+        context,
+      );
+
+      expect(result.isError).toBeUndefined();
+      expect(context.client.waybill.createWithOptions).toHaveBeenCalled();
+    });
+
+    it('requires request object', async () => {
+      const result = await handleWaybillTool('waybill_create_with_options', {}, context);
+      expect(result.isError).toBe(true);
+    });
+  });
+
+  describe('waybill_create_for_postomat', () => {
+    it('successfully creates waybill for postomat', async () => {
+      vi.mocked(context.client.waybill.createForPostomat).mockResolvedValue({
+        success: true,
+        data: [{ Ref: 'doc-ref-456', IntDocNumber: '20400048799001' }] as any,
+        errors: [],
+        warnings: [],
+        info: [],
+        messageCodes: [],
+        errorCodes: [],
+        warningCodes: [],
+        infoCodes: [],
+      });
+
+      const result = await handleWaybillTool(
+        'waybill_create_for_postomat',
+        {
+          request: {
+            payerType: 'Sender',
+            paymentMethod: 'Cash',
+            dateTime: '01.01.2024',
+            cargoType: 'Parcel',
+            weight: 1,
+            serviceType: 'WarehouseWarehouse',
+            seatsAmount: 1,
+            description: 'Test',
+            cost: 100,
+            citySender: 'city1',
+            sender: 'sender-ref',
+            senderAddress: 'address1',
+            contactSender: 'contact1',
+            sendersPhone: '380501234567',
+            cityRecipient: 'city2',
+            recipient: 'recipient-ref',
+            recipientAddress: 'address2',
+            contactRecipient: 'contact2',
+            recipientsPhone: '380501234568',
+            optionsSeat: [],
+          },
+        },
+        context,
+      );
+
+      expect(result.isError).toBeUndefined();
+      expect(context.client.waybill.createForPostomat).toHaveBeenCalled();
+    });
+  });
+
+  describe('waybill_create_batch', () => {
+    it('successfully creates multiple waybills', async () => {
+      vi.mocked(context.client.waybill.createBatch).mockResolvedValue([
+        {
+          success: true,
+          data: [{ Ref: 'doc-ref-1' }] as any,
+          errors: [],
+          warnings: [],
+          info: [],
+          messageCodes: [],
+          errorCodes: [],
+          warningCodes: [],
+          infoCodes: [],
+        },
+        {
+          success: true,
+          data: [{ Ref: 'doc-ref-2' }] as any,
+          errors: [],
+          warnings: [],
+          info: [],
+          messageCodes: [],
+          errorCodes: [],
+          warningCodes: [],
+          infoCodes: [],
+        },
+      ]);
+
+      const result = await handleWaybillTool(
+        'waybill_create_batch',
+        {
+          requests: [
+            {
+              payerType: 'Sender',
+              paymentMethod: 'Cash',
+              cargoType: 'Parcel',
+              serviceType: 'WarehouseWarehouse',
+            } as any,
+            {
+              payerType: 'Sender',
+              paymentMethod: 'Cash',
+              cargoType: 'Parcel',
+              serviceType: 'WarehouseWarehouse',
+            } as any,
+          ],
+        },
+        context,
+      );
+
+      expect(result.isError).toBeUndefined();
+      expect(context.client.waybill.createBatch).toHaveBeenCalled();
+    });
+
+    it('requires at least one request', async () => {
+      const result = await handleWaybillTool('waybill_create_batch', { requests: [] }, context);
+      expect(result.isError).toBe(true);
+    });
+  });
+
+  describe('waybill_delete_batch', () => {
+    it('successfully deletes multiple waybills', async () => {
+      vi.mocked(context.client.waybill.deleteBatch).mockResolvedValue({
+        success: true,
+        data: [{ Ref: 'doc-ref-1' }, { Ref: 'doc-ref-2' }] as any,
+        errors: [],
+        warnings: [],
+        info: [],
+        messageCodes: [],
+        errorCodes: [],
+        warningCodes: [],
+        infoCodes: [],
+      });
+
+      const result = await handleWaybillTool(
+        'waybill_delete_batch',
+        { documentRefs: ['doc-ref-1', 'doc-ref-2'] },
+        context,
+      );
+
+      expect(result.isError).toBeUndefined();
+      expect(context.client.waybill.deleteBatch).toHaveBeenCalledWith(['doc-ref-1', 'doc-ref-2']);
+    });
+
+    it('requires at least one document ref', async () => {
+      const result = await handleWaybillTool('waybill_delete_batch', { documentRefs: [] }, context);
+      expect(result.isError).toBe(true);
     });
   });
 });

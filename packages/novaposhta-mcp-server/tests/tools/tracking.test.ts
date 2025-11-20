@@ -8,12 +8,15 @@ const baseContext: ToolContext = {
     tracking: {
       trackDocument: vi.fn(),
       trackDocuments: vi.fn(),
+      trackMultiple: vi.fn(),
       getDocumentMovement: vi.fn(),
       getDocumentList: vi.fn(),
     },
     address: {} as any,
     reference: {} as any,
     waybill: {} as any,
+    counterparty: {} as any,
+    contactPerson: {} as any,
   },
   config: {
     apiKey: 'test',
@@ -28,8 +31,8 @@ describe('tracking tools', () => {
     vi.clearAllMocks();
   });
 
-  it('exposes four tracking tools', () => {
-    expect(getTrackingTools()).toHaveLength(4);
+  it('exposes five tracking tools', () => {
+    expect(getTrackingTools()).toHaveLength(5);
   });
 
   describe('track_document', () => {
@@ -181,6 +184,99 @@ describe('tracking tools', () => {
         documents: [{ documentNumber: '20400048799000' }],
         showDeliveryDetails: true,
       });
+    });
+  });
+
+  describe('track_multiple', () => {
+    it('successfully tracks multiple documents with statistics', async () => {
+      vi.mocked(baseContext.client.tracking.trackMultiple).mockResolvedValue({
+        successful: [
+          {
+            Number: '20400048799000',
+            Status: 'Delivered',
+            StatusCode: '9' as any,
+            CityRecipient: 'Київ',
+            CitySender: 'Львів',
+            DateCreated: '2024-11-01',
+          },
+          {
+            Number: '20400048799001',
+            Status: 'In Transit',
+            StatusCode: '4' as any,
+            CityRecipient: 'Одеса',
+            CitySender: 'Київ',
+            DateCreated: '2024-11-18',
+          },
+        ] as any,
+        failed: [],
+        statistics: {
+          totalTracked: 2,
+          delivered: 1,
+          inTransit: 1,
+          atWarehouse: 0,
+          failed: 0,
+          unknown: 0,
+        },
+      });
+
+      const result = await handleTrackingTool(
+        'track_multiple',
+        { documentNumbers: ['20400048799000', '20400048799001'] },
+        baseContext,
+      );
+
+      expect(result.isError).toBeFalsy();
+      expect(baseContext.client.tracking.trackMultiple).toHaveBeenCalledWith(['20400048799000', '20400048799001']);
+
+      const text = (result.content[0] as any).text;
+      expect(text).toContain('successful');
+      expect(text).toContain('statistics');
+    });
+
+    it('reports failed tracking attempts', async () => {
+      vi.mocked(baseContext.client.tracking.trackMultiple).mockResolvedValue({
+        successful: [],
+        failed: ['20400048799999'],
+        statistics: {
+          totalTracked: 0,
+          delivered: 0,
+          inTransit: 0,
+          atWarehouse: 0,
+          failed: 1,
+          unknown: 0,
+        },
+      });
+
+      const result = await handleTrackingTool(
+        'track_multiple',
+        { documentNumbers: ['20400048799999'] },
+        baseContext,
+      );
+
+      expect(result.isError).toBeFalsy();
+      const text = (result.content[0] as any).text;
+      expect(text).toContain('failed');
+      expect(text).toContain('1');
+    });
+
+    it('validates all tracking numbers', async () => {
+      const result = await handleTrackingTool(
+        'track_multiple',
+        { documentNumbers: ['20400048799000', 'invalid'] },
+        baseContext,
+      );
+
+      expect(result.isError).toBe(true);
+      const text = (result.content[0] as any).text;
+      expect(text).toContain('Invalid tracking number');
+    });
+
+    it('requires at least one tracking number', async () => {
+      const result = await handleTrackingTool('track_multiple', { documentNumbers: [] }, baseContext);
+
+      expect(result.isError).toBe(true);
+      const text = (result.content[0] as any).text;
+      expect(text).toContain('at least one');
     });
   });
 

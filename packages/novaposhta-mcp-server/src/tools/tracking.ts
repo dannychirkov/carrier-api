@@ -51,6 +51,24 @@ const trackingTools: Tool[] = [
     },
   },
   {
+    name: 'track_multiple',
+    description:
+      'Track multiple Nova Poshta documents with organized results and statistics via TrackingDocument/getStatusDocuments (doc 1.2). Returns successful/failed tracking attempts with delivery statistics (delivered, in-transit, at-warehouse counts). More convenient than track_multiple_documents for batch operations.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        documentNumbers: {
+          type: 'array',
+          description: 'List of tracking numbers (14 digits each).',
+          items: {
+            type: 'string',
+          },
+        },
+      },
+      required: ['documentNumbers'],
+    },
+  },
+  {
     name: 'get_document_movement',
     description:
       'Get movement history for up to 10 documents including statuses and timestamps. Doc 1.2 identifies InternetDocument numbers as the primary shipment identifiers, which this endpoint accepts in batches.',
@@ -114,6 +132,8 @@ export async function handleTrackingTool(
       case 'track_document':
         return await handleTrackDocument(args, context);
       case 'track_multiple_documents':
+        return await handleTrackMultipleDocuments(args, context);
+      case 'track_multiple':
         return await handleTrackMultiple(args, context);
       case 'get_document_movement':
         return await handleDocumentMovement(args, context);
@@ -162,7 +182,7 @@ async function handleTrackDocument(args: ToolArguments, context: ToolContext): P
   return createTextResult(formatAsJson(highlighted), { document: result });
 }
 
-async function handleTrackMultiple(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
+async function handleTrackMultipleDocuments(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
   const rawNumbers = Array.isArray(args?.documentNumbers) ? (args?.documentNumbers as unknown[]) : [];
   const numbers = rawNumbers.map(value => assertString(value, 'documentNumbers[]'));
   if (numbers.length === 0) {
@@ -186,6 +206,31 @@ async function handleTrackMultiple(args: ToolArguments, context: ToolContext): P
       tracked: response.data?.length ?? 0,
     }),
     { response },
+  );
+}
+
+async function handleTrackMultiple(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
+  const rawNumbers = Array.isArray(args?.documentNumbers) ? (args?.documentNumbers as unknown[]) : [];
+  const numbers = rawNumbers.map(value => assertString(value, 'documentNumbers[]'));
+  if (numbers.length === 0) {
+    throw new Error('documentNumbers must contain at least one tracking number');
+  }
+
+  numbers.forEach(num => {
+    if (!isTrackingNumber(num)) {
+      throw new Error(`Invalid tracking number: ${num}`);
+    }
+  });
+
+  const result = await context.client.tracking.trackMultiple(numbers);
+
+  return createTextResult(
+    formatAsJson({
+      successful: result.successful.length,
+      failed: result.failed.length,
+      statistics: result.statistics,
+    }),
+    { result },
   );
 }
 

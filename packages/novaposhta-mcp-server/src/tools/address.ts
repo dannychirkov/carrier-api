@@ -6,6 +6,31 @@ import { assertOptionalNumber, assertOptionalString, assertString } from '../uti
 import { createTextResult, formatAsJson } from '../utils/tool-response.js';
 const addressTools: Tool[] = [
   {
+    name: 'address_get_settlements',
+    description:
+      'Get settlement areas (областей) via Address/getSettlementAreas (doc 1.3). Returns list of administrative regions/areas in Ukraine. Docs recommend caching this public directory for 12 hours.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        ref: { type: 'string', description: 'Optional area reference to get specific area.' },
+      },
+      required: [],
+    },
+  },
+  {
+    name: 'address_get_settlement_country_region',
+    description:
+      'Get settlement country regions (регіонів) for a specific area via Address/getSettlementCountryRegion (doc 1.3). Returns list of regions within an administrative area. Requires areaRef parameter. Docs recommend caching for 12 hours.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        areaRef: { type: 'string', description: 'Area reference from address_get_settlements.' },
+        ref: { type: 'string', description: 'Optional region reference to get specific region.' },
+      },
+      required: ['areaRef'],
+    },
+  },
+  {
     name: 'address_search_cities',
     description:
       'Find Nova Poshta cities by name or postal index using Address/getCities (doc 1.3). Docs note the city directory is public (no API key) but must be cached and refreshed daily because it exposes Area and Delivery1-Delivery7 flags. IMPORTANT: Always use limit parameter (recommended: 10) to avoid large responses.',
@@ -135,6 +160,10 @@ export async function handleAddressTool(
 ): Promise<CallToolResult> {
   try {
     switch (name) {
+      case 'address_get_settlements':
+        return await handleGetSettlements(args, context);
+      case 'address_get_settlement_country_region':
+        return await handleGetSettlementCountryRegion(args, context);
       case 'address_search_cities':
         return await handleSearchCities(args, context);
       case 'address_search_settlements':
@@ -155,6 +184,49 @@ export async function handleAddressTool(
   } catch (error) {
     return toErrorResult(error, `Address tool "${name}"`);
   }
+}
+
+async function handleGetSettlements(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
+  const ref = assertOptionalString(args?.ref, 'ref');
+
+  const response = await context.client.address.getSettlements({
+    ...(ref ? { ref } : {}),
+  });
+
+  if (!response.success) {
+    throw new Error(response.errors?.join(', ') || 'Failed to get settlements');
+  }
+
+  const settlements = response.data?.map(settlement => ({
+    ref: settlement.Ref,
+    description: settlement.Description,
+    areasCenter: settlement.AreasCenter,
+  })) ?? [];
+
+  return createTextResult(formatAsJson({ total: settlements.length, settlements }));
+}
+
+async function handleGetSettlementCountryRegion(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
+  const areaRef = assertString(args?.areaRef, 'areaRef');
+  const ref = assertOptionalString(args?.ref, 'ref');
+
+  const response = await context.client.address.getSettlementCountryRegion({
+    areaRef,
+    ...(ref ? { ref } : {}),
+  });
+
+  if (!response.success) {
+    throw new Error(response.errors?.join(', ') || 'Failed to get settlement country regions');
+  }
+
+  const regions = response.data?.map(region => ({
+    ref: region.Ref,
+    description: region.Description,
+    regionType: region.RegionType,
+    areasCenter: region.AreasCenter,
+  })) ?? [];
+
+  return createTextResult(formatAsJson({ total: regions.length, regions }));
 }
 
 async function handleSearchCities(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {

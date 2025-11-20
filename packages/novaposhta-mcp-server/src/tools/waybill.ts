@@ -1,6 +1,8 @@
 import type { CallToolResult, Tool } from '@modelcontextprotocol/sdk/types.js';
 import type {
   CreateWaybillRequest,
+  CreateWaybillWithOptionsRequest,
+  CreatePoshtomatWaybillRequest,
   DeleteWaybillRequest,
   DeliveryDateRequest,
   PriceCalculationRequest,
@@ -36,9 +38,31 @@ const waybillTools: Tool[] = [
     },
   },
   {
+    name: 'waybill_get_estimate',
+    description:
+      'Get complete shipment estimate (price + delivery date) in one call via InternetDocument/getDocumentPrice and getDocumentDeliveryDate (doc 1.2). Combines cost calculation and delivery date estimation for convenience. Requires same parameters as waybill_calculate_cost.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        request: {
+          type: 'object',
+          description: 'Raw Nova Poshta price calculation payload.',
+        },
+        citySender: { type: 'string', description: 'Sender city reference.' },
+        cityRecipient: { type: 'string', description: 'Recipient city reference.' },
+        serviceType: { type: 'string', description: 'Service type (WarehouseWarehouse, WarehouseDoors, etc.).' },
+        cargoType: { type: 'string', description: 'Cargo type (Parcel, Documents, TiresWheels, etc.).' },
+        cost: { type: 'number', description: 'Declared value in UAH.' },
+        weight: { type: 'number', description: 'Weight in kg.' },
+        seatsAmount: { type: 'number', description: 'Number of seats.' },
+      },
+      required: [],
+    },
+  },
+  {
     name: 'waybill_create',
     description:
-      'Create a Nova Poshta waybill (Internet document). Doc 1.2 highlights InternetDocument as the model for оформлення відправлень, so provide the exact methodProperties payload (with your API key) that the official docs expect.',
+      'Create a standard Nova Poshta waybill (Internet document) via InternetDocument/save (doc 1.2). This is the basic waybill creation method. For additional services use waybill_create_with_options. For postomat delivery use waybill_create_for_postomat.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -48,6 +72,52 @@ const waybillTools: Tool[] = [
         },
       },
       required: ['request'],
+    },
+  },
+  {
+    name: 'waybill_create_with_options',
+    description:
+      'Create a Nova Poshta waybill with additional options and services via InternetDocument/save (doc 1.2). Supports backward delivery, additional services, third-party payer, and RedBox barcodes. Use this when you need COD, insurance, or return shipments.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        request: {
+          type: 'object',
+          description: 'Raw Nova Poshta create waybill payload with additional options (backwardDeliveryData, additionalServices, thirdPerson, redBoxBarcode).',
+        },
+      },
+      required: ['request'],
+    },
+  },
+  {
+    name: 'waybill_create_for_postomat',
+    description:
+      'Create a waybill for postomat delivery via InternetDocument/save (doc 1.2). Postomats have size/weight restrictions (max 30kg, max dimensions). Requires proper warehouse selection (postomat type) and seat options configuration.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        request: {
+          type: 'object',
+          description: 'Raw Nova Poshta create postomat waybill payload with optionsSeat array.',
+        },
+      },
+      required: ['request'],
+    },
+  },
+  {
+    name: 'waybill_create_batch',
+    description:
+      'Batch create multiple waybills sequentially via InternetDocument/save (doc 1.2). Processes each waybill one by one to avoid rate limiting. Returns array of results including any errors. Useful for bulk shipment creation.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        requests: {
+          type: 'array',
+          items: { type: 'object' },
+          description: 'Array of Nova Poshta create waybill payloads.',
+        },
+      },
+      required: ['requests'],
     },
   },
   {
@@ -68,7 +138,23 @@ const waybillTools: Tool[] = [
   {
     name: 'waybill_delete',
     description:
-      'Delete one or multiple waybills by their DocumentRef. Doc 1.2 covers the uniform request structure, so supply the InternetDocument delete payload (list of DocumentRef values) you would normally POST to Nova Poshta.',
+      'Delete one or multiple waybills by their DocumentRef via InternetDocument/delete (doc 1.2). Waybills can only be deleted before they enter processing. Returns success/error status for the operation.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        documentRefs: {
+          type: 'array',
+          items: { type: 'string' },
+          description: 'Array of DocumentRef values to delete.',
+        },
+      },
+      required: ['documentRefs'],
+    },
+  },
+  {
+    name: 'waybill_delete_batch',
+    description:
+      'Batch delete multiple waybills by their DocumentRef via InternetDocument/delete (doc 1.2). Alias for waybill_delete that processes all refs in a single API call. Waybills can only be deleted before they enter processing.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -115,12 +201,22 @@ export async function handleWaybillTool(
     switch (name) {
       case 'waybill_calculate_cost':
         return await handleCalculateCost(args, context);
+      case 'waybill_get_estimate':
+        return await handleGetEstimate(args, context);
       case 'waybill_create':
         return await handleCreateWaybill(args, context);
+      case 'waybill_create_with_options':
+        return await handleCreateWaybillWithOptions(args, context);
+      case 'waybill_create_for_postomat':
+        return await handleCreateForPostomat(args, context);
+      case 'waybill_create_batch':
+        return await handleCreateBatch(args, context);
       case 'waybill_update':
         return await handleUpdateWaybill(args, context);
       case 'waybill_delete':
         return await handleDeleteWaybill(args, context);
+      case 'waybill_delete_batch':
+        return await handleDeleteBatch(args, context);
       case 'waybill_get_delivery_date':
         return await handleDeliveryDate(args, context);
       default:
@@ -302,4 +398,81 @@ function ensureObject<T>(value: unknown, field: string): T {
     throw new Error(`${field} must be an object with valid Nova Poshta payload`);
   }
   return value as T;
+}
+
+async function handleGetEstimate(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
+  const request = buildPriceRequest(args);
+  const result = await context.client.waybill.getEstimate(request);
+
+  return createTextResult(
+    formatAsJson({
+      price: result.price.data?.[0],
+      deliveryDate: result.deliveryDate.data?.[0],
+      success: result.price.success && result.deliveryDate.success,
+    }),
+    { price: result.price, deliveryDate: result.deliveryDate },
+  );
+}
+
+async function handleCreateWaybillWithOptions(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
+  const request = ensureObject<CreateWaybillWithOptionsRequest>(args?.request, 'request');
+  const response = await context.client.waybill.createWithOptions(request);
+  return createTextResult(
+    formatAsJson({
+      success: response.success,
+      refs: response.data?.map(item => item.Ref),
+      warnings: response.warnings,
+    }),
+    { response },
+  );
+}
+
+async function handleCreateForPostomat(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
+  const request = ensureObject<CreatePoshtomatWaybillRequest>(args?.request, 'request');
+  const response = await context.client.waybill.createForPostomat(request);
+  return createTextResult(
+    formatAsJson({
+      success: response.success,
+      refs: response.data?.map(item => item.Ref),
+      warnings: response.warnings,
+    }),
+    { response },
+  );
+}
+
+async function handleCreateBatch(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
+  const requestsInput = Array.isArray(args?.requests) ? (args?.requests as unknown[]) : [];
+  if (requestsInput.length === 0) {
+    throw new Error('requests must contain at least one waybill request');
+  }
+
+  const requests = requestsInput.map((req, idx) => ensureObject<CreateWaybillRequest>(req, `requests[${idx}]`));
+  const responses = await context.client.waybill.createBatch(requests);
+
+  const summary = {
+    total: responses.length,
+    successful: responses.filter(r => r.success).length,
+    failed: responses.filter(r => !r.success).length,
+  };
+
+  return createTextResult(formatAsJson({ summary, results: responses }));
+}
+
+async function handleDeleteBatch(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
+  const documentRefsInput = Array.isArray(args?.documentRefs) ? (args?.documentRefs as unknown[]) : [];
+  const documentRefs = documentRefsInput.map(value => assertString(value, 'documentRefs[]'));
+  if (documentRefs.length === 0) {
+    throw new Error('documentRefs must contain at least one DocumentRef');
+  }
+
+  const response = await context.client.waybill.deleteBatch(documentRefs);
+
+  return createTextResult(
+    formatAsJson({
+      success: response.success,
+      deleted: response.data?.length ?? 0,
+      errors: response.errors,
+    }),
+    { response },
+  );
 }

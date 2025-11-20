@@ -19,6 +19,76 @@ const referenceTools: Tool[] = [
     },
   },
   {
+    name: 'reference_get_pack_list',
+    description:
+      'List available packaging types via Common/getPackList (doc 1.10). Returns standard package dimensions and descriptions. Useful for calculating delivery costs and validating package options. Docs recommend caching monthly.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        length: { type: 'number', description: 'Optional package length filter in cm.' },
+        width: { type: 'number', description: 'Optional package width filter in cm.' },
+        height: { type: 'number', description: 'Optional package height filter in cm.' },
+      },
+      required: [],
+    },
+  },
+  {
+    name: 'reference_get_tires_wheels_list',
+    description:
+      'List available tires and wheels types via Common/getTiresWheelsList (doc 1.12). Returns types and descriptions for shipping tires and wheels as cargo. Docs recommend caching monthly.',
+    inputSchema: {
+      type: 'object',
+      properties: {},
+      required: [],
+    },
+  },
+  {
+    name: 'reference_get_cargo_description_list',
+    description:
+      'List cargo descriptions with optional search via Common/getCargoDescriptionList (doc 1.15). Returns predefined descriptions for common cargo types. Supports search by keyword. Docs recommend caching monthly.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        findByString: { type: 'string', description: 'Optional search keyword for cargo description.' },
+        page: { type: 'number', description: 'Page number (default 1).' },
+      },
+      required: [],
+    },
+  },
+  {
+    name: 'reference_get_pickup_time_intervals',
+    description:
+      'Get available pickup time intervals via Common/getPickupTimeIntervals (doc 1.17). Returns time windows when Nova Poshta can pick up packages from sender. Requires city reference and date. Docs recommend caching hourly.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        cityRef: { type: 'string', description: 'Sender city reference from address_search_cities.' },
+        dateTime: { type: 'string', description: 'Pickup date (dd.mm.yyyy).' },
+      },
+      required: ['cityRef', 'dateTime'],
+    },
+  },
+  {
+    name: 'reference_get_backward_delivery_cargo_types',
+    description:
+      'List backward delivery cargo types via Common/getBackwardDeliveryCargoTypes (doc 1.18). Returns types of cargo that can be sent back (documents, money, etc.). Used for return shipments and COD. Docs recommend caching monthly.',
+    inputSchema: {
+      type: 'object',
+      properties: {},
+      required: [],
+    },
+  },
+  {
+    name: 'reference_get_types_of_payers_for_redelivery',
+    description:
+      'List payer types for redelivery via Common/getTypesOfPayersForRedelivery (doc 1.19). Returns who can pay for backward delivery (Sender/Recipient). Used with return shipments. Docs recommend caching monthly.',
+    inputSchema: {
+      type: 'object',
+      properties: {},
+      required: [],
+    },
+  },
+  {
     name: 'reference_get_service_types',
     description:
       'List delivery service types (warehouse-door etc.) through Common/getServiceType (doc 1.9). Docs say to refresh monthly and point out the four core technologies: WarehouseWarehouse, WarehouseDoors, DoorsWarehouse, DoorsDoors.',
@@ -128,6 +198,18 @@ export async function handleReferenceTool(
     switch (name) {
       case 'reference_get_cargo_types':
         return await wrapList(() => context.client.reference.getCargoTypes(), 'cargoTypes');
+      case 'reference_get_pack_list':
+        return await handleGetPackList(args, context);
+      case 'reference_get_tires_wheels_list':
+        return await wrapList(() => context.client.reference.getTiresWheelsList(), 'tiresWheels');
+      case 'reference_get_cargo_description_list':
+        return await handleGetCargoDescriptionList(args, context);
+      case 'reference_get_pickup_time_intervals':
+        return await handleGetPickupTimeIntervals(args, context);
+      case 'reference_get_backward_delivery_cargo_types':
+        return await wrapList(() => context.client.reference.getBackwardDeliveryCargoTypes(), 'backwardDeliveryCargoTypes');
+      case 'reference_get_types_of_payers_for_redelivery':
+        return await wrapList(() => context.client.reference.getTypesOfPayersForRedelivery(), 'payerTypesForRedelivery');
       case 'reference_get_service_types':
         return await wrapList(() => context.client.reference.getServiceTypes(), 'serviceTypes');
       case 'reference_get_payment_methods':
@@ -199,17 +281,55 @@ async function handleDecodeMessage(args: ToolArguments, context: ToolContext): P
   );
 }
 
-async function handleGetTypesOfPayers(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
+async function handleGetTypesOfPayers(_args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
   const response = await context.client.reference.getTypesOfPayers();
   return createTextResult(formatAsJson({ payerTypes: response.data }), { response });
 }
 
-async function handleGetPaymentForms(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
+async function handleGetPaymentForms(_args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
   const response = await context.client.reference.getPaymentForms();
   return createTextResult(formatAsJson({ paymentForms: response.data }), { response });
 }
 
-async function handleGetTypesOfCounterparties(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
+async function handleGetTypesOfCounterparties(_args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
   const response = await context.client.reference.getTypesOfCounterparties();
   return createTextResult(formatAsJson({ counterpartyTypes: response.data }), { response });
+}
+
+async function handleGetPackList(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
+  const length = args?.length !== undefined ? Number(args.length) : undefined;
+  const width = args?.width !== undefined ? Number(args.width) : undefined;
+  const height = args?.height !== undefined ? Number(args.height) : undefined;
+
+  const response = await context.client.reference.getPackList({
+    ...(length !== undefined ? { length } : {}),
+    ...(width !== undefined ? { width } : {}),
+    ...(height !== undefined ? { height } : {}),
+  });
+
+  return createTextResult(formatAsJson({ packs: response.data, total: response.data?.length ?? 0 }), { response });
+}
+
+async function handleGetCargoDescriptionList(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
+  const findByString = assertOptionalString(args?.findByString, 'findByString');
+  const page = args?.page !== undefined ? Number(args.page) : undefined;
+
+  const response = await context.client.reference.getCargoDescriptionList({
+    ...(findByString ? { findByString } : {}),
+    ...(page !== undefined ? { page } : {}),
+  });
+
+  return createTextResult(formatAsJson({ cargoDescriptions: response.data, total: response.data?.length ?? 0 }), { response });
+}
+
+async function handleGetPickupTimeIntervals(args: ToolArguments, context: ToolContext): Promise<CallToolResult> {
+  const cityRef = assertString(args?.cityRef, 'cityRef');
+  const dateTime = assertString(args?.dateTime, 'dateTime');
+
+  const response = await context.client.reference.getPickupTimeIntervals({
+    senderCityRef: cityRef,
+    dateTime,
+  });
+
+  return createTextResult(formatAsJson({ intervals: response.data, total: response.data?.length ?? 0 }), { response });
 }

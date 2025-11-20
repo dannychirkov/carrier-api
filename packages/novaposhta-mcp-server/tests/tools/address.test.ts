@@ -6,14 +6,21 @@ import type { ToolContext } from '../../src/types/mcp.js';
 const context: ToolContext = {
   client: {
     address: {
+      getSettlements: vi.fn(),
+      getSettlementCountryRegion: vi.fn(),
       getCities: vi.fn(),
       searchSettlements: vi.fn(),
       searchSettlementStreets: vi.fn(),
       getWarehouses: vi.fn(),
+      save: vi.fn(),
+      update: vi.fn(),
+      delete: vi.fn(),
     },
     reference: {} as any,
     tracking: {} as any,
     waybill: {} as any,
+    counterparty: {} as any,
+    contactPerson: {} as any,
   },
   config: {
     apiKey: 'test',
@@ -28,8 +35,8 @@ describe('address tools', () => {
     vi.clearAllMocks();
   });
 
-  it('exposes seven address tools', () => {
-    expect(getAddressTools()).toHaveLength(7);
+  it('exposes nine address tools', () => {
+    expect(getAddressTools()).toHaveLength(9);
   });
 
   describe('address_search_cities', () => {
@@ -126,6 +133,103 @@ describe('address tools', () => {
 
       const result = await handleAddressTool('address_get_warehouses', { cityRef: 'city-ref' }, context);
       expect(result.isError).toBeFalsy();
+    });
+  });
+
+  describe('address_get_settlements', () => {
+    it('successfully gets settlements', async () => {
+      vi.mocked(context.client.address.getSettlements).mockResolvedValue({
+        success: true,
+        data: [
+          {
+            Ref: 'area-ref-123',
+            Description: 'Київська',
+            AreasCenter: 'center-ref' as any,
+          } as any,
+        ],
+        errors: [],
+        warnings: [],
+        info: [],
+        messageCodes: [],
+        errorCodes: [],
+        warningCodes: [],
+        infoCodes: [],
+      });
+
+      const result = await handleAddressTool('address_get_settlements', {}, context);
+      expect(result.isError).toBeFalsy();
+      expect(context.client.address.getSettlements).toHaveBeenCalledWith({});
+    });
+
+    it('passes ref parameter to getSettlements', async () => {
+      vi.mocked(context.client.address.getSettlements).mockResolvedValue({
+        success: true,
+        data: [],
+        errors: [],
+        warnings: [],
+        info: [],
+        messageCodes: [],
+        errorCodes: [],
+        warningCodes: [],
+        infoCodes: [],
+      });
+
+      await handleAddressTool('address_get_settlements', { ref: 'area-ref-123' }, context);
+      expect(context.client.address.getSettlements).toHaveBeenCalledWith({ ref: 'area-ref-123' });
+    });
+  });
+
+  describe('address_get_settlement_country_region', () => {
+    it('successfully gets settlement country regions', async () => {
+      vi.mocked(context.client.address.getSettlementCountryRegion).mockResolvedValue({
+        success: true,
+        data: [
+          {
+            Ref: 'region-ref-123',
+            Description: 'Київський район',
+            RegionType: 'district',
+            AreasCenter: 'center-ref' as any,
+          } as any,
+        ],
+        errors: [],
+        warnings: [],
+        info: [],
+        messageCodes: [],
+        errorCodes: [],
+        warningCodes: [],
+        infoCodes: [],
+      });
+
+      const result = await handleAddressTool('address_get_settlement_country_region', { areaRef: 'area-ref' }, context);
+      expect(result.isError).toBeFalsy();
+      expect(context.client.address.getSettlementCountryRegion).toHaveBeenCalledWith({ areaRef: 'area-ref' });
+    });
+
+    it('requires areaRef parameter', async () => {
+      const result = await handleAddressTool('address_get_settlement_country_region', {}, context);
+      expect(result.isError).toBe(true);
+      const text = (result.content[0] as any).text;
+      expect(text).toContain('areaRef');
+    });
+
+    it('passes optional ref parameter', async () => {
+      vi.mocked(context.client.address.getSettlementCountryRegion).mockResolvedValue({
+        success: true,
+        data: [],
+        errors: [],
+        warnings: [],
+        info: [],
+        messageCodes: [],
+        errorCodes: [],
+        warningCodes: [],
+        infoCodes: [],
+      });
+
+      await handleAddressTool('address_get_settlement_country_region', { areaRef: 'area-ref', ref: 'region-ref' }, context);
+      expect(context.client.address.getSettlementCountryRegion).toHaveBeenCalledWith({
+        areaRef: 'area-ref',
+        ref: 'region-ref'
+      });
     });
   });
 });
