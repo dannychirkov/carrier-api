@@ -506,7 +506,7 @@ const client = createClient({
 }).use(new AddressService());
 
 // Now you can test without real API calls
-const result = await client.address.searchCities({ query: 'Test' });
+const result = await client.address.searchCities({ FindByString: 'Test' });
 expect(result.data).toHaveLength(1);
 ```
 

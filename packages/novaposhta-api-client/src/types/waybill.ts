@@ -19,9 +19,6 @@ import type {
   Volume,
   Dimensions,
   Cost,
-  CargoDimensions,
-  MoneyAmount,
-  TimeInterval,
 } from './base';
 import {
   PaymentMethod,
@@ -137,7 +134,7 @@ export interface DeleteWaybillRequest {
 }
 
 // Cargo seat options
-export interface OptionsSeatItem extends CargoDimensions {
+export interface OptionsSeatItem {
   /** Weight in kg */
   readonly Weight: Weight;
   /** Width in cm */
