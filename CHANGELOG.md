@@ -7,6 +7,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.1-alpha.5] - 2025-11-20
+
+### Added
+- Optional `system` field to API requests (type: `'DevCentre'`)
+- Support for passing `system` parameter in `ClientContext` configuration
+- Export of `System` type from base types
+
+### Changed
+- Updated `NovaPoshtaRequest` interface to include optional `system` field
+- Updated `ClientContext` interface to include optional `system` field
+- Enhanced `toHttpTransport` to handle `system` field from config or request
+
+## [0.0.1-alpha.4] - 2025-11-20
+
+### Changed
+- Previous alpha release
+
+## [0.0.1-alpha.3] - 2025-11-20
+
+### Changed
+- Previous alpha release
+
+## [0.0.1-alpha.2] - 2025-11-20
+
+### Changed
+- Previous alpha release
+
+## [0.0.1-alpha.1] - 2025-11-20
+
+### Changed
+- Previous alpha release
+
 ## [0.0.1-alpha.0] - 2025-11-19
 
 ### Overview
