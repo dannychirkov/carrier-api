@@ -7,12 +7,12 @@
     "source": "github",
     "subfolder": "packages/novaposhta-mcp-server"
   },
-  "version": "0.0.1-alpha.5",
+  "version": "0.0.1-alpha.7",
   "packages": [
     {
       "registryType": "npm",
       "identifier": "@shopana/novaposhta-mcp-server",
-      "version": "0.0.1-alpha.5",
+      "version": "latest",
       "transport": {
         "type": "stdio"
       },
