@@ -35,82 +35,11 @@
 - **Production-Ready**: Enterprise-grade error handling and logging
 - **Zero Configuration**: Works out of the box with sensible defaults
 
-## Installation
-
-### From MCP Registry (Easiest)
-
-This server is published in the [MCP Registry](https://registry.modelcontextprotocol.io/v0.1/servers?search=io.github.shopanaio/novaposhta) as `io.github.shopanaio/novaposhta`.
-
-MCP-compatible clients can discover and install it automatically. For manual installation, see options below.
-
-### For Claude Desktop / Claude Code (Recommended)
-
-Add to your MCP configuration file:
-
-**macOS/Linux**: `~/.mcp.json` or `~/Library/Application Support/Claude/claude_desktop_config.json`
-**Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
-
-```json
-{
-  "mcpServers": {
-    "novaposhta": {
-      "command": "npx",
-      "args": ["-y", "-p", "@shopana/novaposhta-mcp-server", "novaposhta-mcp"],
-      "env": {
-        "NOVA_POSHTA_API_KEY": "your_api_key_here",
-        "NOVA_POSHTA_SYSTEM": "DevCentre",
-        "LOG_LEVEL": "info"
-      }
-    }
-  }
-}
-```
-
-### For Local Development
-
-```bash
-# Install in the workspace
-yarn install
-
-# Build the server
-yarn workspace @shopana/novaposhta-mcp-server build
-
-# Add to your .mcp.json
-{
-  "mcpServers": {
-    "novaposhta-stdio": {
-      "type": "stdio",
-      "command": "/absolute/path/to/carrier-api/packages/novaposhta-mcp-server/dist/cli.js",
-      "env": {
-        "NOVA_POSHTA_API_KEY": "your_api_key_here",
-        "LOG_LEVEL": "info"
-      }
-    }
-  }
-}
-```
-
-### As NPM Package (Global)
-
-```bash
-npm install -g @shopana/novaposhta-mcp-server
-
-# Then reference in your config
-{
-  "mcpServers": {
-    "novaposhta": {
-      "command": "novaposhta-mcp",
-      "env": {
-        "NOVA_POSHTA_API_KEY": "your_api_key_here"
-      }
-    }
-  }
-}
-```
-
 ## Quick Start
 
-### 1. Get Your API Key
+### 1. Get Your API Key (Optional for most operations)
+
+**Note:** API key is only required for waybill operations (create, update, delete). Tracking, address search, and reference data work without authentication.
 
 1. Sign up at [Nova Poshta](https://my.novaposhta.ua/)
 2. Navigate to Settings → API Keys
@@ -124,10 +53,14 @@ Create or update your `.mcp.json`:
 {
   "mcpServers": {
     "novaposhta": {
+      "type": "stdio",
       "command": "npx",
       "args": ["-y", "-p", "@shopana/novaposhta-mcp-server", "novaposhta-mcp"],
       "env": {
+        // Optional. Only required for waybill operations.
+        // Tracking, addresses, and reference data work without API key.
         "NOVA_POSHTA_API_KEY": "your_actual_api_key_here",
+        // Optional. Parameter sent by Nova Poshta API Sandbox UI
         "NOVA_POSHTA_SYSTEM": "DevCentre",
         "LOG_LEVEL": "info"
       }
@@ -138,8 +71,13 @@ Create or update your `.mcp.json`:
 
 ### 3. Restart Your MCP Client
 
-- **Claude Desktop**: Restart the application
-- **Claude Code**: Reload the MCP server or restart Claude Code
+After updating your MCP configuration, you need to restart or reload your client:
+
+- **Windsurf, Cursor, *Claude, Gemini, VSCode extensions**:
+  - Reload IDE window (`Cmd/Ctrl + Shift + P` → "Reload Window")
+  - Or restart the extension from Extensions panel
+  - Or restart the CLI
+  - Or reload MCP servers from IDE settings/command palette
 
 ### 4. Start Using
 
@@ -155,11 +93,21 @@ Ask Claude:
 
 | Variable | Required | Default | Description |
 |----------|----------|---------|-------------|
-| `NOVA_POSHTA_API_KEY` | Yes | - | Your Nova Poshta API key |
+| `NOVA_POSHTA_API_KEY` | Partial* | - | Your Nova Poshta API key (*only required for waybill operations) |
 | `NOVA_POSHTA_BASE_URL` | No | `https://api.novaposhta.ua/v2.0/json/` | API base URL |
-| `NOVA_POSHTA_SYSTEM` | No | - | System identifier (e.g., `DevCentre` for development/testing) |
+| `NOVA_POSHTA_SYSTEM` | No | - | System identifier parameter. `DevCentre` is the value used by Nova Poshta API Sandbox UI (optional, does not affect functionality) |
 | `LOG_LEVEL` | No | `info` | Logging level: `debug`, `info`, `warn`, `error` |
 | `MCP_PORT` | No | `3000` | HTTP server port (HTTP mode only) |
+
+**Operations that work without API key:**
+- Tracking (track_document, track_multiple_documents, get_document_movement)
+- Address search (address_search_cities, address_search_settlements, address_search_streets, address_get_warehouses)
+- Reference data (all reference_* tools)
+
+**Operations that require API key:**
+- Waybill management (waybill_create, waybill_update, waybill_delete)
+- Counterparty operations
+- Contact person management
 
 ### Transport Modes
 
@@ -530,7 +478,9 @@ Claude uses `track_multiple_documents` and provides aggregated statistics: deliv
       "command": "npx",
       "args": ["-y", "-p", "@shopana/novaposhta-mcp-server", "novaposhta-mcp"],
       "env": {
+        // Optional - only required for waybill operations
         "NOVA_POSHTA_API_KEY": "your_api_key",
+        // Optional - parameter sent by Nova Poshta API Sandbox UI
         "NOVA_POSHTA_SYSTEM": "DevCentre",
         "LOG_LEVEL": "info"
       }
@@ -550,7 +500,9 @@ Create `.mcp.json` in your project root or home directory:
       "type": "stdio",
       "command": "/path/to/dist/cli.js",
       "env": {
+        // Optional - only required for waybill operations
         "NOVA_POSHTA_API_KEY": "your_api_key",
+        // Optional - parameter sent by Nova Poshta API Sandbox UI
         "NOVA_POSHTA_SYSTEM": "DevCentre",
         "LOG_LEVEL": "debug"
       }
@@ -568,7 +520,9 @@ Create `.mcp.json` in your project root or home directory:
       "type": "http",
       "url": "https://your-domain.com/mcp",
       "env": {
+        // Optional - only required for waybill operations
         "NOVA_POSHTA_API_KEY": "your_api_key",
+        // Optional - parameter sent by Nova Poshta API Sandbox UI
         "NOVA_POSHTA_SYSTEM": "DevCentre",
         "LOG_LEVEL": "info"
       }
@@ -584,7 +538,9 @@ FROM node:20-alpine
 WORKDIR /app
 COPY . .
 RUN yarn install && yarn build
+# Optional - only required for waybill operations
 ENV NOVA_POSHTA_API_KEY=your_key
+# Optional - parameter sent by Nova Poshta API Sandbox UI
 ENV NOVA_POSHTA_SYSTEM=DevCentre
 ENV MCP_PORT=3000
 EXPOSE 3000
