@@ -30,7 +30,6 @@
 - **Address Discovery**: Search cities, settlements, streets, and warehouses with advanced filtering
 - **Waybill Operations**: Calculate costs, create, update, and delete waybills programmatically
 - **Reference Data**: Access cargo types, service types, payment methods, and more
-- **Dual Transport**: Supports both stdio (Claude Desktop/Code) and HTTP transports
 - **Type-Safe**: Built with TypeScript for full type safety
 - **Production-Ready**: Enterprise-grade error handling and logging
 - **Zero Configuration**: Works out of the box with sensible defaults
@@ -373,8 +372,7 @@ Check logs:
 A: This MCP server provides several key advantages:
 - **Comprehensive Documentation**: All tools are well-documented with clear descriptions, making it easy for AI assistants to understand and use them correctly
 - **Real Data Operations**: Execute real API calls with actual Nova Poshta data - tracking shipments, calculating costs, creating waybills, and more
-- **AI-Native Integration**: Designed specifically for AI assistants like Claude, enabling natural language interactions with Nova Poshta services
-- **Zero Configuration**: Works immediately after setup with sensible defaults and clear error messages
+- **AI-Native Integration**: Designed specifically for AI assistants like Claude, enabling natural language interactions with Nova
 
 **Q: Do I need a Nova Poshta account to use this?**
 A: Yes, you need to register at [my.novaposhta.ua](https://my.novaposhta.ua/) and generate an API key.
@@ -406,8 +404,6 @@ Apache License 2.0 - see [LICENSE](./LICENSE) for details.
 - [Nova Poshta API Documentation](https://developers.novaposhta.ua/)
 - [Model Context Protocol](https://modelcontextprotocol.io)
 - [MCP SDK](https://github.com/modelcontextprotocol/sdk)
-- [Claude Desktop](https://claude.ai/download)
-- [Claude Code](https://docs.claude.com/claude-code)
 
 ## Support
 
