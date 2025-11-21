@@ -22,6 +22,8 @@
 
 `@shopana/novaposhta-mcp-server` is a production-ready MCP server that exposes Nova Poshta postal services to AI assistants like Claude Desktop, Claude Code, and other MCP-compatible clients. Built on top of the type-safe [@shopana/novaposhta-api-client](../novaposhta-api-client), it provides seamless access to tracking, address search, waybill management, and reference data.
 
+<img src="docs/demo.gif" />
+
 ## Features
 
 - **Comprehensive Tracking**: Track single/multiple shipments, view movement history, and list documents
