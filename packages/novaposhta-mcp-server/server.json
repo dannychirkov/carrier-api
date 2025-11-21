@@ -12,7 +12,7 @@
     {
       "registryType": "npm",
       "identifier": "@shopana/novaposhta-mcp-server",
-      "version": "latest",
+      "version": "0.0.1-alpha.7",
       "transport": {
         "type": "stdio"
       },
