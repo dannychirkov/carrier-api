@@ -2,7 +2,7 @@
 
 # @shopana/carrier-api
 
-**Modern type-safe API clients for shipping carriers in Ukraine**
+**Modern type-safe API clients for shipping carriers**
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=flat-square)](https://www.apache.org/licenses/LICENSE-2.0)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue.svg?style=flat-square)](https://www.typescriptlang.org/)
@@ -16,7 +16,7 @@
 
 ## 🚀 Overview
 
-A production-ready monorepo containing **enterprise-grade TypeScript API clients** for Ukrainian shipping carriers. Built with modern architecture patterns, each client features plugin-based design, full type safety, and transport-agnostic implementation.
+A production-ready monorepo containing **enterprise-grade TypeScript API clients** for shipping carriers. Built with modern architecture patterns, each client features plugin-based design, full type safety, and transport-agnostic implementation.
 
 ### 🎯 Why Carrier API?
 
@@ -326,7 +326,7 @@ Found a bug or have a feature request? Please [open an issue](https://github.com
 
 ### Planned Features
 
-- [ ] Additional carrier integrations (Ukrposhta, Meest, Justin)
+- [ ] Additional carrier integrations
 - [ ] GraphQL API layer
 - [ ] React hooks package
 - [ ] CLI tool for common operations
@@ -336,10 +336,17 @@ Found a bug or have a feature request? Please [open an issue](https://github.com
 
 ### Future Carriers
 
+**Eastern Europe:**
 - Ukrposhta
 - Meest
 - Justin
 - Delivery
+
+**International:**
+- DHL
+- FedEx
+- UPS
+- DPD
 
 Want to help implement these? [Contributions welcome!](#-contributing)
 
