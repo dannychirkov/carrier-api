@@ -7,6 +7,7 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=flat-square)](https://www.apache.org/licenses/LICENSE-2.0)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue.svg?style=flat-square)](https://www.typescriptlang.org/)
 [![MCP](https://img.shields.io/badge/MCP-1.22+-green.svg?style=flat-square)](https://modelcontextprotocol.io)
+[![MCP Badge](https://lobehub.com/badge/mcp/shopanaio-carrier-api)](https://lobehub.com/mcp/shopanaio-carrier-api)
 
 **Model Context Protocol (MCP) server for Nova Poshta API integration with AI assistants**
 
