@@ -63,6 +63,14 @@ export enum NovaPoshtaMethod {
   GetCounterpartyAddresses = 'getCounterpartyAddresses',
   GetCounterpartyContactPersons = 'getCounterpartyContactPersons',
   GetCounterpartyOptions = 'getCounterpartyOptions',
+
+  // ScanSheet methods
+  InsertDocuments = 'insertDocuments',
+  GetScanSheet = 'getScanSheet',
+  GetScanSheetList = 'getScanSheetList',
+  DeleteScanSheet = 'deleteScanSheet',
+  RemoveDocuments = 'removeDocuments',
+  PrintScanSheet = 'printScanSheet',
 }
 
 // Payment methods

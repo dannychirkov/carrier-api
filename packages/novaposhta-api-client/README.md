@@ -60,6 +60,7 @@ import {
   ReferenceService,
   TrackingService,
   WaybillService,
+  ScanSheetService,
 } from '@shopana/novaposhta-api-client';
 import { createFetchHttpTransport } from '@shopana/novaposhta-transport-fetch';
 
@@ -74,12 +75,14 @@ const client = createClient({
   .use(new ContactPersonService())
   .use(new ReferenceService())
   .use(new TrackingService())
-  .use(new WaybillService());
+  .use(new WaybillService())
+  .use(new ScanSheetService());
 
 // Namespaced API
 const cities = await client.address.getCities({});
 const cargoTypes = await client.reference.getCargoTypes();
 const tracked = await client.tracking.trackDocument('20400048799000');
+const scanSheets = await client.scanSheet.getScanSheetList({ Page: 1, Limit: 10 });
 ```
 
 ## Counterparty Management
@@ -462,6 +465,33 @@ Manage contact persons for counterparties:
 client.contactPerson.save({ CounterpartyRef, FirstName, LastName, Phone })
 client.contactPerson.update({ Ref, CounterpartyRef, ... })
 client.contactPerson.delete({ Ref, CounterpartyRef })
+```
+
+### ScanSheetService
+Manage scan sheets (registries) for batch document processing:
+
+```typescript
+// Create new scan sheet with documents
+client.scanSheet.insertDocuments({ DocumentRefs: ['doc-ref-1', 'doc-ref-2'] })
+client.scanSheet.createScanSheet(['doc-ref-1', 'doc-ref-2']) // convenience method
+
+// Add documents to existing scan sheet
+client.scanSheet.addDocuments('scan-sheet-ref', ['doc-ref-3', 'doc-ref-4'])
+
+// Get scan sheet information
+client.scanSheet.getScanSheet({ Ref: 'scan-sheet-ref' })
+client.scanSheet.getScanSheetList({ Page: 1, Limit: 50 })
+client.scanSheet.getAllScanSheets() // fetches all pages
+
+// Remove documents from scan sheet
+client.scanSheet.removeDocuments({ Ref: 'scan-sheet-ref', DocumentRefs: ['doc-ref-1'] })
+
+// Delete scan sheets
+client.scanSheet.deleteScanSheet({ ScanSheetRefs: ['scan-sheet-ref-1'] })
+client.scanSheet.deleteSingle('scan-sheet-ref') // convenience method
+
+// Get print form
+client.scanSheet.printScanSheet({ Ref: 'scan-sheet-ref' })
 ```
 
 ---
