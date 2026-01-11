@@ -1,5 +1,6 @@
 import { client } from '../../../setup/client.setup';
 import { itWithApiKey } from '../../../setup/testHelpers';
+import { hasDeleteError } from '@shopana/novaposhta-api-client';
 
 describe('ScanSheetService - deleteScanSheet', () => {
   itWithApiKey('should delete scan sheet', async () => {
@@ -20,11 +21,20 @@ describe('ScanSheetService - deleteScanSheet', () => {
     expect(response.data).toBeDefined();
   });
 
-  it('should fail with invalid ref', async () => {
+  it('should return error for invalid ref', async () => {
+    // Note: Nova Poshta API returns success: false for auth/validation errors
+    // or success: true with errors in data[].Error for logical errors
     const response = await client.scanSheet.deleteScanSheet({
       ScanSheetRefs: ['invalid-ref' as any],
     });
 
-    expect(response.success).toBe(false);
+    expect(response).toBeDefined();
+
+    // Check that we got an error response (either success: false or errors in data)
+    const hasErrors =
+      response.success === false ||
+      response.errors.length > 0 ||
+      (response.data && response.data.length > 0 && hasDeleteError(response.data[0]));
+    expect(hasErrors).toBe(true);
   });
 });

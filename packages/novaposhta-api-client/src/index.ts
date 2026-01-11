@@ -382,7 +382,12 @@ export type {
   ScanSheetDocumentData,
   ScanSheetListItem,
   InsertDocumentsData,
+  InsertDocumentsSuccessItem,
+  InsertDocumentsErrorItem,
+  InsertDocumentsNestedData,
   RemoveDocumentsData,
+  RemoveDocumentsSuccessItem,
+  RemoveDocumentsResultData,
   DeleteScanSheetData,
   PrintFormData,
   InsertDocumentsResponse,
@@ -396,7 +401,10 @@ export type {
 // ScanSheet utilities
 export {
   isScanSheetEmpty,
-  canDeleteScanSheet,
+  isScanSheetPrinted,
+  hasInsertErrors,
+  hasDeleteError,
+  hasRemoveErrors,
   validateDocumentRefs,
   validateScanSheetRef,
 } from './types/scanSheet';

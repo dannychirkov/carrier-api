@@ -74,9 +74,10 @@ export class ScanSheetService {
    * @example
    * ```typescript
    * const scanSheet = await client.scanSheet.getScanSheet({
-   *   Ref: 'scan-sheet-ref'
+   *   Ref: 'scan-sheet-ref',
+   *   CounterpartyRef: 'counterparty-ref'
    * });
-   * console.log('Documents in scan sheet:', scanSheet.data[0].DocumentsCount);
+   * console.log('Documents in scan sheet:', scanSheet.data[0].Count);
    * ```
    */
   async getScanSheet(request: GetScanSheetRequest): Promise<GetScanSheetResponse> {
@@ -143,7 +144,7 @@ export class ScanSheetService {
    *   Ref: 'scan-sheet-ref',
    *   DocumentRefs: ['doc-ref-1', 'doc-ref-2']
    * });
-   * console.log('Documents removed:', result.data[0].DocumentsRemoved);
+   * console.log('Documents removed:', result.data[0].DocumentRefs.Success.length);
    * ```
    */
   async removeDocuments(request: RemoveDocumentsRequest): Promise<RemoveDocumentsResponse> {
