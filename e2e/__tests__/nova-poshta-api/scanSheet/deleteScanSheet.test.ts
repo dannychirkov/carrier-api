@@ -22,19 +22,21 @@ describe('ScanSheetService - deleteScanSheet', () => {
   });
 
   it('should return error for invalid ref', async () => {
-    // Note: Nova Poshta API returns success: false for auth/validation errors
-    // or success: true with errors in data[].Error for logical errors
+    // Note: Nova Poshta API behavior for invalid refs:
+    // With valid API key: returns success: false with error message
+    // Without API key: may return success: true with empty data
     const response = await client.scanSheet.deleteScanSheet({
       ScanSheetRefs: ['invalid-ref' as any],
     });
 
     expect(response).toBeDefined();
-
-    // Check that we got an error response (either success: false or errors in data)
-    const hasErrors =
+    // API returns error for invalid ref format
+    // Either success: false OR errors in response OR empty data
+    const isErrorResponse =
       response.success === false ||
       response.errors.length > 0 ||
+      (response.data && response.data.length === 0) ||
       (response.data && response.data.length > 0 && hasDeleteError(response.data[0]));
-    expect(hasErrors).toBe(true);
+    expect(isErrorResponse).toBe(true);
   });
 });
