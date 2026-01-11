@@ -3,13 +3,7 @@
  * Handles registry/scan sheet operations for document processing
  */
 
-import type {
-  NovaPoshtaRef,
-  DocumentRef,
-  NovaPoshtaResponse,
-  NovaPoshtaDate,
-  String100,
-} from './base';
+import type { NovaPoshtaRef, DocumentRef, NovaPoshtaResponse, NovaPoshtaDate, String100 } from './base';
 
 // ============================================================================
 // Request Types
@@ -196,7 +190,7 @@ export type GetScanSheetResponse = NovaPoshtaResponse<ScanSheetData>;
 /**
  * Response for getting scan sheet list
  */
-export type GetScanSheetListResponse = NovaPoshtaResponse<ScanSheetListItem>;
+export type GetScanSheetListResponse = NovaPoshtaResponse<ScanSheetListItem[]>;
 
 /**
  * Response for deleting scan sheet
@@ -240,7 +234,7 @@ export function validateDocumentRefs(documentRefs: DocumentRef[]): boolean {
     return false;
   }
 
-  return documentRefs.every((ref) => {
+  return documentRefs.every(ref => {
     return typeof ref === 'string' && ref.length > 0;
   });
 }
