@@ -41,8 +41,8 @@ A production-ready monorepo containing **enterprise-grade TypeScript API clients
 **Nova Poshta API client** with plugin architecture and complete type safety.
 
 **Features:**
-- 🔧 Plugin-based services (Address, Reference, Tracking, Waybill, Counterparty, ContactPerson)
-- 📛 Namespaced API: `client.address.*`, `client.reference.*`, `client.tracking.*`, `client.waybill.*`
+- 🔧 Plugin-based services (Address, Reference, Tracking, Waybill, Counterparty, ContactPerson, ScanSheet)
+- 📛 Namespaced API: `client.address.*`, `client.reference.*`, `client.tracking.*`, `client.waybill.*`, `client.scanSheet.*`
 - 🎯 Full TypeScript support with strict typing
 - 🔄 Transport-agnostic design
 - 🌳 Tree-shakeable - only bundle what you use

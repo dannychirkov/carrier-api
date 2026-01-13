@@ -73,6 +73,7 @@ export { ReferenceService } from './services/referenceService';
 export { AddressService } from './services/addressService';
 export { CounterpartyService } from './services/counterpartyService';
 export { ContactPersonService } from './services/contactPersonService';
+export { ScanSheetService } from './services/scanSheetService';
 
 // Base types
 export type {
@@ -368,6 +369,45 @@ export type {
   ContactPersonRequest,
   ContactPersonResponse,
 } from './types/contactPerson';
+
+// ScanSheet types
+export type {
+  InsertDocumentsRequest,
+  GetScanSheetRequest,
+  GetScanSheetListRequest,
+  DeleteScanSheetRequest,
+  RemoveDocumentsRequest,
+  PrintScanSheetRequest,
+  ScanSheetData,
+  ScanSheetDocumentData,
+  ScanSheetListItem,
+  InsertDocumentsData,
+  InsertDocumentsSuccessItem,
+  InsertDocumentsErrorItem,
+  InsertDocumentsNestedData,
+  RemoveDocumentsData,
+  RemoveDocumentsSuccessItem,
+  RemoveDocumentsResultData,
+  DeleteScanSheetData,
+  PrintFormData,
+  InsertDocumentsResponse,
+  GetScanSheetResponse,
+  GetScanSheetListResponse,
+  DeleteScanSheetResponse,
+  RemoveDocumentsResponse,
+  PrintScanSheetResponse,
+} from './types/scanSheet';
+
+// ScanSheet utilities
+export {
+  isScanSheetEmpty,
+  isScanSheetPrinted,
+  hasInsertErrors,
+  hasDeleteError,
+  hasRemoveErrors,
+  validateDocumentRefs,
+  validateScanSheetRef,
+} from './types/scanSheet';
 
 // Version information
 export const VERSION = '1.0.0';
