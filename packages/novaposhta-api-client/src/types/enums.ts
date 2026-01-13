@@ -71,6 +71,10 @@ export enum NovaPoshtaMethod {
   DeleteScanSheet = 'deleteScanSheet',
   RemoveDocuments = 'removeDocuments',
   PrintScanSheet = 'printScanSheet',
+
+  // Return order methods (AdditionalServiceGeneral model)
+  GetReturnOrdersList = 'getReturnOrdersList',
+  CheckPossibilityCreateReturn = 'CheckPossibilityCreateReturn',
 }
 
 // Payment methods

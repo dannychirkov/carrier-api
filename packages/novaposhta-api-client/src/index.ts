@@ -74,6 +74,7 @@ export { AddressService } from './services/addressService';
 export { CounterpartyService } from './services/counterpartyService';
 export { ContactPersonService } from './services/contactPersonService';
 export { ScanSheetService } from './services/scanSheetService';
+export { ReturnService } from './services/returnService';
 
 // Base types
 export type {
@@ -408,6 +409,38 @@ export {
   validateDocumentRefs,
   validateScanSheetRef,
 } from './types/scanSheet';
+
+// Return types
+export type {
+  GetReturnOrdersListRequest,
+  GetReturnOrdersListResponse,
+  ReturnOrderData,
+  CheckPossibilityCreateReturnRequest,
+  CheckPossibilityCreateReturnResponse,
+  ReturnPossibilityData,
+  CreateReturnToSenderAddressRequest,
+  CreateReturnToNewAddressRequest,
+  CreateReturnToWarehouseRequest,
+  CreateReturnRequest,
+  CreateReturnFullRequest,
+  CreateReturnResponse,
+  CreateReturnData,
+  UpdateReturnRequest,
+  UpdateReturnResponse,
+  UpdateReturnData,
+  PricingService,
+  ReturnPricing,
+} from './types/returns';
+
+// Return enums and utilities
+export {
+  ReturnOrderType,
+  ReturnOrderStatus,
+  isReturnOrderEditable,
+  isReturnToSenderAddress,
+  isReturnToNewAddress,
+  isReturnToWarehouse,
+} from './types/returns';
 
 // Version information
 export const VERSION = '1.0.0';
