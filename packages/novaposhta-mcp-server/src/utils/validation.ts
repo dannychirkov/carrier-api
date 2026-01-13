@@ -27,8 +27,7 @@ export function isDateFormat(value: unknown): value is string {
 
 export function isUUID(value: unknown): value is string {
   return (
-    typeof value === 'string' &&
-    /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i.test(value.trim())
+    typeof value === 'string' && /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i.test(value.trim())
   );
 }
 
@@ -82,4 +81,27 @@ export function assertOptionalNumber(value: unknown, field: string): number | un
     return undefined;
   }
   return assertNumber(value, field);
+}
+
+export function assertBoolean(value: unknown, field: string): boolean {
+  if (typeof value === 'boolean') {
+    return value;
+  }
+  if (typeof value === 'string') {
+    const lower = value.toLowerCase().trim();
+    if (lower === 'true' || lower === '1') return true;
+    if (lower === 'false' || lower === '0') return false;
+  }
+  if (typeof value === 'number') {
+    if (value === 1) return true;
+    if (value === 0) return false;
+  }
+  throw new Error(`Field "${field}" must be a boolean`);
+}
+
+export function assertOptionalBoolean(value: unknown, field: string): boolean | undefined {
+  if (value === undefined || value === null || value === '') {
+    return undefined;
+  }
+  return assertBoolean(value, field);
 }

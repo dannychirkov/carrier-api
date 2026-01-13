@@ -339,6 +339,38 @@ Update existing contact person details. Only legal entities may edit full profil
 
 Delete contact person by reference. Allowed via API only for legal entities and only until the contact was used on an Internet document.
 
+---
+
+### Return Tools
+
+#### `return_get_list`
+
+Get list of return orders via AdditionalServiceGeneral/getReturnOrdersList. Returns all return orders matching the filter criteria. Available for sender clients only. Cache hourly.
+
+#### `return_check_possibility`
+
+Check if return order can be created for a document via AdditionalServiceGeneral/CheckPossibilityCreateReturn. Returns available return addresses, payment options, and Ref identifiers needed for creating a return. Only available for sender clients.
+
+#### `return_create_to_sender_address`
+
+Create a return order to sender's original address via AdditionalServiceGeneral/save. Uses ReturnAddressRef from check_possibility response. Available for sender clients only.
+
+#### `return_create_to_new_address`
+
+Create a return order to a new address via AdditionalServiceGeneral/save. Requires settlement, street, and building details. Available for sender clients only.
+
+#### `return_create_to_warehouse`
+
+Create a return order to a warehouse via AdditionalServiceGeneral/save. Uses warehouse REF. Available for sender clients only.
+
+#### `return_update`
+
+Update an existing return order via AdditionalServiceGeneral/update. Only works when order status is "Прийняте" (Accepted). Can change delivery address or warehouse.
+
+#### `return_get_pricing`
+
+Get pricing information for a return order without updating via AdditionalServiceGeneral/update with OnlyGetPricing=true. Returns scheduled delivery date and pricing details.
+
 ## Usage Examples
 
 ### Tracking a Shipment
@@ -397,7 +429,8 @@ packages/novaposhta-mcp-server/
 │   │   ├── address.ts
 │   │   ├── tracking.ts
 │   │   ├── waybill.ts
-│   │   └── reference.ts
+│   │   ├── reference.ts
+│   │   └── return.ts
 │   ├── types/         # TypeScript type definitions
 │   ├── utils/         # Utilities (logging, validation, etc.)
 │   ├── config.ts      # Configuration management
