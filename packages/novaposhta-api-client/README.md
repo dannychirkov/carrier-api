@@ -61,11 +61,12 @@ import {
   TrackingService,
   WaybillService,
   ScanSheetService,
+  ReturnService,
 } from '@shopana/novaposhta-api-client';
 import { createFetchHttpTransport } from '@shopana/novaposhta-transport-fetch';
 
 const client = createClient({
-  transport: createFetchHttpTransport(),           // external transport (HTTP POST JSON)
+  transport: createFetchHttpTransport(), // external transport (HTTP POST JSON)
   baseUrl: 'https://api.novaposhta.ua/v2.0/json/', // NP JSON endpoint
   // apiKey is optional; it will be sent only if provided
   apiKey: process.env.NP_API_KEY,
@@ -76,7 +77,8 @@ const client = createClient({
   .use(new ReferenceService())
   .use(new TrackingService())
   .use(new WaybillService())
-  .use(new ScanSheetService());
+  .use(new ScanSheetService())
+  .use(new ReturnService());
 
 // Namespaced API
 const cities = await client.address.getCities({});
@@ -118,8 +120,8 @@ const organization = await client.counterparty.save({
   CounterpartyProperty: 'Sender',
   Phone: '380671234567',
   Email: 'office@company.com',
-  OwnershipForm: 'ТОВ',    // ownership form ref
-  EDRPOU: '12345678',      // tax code
+  OwnershipForm: 'ТОВ', // ownership form ref
+  EDRPOU: '12345678', // tax code
   // Optional contact person
   FirstName: 'Марія',
   LastName: 'Менеджер',
@@ -276,10 +278,10 @@ const waybill = await client.waybill.create({
   SeatsAmount: 1,
   Description: 'Test package',
   Cost: 1000,
-  CitySender: 'sender-city-ref',         // your sender city
-  Sender: 'sender-counterparty-ref',     // your sender counterparty
+  CitySender: 'sender-city-ref', // your sender city
+  Sender: 'sender-counterparty-ref', // your sender counterparty
   SenderAddress: 'sender-warehouse-ref', // your sender warehouse
-  ContactSender: 'sender-contact-ref',   // your sender contact
+  ContactSender: 'sender-contact-ref', // your sender contact
   SendersPhone: '380671234567',
   CityRecipient: recipientCityRef,
   Recipient: recipientRef,
@@ -289,6 +291,48 @@ const waybill = await client.waybill.create({
 });
 
 console.log('Waybill created:', waybill.data[0].IntDocNumber);
+```
+
+## Return Order Workflow
+
+This example shows the complete process of creating a return order:
+
+```ts
+// 1. Check if return is possible for the document
+const possibility = await client.return.checkPossibility({
+  Number: '20450520287825', // original waybill number
+});
+
+if (!possibility.success || possibility.data.length === 0) {
+  console.log('Return not possible:', possibility.errors);
+  return;
+}
+
+// 2. Get available return addresses from the response
+const returnAddress = possibility.data[0];
+console.log('Can return to:', returnAddress.Address);
+console.log('Non-cash available:', returnAddress.NonCash);
+
+// 3. Create return order to sender's address
+const returnOrder = await client.return.createToSenderAddress({
+  IntDocNumber: '20450520287825',
+  PaymentMethod: returnAddress.NonCash ? 'NonCash' : 'Cash',
+  Reason: 'reason-ref', // get from reference data
+  SubtypeReason: 'subtype-ref', // get from reference data
+  ReturnAddressRef: returnAddress.Ref,
+  Note: 'Customer requested return',
+});
+
+console.log('Return order created:', returnOrder.data[0].Number);
+console.log('Return order Ref:', returnOrder.data[0].Ref);
+
+// 4. Check return order status later
+const orders = await client.return.getList({
+  Number: returnOrder.data[0].Number,
+});
+
+console.log('Status:', orders.data[0].OrderStatus);
+console.log('Express waybill:', orders.data[0].ExpressWaybillNumber);
 ```
 
 ---
@@ -345,17 +389,19 @@ const client = createClient({
 ## ✨ Features
 
 ### Plugin Architecture
+
 Connect only the services you need. Each service is a separate plugin:
 
 ```typescript
 const client = createClient({ transport, baseUrl, apiKey })
-  .use(new AddressService())      // Only if you need address operations
-  .use(new TrackingService());    // Only if you need tracking
+  .use(new AddressService()) // Only if you need address operations
+  .use(new TrackingService()); // Only if you need tracking
 
 // Tree-shaking automatically removes unused services from your bundle
 ```
 
 ### Namespaced API
+
 Clean, organized method calls:
 
 ```typescript
@@ -365,9 +411,12 @@ client.tracking.*      // Tracking operations
 client.waybill.*       // Waybill management
 client.counterparty.*  // Counterparty operations
 client.contactPerson.* // Contact person management
+client.scanSheet.*     // Scan sheet (registry) management
+client.return.*        // Return order management
 ```
 
 ### Complete Type Safety
+
 All inputs and outputs are strictly typed:
 
 ```typescript
@@ -377,13 +426,14 @@ const result = await client.address.searchCities({ FindByString: 'Kyiv', Limit: 
 
 // Autocomplete for all parameters
 const waybill = await client.waybill.create({
-  PayerType: '...',     // Autocomplete: 'Sender' | 'Recipient' | 'ThirdPerson'
+  PayerType: '...', // Autocomplete: 'Sender' | 'Recipient' | 'ThirdPerson'
   PaymentMethod: '...', // Autocomplete: 'Cash' | 'NonCash'
   // ... all parameters with type checking
 });
 ```
 
 ### Transport Agnostic
+
 The client doesn't make HTTP calls directly. Instead, it uses an injected transport:
 
 - ✅ Easy testing with mock transports
@@ -396,6 +446,7 @@ The client doesn't make HTTP calls directly. Instead, it uses an injected transp
 ## 📚 API Services
 
 ### AddressService
+
 Methods for working with addresses, cities, streets, and warehouses:
 
 ```typescript
@@ -409,31 +460,34 @@ client.address.delete({ Ref })
 ```
 
 ### ReferenceService
+
 Access reference data and dictionaries:
 
 ```typescript
-client.reference.getCargoTypes()
-client.reference.getServiceTypes()
-client.reference.getPaymentMethods()
-client.reference.getPaymentForms()
-client.reference.getTypesOfPayers()
-client.reference.getTypesOfCounterparties()
-client.reference.getOwnershipForms()
-client.reference.getTimeIntervals({ RecipientCityRef })
+client.reference.getCargoTypes();
+client.reference.getServiceTypes();
+client.reference.getPaymentMethods();
+client.reference.getPaymentForms();
+client.reference.getTypesOfPayers();
+client.reference.getTypesOfCounterparties();
+client.reference.getOwnershipForms();
+client.reference.getTimeIntervals({ RecipientCityRef });
 // ... and more
 ```
 
 ### TrackingService
+
 Track packages and view delivery status:
 
 ```typescript
-client.tracking.trackDocument({ Documents: ['20450123456789'], Phone: '380501234567' })
-client.tracking.trackMultipleDocuments({ Documents: ['20450123456789', '...'] })
-client.tracking.getDocumentMovement({ Documents: ['20450123456789'] })
-client.tracking.getDocumentList({ DateTimeFrom: '01.01.2025', DateTimeTo: '31.01.2025' })
+client.tracking.trackDocument({ Documents: ['20450123456789'], Phone: '380501234567' });
+client.tracking.trackMultipleDocuments({ Documents: ['20450123456789', '...'] });
+client.tracking.getDocumentMovement({ Documents: ['20450123456789'] });
+client.tracking.getDocumentList({ DateTimeFrom: '01.01.2025', DateTimeTo: '31.01.2025' });
 ```
 
 ### WaybillService
+
 Create and manage waybills (Internet documents):
 
 ```typescript
@@ -446,6 +500,7 @@ client.waybill.getEstimate({ ... })
 ```
 
 ### CounterpartyService
+
 Manage senders and recipients:
 
 ```typescript
@@ -459,6 +514,7 @@ client.counterparty.getCounterpartyOptions({ Ref })
 ```
 
 ### ContactPersonService
+
 Manage contact persons for counterparties:
 
 ```typescript
@@ -468,30 +524,95 @@ client.contactPerson.delete({ Ref, CounterpartyRef })
 ```
 
 ### ScanSheetService
+
 Manage scan sheets (registries) for batch document processing:
 
 ```typescript
 // Create new scan sheet with documents
-client.scanSheet.insertDocuments({ DocumentRefs: ['doc-ref-1', 'doc-ref-2'] })
-client.scanSheet.createScanSheet(['doc-ref-1', 'doc-ref-2']) // convenience method
+client.scanSheet.insertDocuments({ DocumentRefs: ['doc-ref-1', 'doc-ref-2'] });
+client.scanSheet.createScanSheet(['doc-ref-1', 'doc-ref-2']); // convenience method
 
 // Add documents to existing scan sheet
-client.scanSheet.addDocuments('scan-sheet-ref', ['doc-ref-3', 'doc-ref-4'])
+client.scanSheet.addDocuments('scan-sheet-ref', ['doc-ref-3', 'doc-ref-4']);
 
 // Get scan sheet information
-client.scanSheet.getScanSheet({ Ref: 'scan-sheet-ref' })
-client.scanSheet.getScanSheetList({ Page: 1, Limit: 50 })
-client.scanSheet.getAllScanSheets() // fetches all pages
+client.scanSheet.getScanSheet({ Ref: 'scan-sheet-ref' });
+client.scanSheet.getScanSheetList({ Page: 1, Limit: 50 });
+client.scanSheet.getAllScanSheets(); // fetches all pages
 
 // Remove documents from scan sheet
-client.scanSheet.removeDocuments({ Ref: 'scan-sheet-ref', DocumentRefs: ['doc-ref-1'] })
+client.scanSheet.removeDocuments({ Ref: 'scan-sheet-ref', DocumentRefs: ['doc-ref-1'] });
 
 // Delete scan sheets
-client.scanSheet.deleteScanSheet({ ScanSheetRefs: ['scan-sheet-ref-1'] })
-client.scanSheet.deleteSingle('scan-sheet-ref') // convenience method
+client.scanSheet.deleteScanSheet({ ScanSheetRefs: ['scan-sheet-ref-1'] });
+client.scanSheet.deleteSingle('scan-sheet-ref'); // convenience method
 
 // Get print form
-client.scanSheet.printScanSheet({ Ref: 'scan-sheet-ref' })
+client.scanSheet.printScanSheet({ Ref: 'scan-sheet-ref' });
+```
+
+### ReturnService
+
+Manage return orders for packages (available for sender clients only):
+
+```typescript
+// Check if return is possible for a document
+const possibility = await client.return.checkPossibility({ Number: '20450520287825' });
+// Returns available addresses, payment options, and Ref for creating return
+
+// Get list of return orders
+client.return.getList({ Page: '1', Limit: '50' });
+client.return.getList({ Number: '102-00003168' }); // by order number
+client.return.getList({ BeginDate: '01.01.2024', EndDate: '31.01.2024' }); // by date range
+
+// Create return to sender's original address
+client.return.createToSenderAddress({
+  IntDocNumber: '20450520287825',
+  PaymentMethod: 'Cash',
+  Reason: 'reason-ref',
+  SubtypeReason: 'subtype-ref',
+  ReturnAddressRef: possibility.data[0].Ref, // from checkPossibility response
+});
+
+// Create return to a new address
+client.return.createToNewAddress({
+  IntDocNumber: '20450520287825',
+  PaymentMethod: 'Cash',
+  Reason: 'reason-ref',
+  SubtypeReason: 'subtype-ref',
+  RecipientSettlement: 'settlement-ref',
+  RecipientSettlementStreet: 'street-ref',
+  BuildingNumber: '10',
+  NoteAddressRecipient: 'Apt 5',
+});
+
+// Create return to a warehouse
+client.return.createToWarehouse({
+  IntDocNumber: '20450520287825',
+  PaymentMethod: 'Cash',
+  Reason: 'reason-ref',
+  SubtypeReason: 'subtype-ref',
+  RecipientWarehouse: 'warehouse-ref',
+});
+
+// Update existing return order (only when status is "Прийняте")
+client.return.update({
+  Ref: 'return-order-ref',
+  IntDocNumber: '20450520287825',
+  PaymentMethod: 'Cash',
+  OrderType: 'orderCargoReturn',
+  Reason: 'reason-ref',
+  SubtypeReason: 'subtype-ref',
+  RecipientWarehouse: 'new-warehouse-ref',
+});
+
+// Get pricing without updating
+client.return.getPricing({ ... });
+
+// Convenience methods
+client.return.getByNumber('102-00003168');
+client.return.getByRef('return-order-ref');
+client.return.getByDateRange('01.01.2024', '31.01.2024');
 ```
 
 ---
@@ -632,10 +753,7 @@ try {
 ```typescript
 const controller = new AbortController();
 
-const promise = client.address.searchCities(
-  { FindByString: 'Kyiv' },
-  { signal: controller.signal }
-);
+const promise = client.address.searchCities({ FindByString: 'Kyiv' }, { signal: controller.signal });
 
 // Cancel after 5 seconds
 setTimeout(() => controller.abort(), 5000);
